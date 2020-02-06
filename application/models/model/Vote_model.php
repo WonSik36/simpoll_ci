@@ -5,6 +5,7 @@ CREATE TABLE sp_vote
 (
     `id`          VARCHAR(6)     NOT NULL    COMMENT '투표 아이디 (여섯글자)', 
     `room_id`     VARCHAR(4)     NOT NULL    COMMENT '방 아이디 (네글자)', 
+    `user_id`     INT            NOT NULL    COMMENT '사용자 아이디', 
     `title`       VARCHAR(45)    NOT NULL    COMMENT '투표 제목', 
     `start_date`  TIMESTAMP      NOT NULL    COMMENT '시작일', 
     `end_date`    TIMESTAMP      NOT NULL    COMMENT '종료일', 
@@ -18,6 +19,10 @@ ALTER TABLE sp_vote COMMENT '투표';
 ALTER TABLE sp_vote
     ADD CONSTRAINT FK_sp_vote_room_id_sp_room_id FOREIGN KEY (room_id)
         REFERENCES sp_room (id) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE sp_vote
+    ADD CONSTRAINT FK_sp_vote_user_id_sp_user_id FOREIGN KEY (user_id)
+        REFERENCES sp_user (id) ON DELETE RESTRICT ON UPDATE RESTRICT;
 */
 class Vote_model extends CI_Model {
     function __construct()
