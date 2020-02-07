@@ -24,40 +24,76 @@ class Choice_model extends CI_Model {
 
     /* 
         insertList
-        등록된 투표 목록(array) 삽입
-        param: 투표 array
+        등록된 선택지 목록(array) 삽입
+        param: 선택지 array
+        $choice_list = array(
+            array(
+                'vote_id' => '#ABCDEF' ,
+                'contents' => 'choice 1'
+            ),
+            array(
+                'vote_id' => '#ABCDEF' ,
+                'contents' => 'choice 2'
+            )
+        );
     */
-    function insertList($room_list){
-        $this->db->insert_batch('sp_choice',$room_list);
+    function insertList($choice_list){
+        $this->db->insert_batch('sp_choice',$choice_list);
     }
 
     /*  
         selectList
-        특정 투표(vote_id)에 포함된 선택지 목록을 반환한다
+        특정 투표(vote_id)에 포함된 선택지 목록중 삭제되지 않은 것을 반환한다
         param: 투표 아이디
+        return: 선택지 array
+        $choice_list = array(
+            array(
+                'id' => '1' ,
+                'vote_id' => '#ABCDEF' ,
+                'contents' => 'choice 1',
+                'deleted' => '0'
+            ),
+            array(
+                'id' => '2' ,
+                'vote_id' => '#ABCDEF' ,
+                'contents' => 'choice 2',
+                'deleted' => '0'
+            )
+        );
     */
     function selectList($vote_id){
-        $sql = "SELECT * FROM sp_choice WHERE vote_id=? ORDER BY ASC";
-        return $this->db->query($sql, array($vote_id));
+        $sql = "SELECT * FROM sp_choice WHERE vote_id=? AND deleted=0 ORDER BY ASC";
+        return $this->db->query($sql, array($vote_id))->result_array();
     }
 
     /*
         update
         특정 선택지의 내용(contents)을 업데이트 한다
-        param: array
+        param: 선택지 array
+        $choice_list = array(
+            array(
+                'id' => '1' ,
+                'vote_id' => '#ABCDEF' ,
+                'contents' => 'choice 1'
+            ),
+            array(
+                'id' => '2' ,
+                'vote_id' => '#ABCDEF' ,
+                'contents' => 'choice 2'
+            )
+        );
     */
-    function update($choice){
-        $sql = "UPDATE sp_choice SET contents=? WHERE id=?";
-        $this->db->query($sql, array($choice['contents'], $choice['id']));
+    function updateList($choice_list){
+        $this->db->update_batch('sp_choice',$choice_list, 'id');
     }
 
     /* 
         delete
-        특정 선택지를 삭제한다.
+        특정 선택지를 삭제한다.(update)
         param: 선택지 아이디
     */
     function delete($id){
-        $sql = "DELETE FROM sp_choice WHERE id=?";
+        $sql = "UPDATE sp_choice SET deleted=1 WHERE id=?";
         $this->db->query($sql, $id);
     }
 ?>
