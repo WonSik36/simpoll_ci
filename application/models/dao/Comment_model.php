@@ -3,11 +3,11 @@
 -- sp_comment Table Create SQL
 CREATE TABLE sp_comment
 (
-    `vote_id`   VARCHAR(6)    NOT NULL    COMMENT '투표 아이디 (여섯글자)', 
-    `user_id`   INT           NOT NULL    COMMENT '사용자 아이디', 
-    `contents`  TEXT          NOT NULL    COMMENT '내용', 
-    `deleted`   TINYINT(1)    NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
-    `mod_date`  TIMESTAMP     NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '수정 날짜', 
+    `vote_id`   VARCHAR(6)    NOT NULL    COMMENT '투표 아이디 (여섯글자)',
+    `user_id`   INT           NOT NULL    COMMENT '사용자 아이디',
+    `contents`  TEXT          NOT NULL    COMMENT '내용',
+    `deleted`   TINYINT(1)    NOT NULL    DEFAULT 0 COMMENT '삭제 여부',
+    `mod_date`  TIMESTAMP     NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '수정 날짜',
     PRIMARY KEY (vote_id, user_id)
 );
 
@@ -23,8 +23,9 @@ ALTER TABLE sp_comment
 */
 class Comment_model extends CI_Model {
     function __construct()
-    {       
+    {
         parent::__construct();
     }
 }
 ?>
+  
