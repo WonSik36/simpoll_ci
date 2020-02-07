@@ -23,5 +23,5 @@ class Room_User_model extends CI_Model {
     {       
         parent::__construct();
     }
-
+}
 ?>

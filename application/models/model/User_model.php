@@ -22,4 +22,9 @@ class User_model extends CI_Model {
         parent::__construct();
     }
 
+    /*
+        insert
+        param: 배열(사용자)
+    */
+}
 ?>

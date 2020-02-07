@@ -96,4 +96,5 @@ class Choice_model extends CI_Model {
         $sql = "UPDATE sp_choice SET deleted=1 WHERE id=?";
         $this->db->query($sql, $id);
     }
+}
 ?>

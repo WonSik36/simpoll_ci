@@ -24,5 +24,5 @@ class Like_model extends CI_Model {
     {       
         parent::__construct();
     }
-
+}
 ?>

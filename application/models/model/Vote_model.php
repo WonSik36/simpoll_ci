@@ -29,5 +29,5 @@ class Vote_model extends CI_Model {
     {       
         parent::__construct();
     }
-
+}
 ?>
