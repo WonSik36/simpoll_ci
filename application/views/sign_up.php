@@ -9,10 +9,10 @@
 <body>
   <h3>회원가입</h3>
   <form action="." method="post">
-    e-mail: <input type="email" name="email">
-    pw: <input type="password" name="password">
-    name: <input type="text" name="name">
-    nickname: <input type="text" name="nickname">
+    e-mail: <input type="email" name="email" required>
+    pw: <input type="password" name="password" required>
+    name: <input type="text" name="name" required>
+    nickname: <input type="text" name="nickname" required>
     <input type="submit" value="signup">
   </form>
 </body>
