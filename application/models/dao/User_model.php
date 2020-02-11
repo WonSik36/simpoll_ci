@@ -25,6 +25,7 @@ class User_model extends CI_Model {
     function __construct()
     {
         parent::__construct();
+        $this->load->database();
     }
 
     /*
@@ -33,7 +34,7 @@ class User_model extends CI_Model {
     */
     function insert($user){
         $sql = "INSERT INTO sp_user (`email`,`password`,`name`,`nickname`) VALUES (?,?,?,?)";
-        $this->db->query($sql, array($user['email'], $user['password'], $user['name'], $user['nickname']));
+        return $this->db->simple_query($sql, array($user['email'], $user['password'], $user['name'], $user['nickname']));
     }
 
     /*
@@ -43,8 +44,8 @@ class User_model extends CI_Model {
         return: 유저 배열
     */
     function selectRoomUserList($room_id){
-        $sql  = "SELECT sp_room_user.room_id, sp_room_user.user_id, sp_user.email, sp_user.name"
-        $sql .= " FROM sp_room_user INNER JOIN sp_user ON sp_room_user.user_id = sp_user.id"
+        $sql  = "SELECT sp_room_user.room_id, sp_room_user.user_id, sp_user.email, sp_user.name";
+        $sql .= " FROM sp_room_user INNER JOIN sp_user ON sp_room_user.user_id = sp_user.id";
         $sql .= " WHERE sp_room_user.room_id = ?";
 
         return $this->db->query($sql, array($room_id))->result_array();

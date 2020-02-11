@@ -12,7 +12,7 @@ class User_service extends CI_Model {
         param: 배열(사용자)
     */
     function signup($user){
-        $this->user_model->insert($user);
+        return $this->user_model->insert($user);
     }
 
     /*

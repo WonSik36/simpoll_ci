@@ -8,7 +8,7 @@
 </head>
 <body>
   <h3>회원가입</h3>
-  <form action="." method="post">
+  <form action="signup" method="post">
     e-mail: <input type="email" name="email" required>
     pw: <input type="password" name="password" required>
     name: <input type="text" name="name" required>

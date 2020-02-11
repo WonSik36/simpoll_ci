@@ -7,7 +7,7 @@
 </head>
 <body>
 <script>
-window.onload = function{
+window.onload = function(){
 
 <?php
     if(empty($message)){
@@ -15,8 +15,8 @@ window.onload = function{
         echo "history.back();";
     }else{
         echo "alert('".$message."');";
-        echo "history.back();";
-    //    echo "location.href = '".$location."';";
+        //echo "history.back();";
+        echo "location.href = '".$location."';";
     }
 ?>
 
