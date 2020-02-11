@@ -16,7 +16,7 @@ window.onload = function{
     }else{
         echo "alert('".$message."');";
         echo "history.back();";
-        echo "location.href = '".$location."';";
+    //    echo "location.href = '".$location."';";
     }
 ?>
 

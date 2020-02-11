@@ -2,7 +2,7 @@
 
 class User_service extends CI_Model {
     function __construct()
-    {       
+    {
         parent::__construct();
         $this->load->model('dao/user_model');
     }
@@ -11,7 +11,7 @@ class User_service extends CI_Model {
         insert
         param: 배열(사용자)
     */
-    function insert($user){
+    function signup($user){
         $this->user_model->insert($user);
     }
 
