@@ -96,21 +96,27 @@ input[type=submit]:hover{
 
 <!-- contents -->
 <div class="col-12 col-m-12 col-s-12">
-    <form action="my_room.html" method="post">
+    <form action="register" method="post">
         <h1>새로운 방 개설</h1>
+
+        <!-- poll title -->
+        <div>
+        <h3>방 제목</h3>
+            <label for="title"><input type="text" id="title" name="title" required></label>
+        </div>
 
         <!-- poll create authority -->
         <div>
         <h3>Simpoll 생성 권한</h3>
-            <label for="c_auth_0"><input type="radio" id="c_auth_0" name="c_auth" value="0" checked> 방장만</label>
-            <label for="c_auth_1"><input type="radio" id="c_auth_1" name="c_auth" value="1"> 방 참여자 모두</label>
+            <label for="c_auth_0"><input type="radio" id="vote_create_auth_0" name="vote_create_auth" value="0" checked> 방장만</label>
+            <label for="c_auth_1"><input type="radio" id="vote_create_auth_1" name="vote_create_auth" value="1"> 방 참여자 모두</label>
         </div>
 
         <!-- nickname or name check -->
         <div>
         <h3>참여자 실명/닉네임 여부</h3>
-            <label for="nick_check_0"><input type="radio" id="nick_check_0" name="nick_check" value="0" checked> 실명</label>
-            <label for="nick_check_1"><input type="radio" id="nick_check_1" name="nick_check" value="1"> 닉네임</label>
+            <label for="nick_check_0"><input type="radio" id="user_name_type_0" name="user_name_type" value="0" checked> 실명</label>
+            <label for="nick_check_1"><input type="radio" id="user_name_type_1" name="user_name_type" value="1"> 닉네임</label>
 
         <br>
         </div>
@@ -118,7 +124,7 @@ input[type=submit]:hover{
         <!-- deadline check -->
         <div style="margin-block-start: 1em; margin-block-end: 1em;">
         <h3 style="display: inline;">마감 날짜 설정 여부</h3>
-        <input type="checkbox" name="d_check" value="true" onclick="deadlineChecked(this)">
+        <input type="checkbox" name="deadline_check" value="1" onclick="deadlineChecked(this)">
         </div>
 
         <!-- deadline -->
