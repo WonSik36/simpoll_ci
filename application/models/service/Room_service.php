@@ -52,8 +52,6 @@ class Room_service extends CI_Model {
         }else{
             $result = $this->room_model->insert_deadline($room);
         }
-        $test = 1/0;
-
         //room_id를 이용해서 해당 방의 sid를 검색한다.
         $room_sid = $this->room_model->find_sid($room_id);
         //room의 sid와 user_id를 이용해서 방장을 해당 방에 넣어준다.
