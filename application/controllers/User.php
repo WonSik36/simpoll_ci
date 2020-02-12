@@ -46,7 +46,7 @@ class User extends CI_Controller {
           // 실패
           }else{
               $this->load->view('sign_up');
-          }*/
+          }
 
       // login page 요청 -> login page 리턴
       }else{
