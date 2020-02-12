@@ -38,15 +38,20 @@ class User extends CI_Controller {
 
           $user = array('email'=> $email, 'password'=> $password, 'name'=> $name, 'nickname'=> $nickname);
           $result = $this->user_service->signup($user);
+<<<<<<< HEAD
+          $this->load->view('debug',array('debug'=>var_dump($result)));
+          /*// 성공
+=======
 
             // $this->load->view('debug', array('debug'=>var_dump($result)));
           // 성공
+>>>>>>> c1b89d6f43bf64de57068f15fe4827db1b3b1f39
           if($result){
               $this->load->view('result',array('message'=>"회원가입이 되었습니다.",'location'=>"/index.php/user/login"));
           // 실패
           }else{
               $this->load->view('sign_up');
-          }
+          }*/
 
       // login page 요청 -> login page 리턴
       }else{
