@@ -167,33 +167,11 @@
                 background-color: rgb(243, 156, 18);
             }
         </style>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="/static/css/style.css">
     </head>
     <body>
         <!-- navigation -->
-        <div class="header">
-            <span class="title">
-                <a href="index.html">Simpoll</a>
-            </span>
-            <ul class="topnav">
-                <li class="right">
-                    <a href="make_room.html">새로운 방 만들기</a>
-                </li>
-                <li class="right">
-                    <a href="list_room.html">참여한 방 목록</a>
-                </li>
-                <li class="right">
-                    <a href="list_room.html">개설한 방 목록</a>
-                </li>
-                <li id="icon">
-                    <i class="fas fa-user-circle"></i>
-                </li>
-                <li id="info" class="right">내별명 님</li>
-                <li class="right">
-                    <a href="#">마이페이지</a>
-                </li>
-            </ul>
-        </div>
+        <?php include 'head.php';?>
 
         <!-- contents -->
         <!-- left side -->
@@ -234,7 +212,6 @@
 
 <?php
     foreach($list as $room){
-        // 하다가 맘
 ?>
                 <!-- top -->
                 <div class="col-12 room">
@@ -246,20 +223,25 @@
                     <!-- left -->
                     <div class="col-5 col-m-5 col-s-5" style="clear: both;">
                         <div class="title">
-                            방장: Prof.Bob
+                            방장: <?=$room['master_nickname']?>
                             <br>
-                            참여인원: 50명
+                            참여인원: <?=$room['part_num']?>명
                         </div>
                     </div>
 
                     <!-- mid -->
                     <div class="col-4 col-m-4 col-s-4">
-
+<?php
+if($room['deadline_check']==1){
+?>
                         <div class="title">
                             마감 날짜:
                             <br>
-                            <?=$room['deadline']?>
+                            ~ <?=$room['deadline']?>
                         </div>
+<?php
+}
+?>
                     </div>
 
                     <!-- right -->

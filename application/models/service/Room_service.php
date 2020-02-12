@@ -16,12 +16,13 @@ class Room_service extends CI_Model {
     }
 
     /*
-        login
-        param: 유저 email, password
-        return: 유저 object
+        speacker_room_list
+        자신이 강연자로 있는 방 목록 반환
+        param: 유저 시퀀스 아이디
+        return: 방(array) array
     */
-    function speacker_room_list($email, $pw){
-        return $this->user_model->login($email, $pw);
+    function speacker_room_list($user_id){
+        return $this->room_model->speacker_room_list($user_id);
     }
 }
 ?>
