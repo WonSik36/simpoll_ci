@@ -1,0 +1,6 @@
+TINYINT(1)의 경우 boolean 이므로 0 -> FALSE, 1 -> TRUE 로 한다.
+
+sp_room_user
+
+`auth`     INT           NOT NULL    COMMENT '권한',
+1: 방장, 2: 일반 참여자
