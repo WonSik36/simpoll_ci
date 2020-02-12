@@ -1,0 +1,18 @@
+TINYINT(1)의 경우 boolean 이므로 0 -> FALSE, 1 -> TRUE 로 한다.
+
+sp_room
+
+`user_name_type`    INT            NOT NULL    COMMENT '참여자 실명/닉네임 여부', 
+0: 실명, 1: 닉네임
+
+`vote_create_auth`  INT            NOT NULL    COMMENT '투표 생성권한', 
+0: 방장만, 1: 방 참여자 모두
+
+`deadline_check`    TINYINT(1)     NOT NULL    COMMENT '마감날짜 설정여부', 
+0: 마감 날짜 미설정, 1: 마감 날짜 설정
+
+
+sp_room_user
+
+`auth`     INT           NOT NULL    COMMENT '권한',
+1: 방장, 2: 일반 참여자

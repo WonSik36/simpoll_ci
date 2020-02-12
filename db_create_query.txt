@@ -33,6 +33,7 @@ CREATE TABLE sp_room
     `vote_create_auth`  INT            NOT NULL    COMMENT '투표 생성권한', 
     `deadline_check`    TINYINT(1)     NOT NULL    COMMENT '마감날짜 설정여부', 
     `deadline`          TIMESTAMP      NULL        COMMENT '마감날짜', 
+    `part_num`          INT            NOT NULL    DEFAULT 1 COMMENT '참여 인원', 
     PRIMARY KEY (sid)
 );
 

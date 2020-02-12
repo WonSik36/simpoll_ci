@@ -45,16 +45,18 @@ class Room extends CI_Controller {
         }
     }
 
+    // 자신이 개설한 방 목록
     function speacker(){
-        $user_id = $this->session->userdata('id');
+        $user_id = $this->session->userdata('sid');
 
         // 로그인 되어 있지 않다면
         if(empty($user_id)){
-            $this->load->view('login');
+            $this->load->view('result',array('message'=>"로그인하시기 바랍니다.",'location'=>"/index.php/user/login"));
             return;
         }
 
         $room_list = $this->room_service->speacker_room_list($user_id);
+        // $this->load->view('debug',array('debug'=>var_dump($room_list)));
         $this->load->view('room_speacker_list',array('list'=>$room_list));
     }
 }
