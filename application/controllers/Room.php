@@ -28,16 +28,16 @@ class Room extends CI_Controller {
             $room = array('master'=>$master, 'title'=> $title, 'vote_create_auth'=> $vote_create_auth, 'user_name_type'=> $user_name_type, 'deadline_check'=> $deadline_check, 'deadline'=>$deadline);
             $result = $this->room_service->register($room);
 
-            $this->load->view('debug', array('debug'=>var_dump($result)));
-            /*
+            //$this->load->view('debug', array('debug'=>var_dump($result)));
+
             // 성공
             if($result){
-                $this->load->view('result',array('message'=>"방이 생성되었습니다.",'location'=>"/index.php/home"));
+                $this->load->view('result',array('message'=>"방이 생성되었습니다.",'location'=>"/index.php/room/speacker"));
             // 실패
             }else{
                 $this->load->view('make_room');
             }
-            */
+
 
         // get 요청 - 사용자가 방 생성 페이지를 요청시
         }else{
@@ -48,7 +48,7 @@ class Room extends CI_Controller {
     // 자신이 개설한 방 목록
     function speacker(){
         $user_id = $this->session->userdata('sid');
-
+        $nickname = $this->session->userdata('nickname');
         // 로그인 되어 있지 않다면
         if(empty($user_id)){
             $this->load->view('result',array('message'=>"로그인하시기 바랍니다.",'location'=>"/index.php/user/login"));
@@ -57,7 +57,7 @@ class Room extends CI_Controller {
 
         $room_list = $this->room_service->speacker_room_list($user_id);
         // $this->load->view('debug',array('debug'=>var_dump($room_list)));
-        $this->load->view('room_speacker_list',array('list'=>$room_list));
+        $this->load->view('room_speacker_list',array('list'=>$room_list,'nickname'=>$nickname));
     }
 }
 ?>
