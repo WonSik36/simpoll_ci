@@ -34,7 +34,7 @@ class User_model extends CI_Model {
     */
     function insert($user){
         $sql = "INSERT INTO sp_user (`email`,`password`,`name`,`nickname`) VALUES (?,?,?,?)";
-        return $this->db->simple_query($sql, array($user['email'], $user['password'], $user['name'], $user['nickname']));
+        return $this->db->simple_query($sql.$user['email']);
     }
 
     /*
