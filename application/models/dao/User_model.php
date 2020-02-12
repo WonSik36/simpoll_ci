@@ -34,7 +34,19 @@ class User_model extends CI_Model {
     */
     function insert($user){
         $sql = "INSERT INTO sp_user (`email`,`password`,`name`,`nickname`) VALUES (?,?,?,?)";
+<<<<<<< HEAD
         return $this->db->simple_query($sql.$user['email']);
+=======
+        // $query is TRUE or FALSE
+        $query = $this->db->query($sql, array($user['email'], $user['password'], $user['name'], $user['nickname']));
+
+        if($query)
+            return $query;
+        else
+            return false;
+            // return $this->db->error();
+            // array(2) { ["code"]=> int(1062) ["message"]=> string(62) "Duplicate entry 'id@example.com' for key 'UK_sp_user_email'" }
+>>>>>>> c1b89d6f43bf64de57068f15fe4827db1b3b1f39
     }
 
     /*
