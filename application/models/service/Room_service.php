@@ -20,7 +20,7 @@ class Room_service extends CI_Model {
         param: 유저 email, password
         return: 유저 object
     */
-    function speacker_list($email, $pw){
+    function speacker_room_list($email, $pw){
         return $this->user_model->login($email, $pw);
     }
 }
