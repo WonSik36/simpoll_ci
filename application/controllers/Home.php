@@ -10,7 +10,7 @@ class Home extends CI_Controller {
     }
 
     function index(){
-      $this->load->view('home',array('nickname'=>$this->session->userdata('nickname')));
+      $this->load->view('home');
     }
 }
 ?>
