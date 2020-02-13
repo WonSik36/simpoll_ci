@@ -55,6 +55,7 @@ class Room extends CI_Controller {
         }
         // $room_id로 array('room'=>$room, 'list'=>$list)를 가져오기.
         $result = $this->room_service->get_room_and_list($room_id);
+        //$this->load->view('debug',array('debug'=>var_dump($result)));
         $this->load->view('my_room',$result);
     }
 

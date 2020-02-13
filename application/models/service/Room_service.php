@@ -62,6 +62,20 @@ class Room_service extends CI_Model {
     }
 
     /*
+        get_room_and_list
+        param: room_id (네글자 방 코드)
+        return: array('room'=>$room, 'list'=>$list)
+    */
+    function get_room_and_list($room_id) {
+        //room_id를 이용해서 해당 방의 sid를 검색한다.
+        $room_sid = $this->room_model->find_sid($room_id);
+        //room_id를 이용해서 방 제목, 방 id, 기간 가져오기 -> $room
+        $room = $this->room_model->get_room($room_sid);
+        $list = $this->room_model->get_list($room_sid);
+        return array('room'=>$room, 'list'=>$list);
+    }
+
+    /*
         speacker_room_list
         자신이 강연자로 있는 방 목록 반환
         param: 유저 시퀀스 아이디
