@@ -75,18 +75,33 @@ class Room_model extends CI_Model {
         else return true;
     }
 
-    //room_id를 이용해서 sp_room의 sid를 반환한다.
+    // room_id를 이용해서 sp_room의 sid를 반환한다.
     function find_sid($room_id){
         $sql = "SELECT sid FROM sp_room WHERE room_id = ?";
         $result = $this->db->query($sql, array($room_id))->row();
         return $result->sid;
     }
 
-    //room_sid와 방장의 sid를 sp_room_user에 추가한다.
+    // room_sid와 방장의 sid를 sp_room_user에 추가한다.
     function insert_sp_room_user($room_sid, $master) {
         $sql = "INSERT INTO sp_room_user (`room_id`,`user_id`) VALUES (?,?)";
         $query = $this->db->query($sql, array($room_sid,$master));
     }
+
+    // room_sid를 이용해서 sp_room의 모든 정보를 반환한다.
+    function get_room($room_sid){
+        $sql = "SELECT * FROM sp_room WHERE sid = ?";
+        $result = $this->db->query($sql, array($room_sid))->row_array();
+        return $result;
+    }
+
+    // room_sid를 이용해서 sp_vote의 모든 정보를 반환한다.
+    function get_list($room_sid){
+        $sql = "SELECT * FROM sp_vote WHERE room_id = ?";
+        $result = $this->db->query($sql, array($room_sid))->result_array();
+        return $result;
+    }
+
     /*
         speacker_room_list
         $user_id가 master로 있는 방 목록 반환
