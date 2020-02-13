@@ -6,7 +6,7 @@
     </div>
     <!-- room code -->
     <div id="room-code" class="col-2 col-m-2 col-s-6">
-        <?=$room['room_id']?>
+        #<?=$room['room_id']?>
     </div>
     <!-- room duration -->
     <div id="room-dur" class="col-5 col-m-5 col-s-12">

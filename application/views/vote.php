@@ -29,9 +29,10 @@
         <li class="title"><?=$vote['title']?><br><?=$total_part?>명</li>
 
         <li class="right">
+            ~
 <?php
-            $time = $room['deadline'];
-            $dateString = date("Y-m-d-h-i", strtotime($time));
+            $time = $vote['deadline'];
+            $dateString = date("Y-m-d A h:i", strtotime($time));
             echo $dateString;
 ?>
         </li>
@@ -45,7 +46,7 @@
     </div>
 </div>
 <script>
-window.onload = function() {
+function vote_view_<?=$vote['sid']?>() {
     <?php
         echo "var ctx_".$vote['sid']." = document.getElementById('vote_result_".$vote['sid']."').getContext('2d');\n";
         echo "var chart_".$vote['sid']." = new Chart(ctx_".$vote['sid'].", {\n";
