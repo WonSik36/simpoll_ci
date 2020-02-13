@@ -219,77 +219,42 @@
         <!-- navigation -->
         <?php include 'head.php';?>
 
-        <!-- contents -->
-        <!-- 방 정보 표시창 -->
-        <div class="contents">
-            <!-- room title, code, duration, and update button -->
-            <div id="room-header" class="col-12 col-m-12 col-s-12">
-                <!-- room title -->
-                <div id="room-title" class="col-2 col-m-2 col-s-6">
-                    <?=$room['title']?>
-                </div>
-                <!-- room code -->
-                <div id="room-code" class="col-2 col-m-2 col-s-6">
-                    <?=$room['room_id']?>
-                </div>
-                <!-- room duration -->
-                <div id="room-dur" class="col-5 col-m-5 col-s-12">
-<?php
-    // 마감 날짜가 있는 경우
-    if($room['deadline_check'] == 1){
-?>
-                    마감 날짜: ~<?=$room['deadline']?>
-                    <?php
-    }
-?>
-                </div>
-                <!-- room update button -->
-                <div id="room-update" class="col-3 col-m-3 col-s-12 align-right">
-                    <a href="#">
-                        <button id="update-btn">수정</button>
-                    </a>
-                </div>
-                <!-- link to participant page -->
-                <div id="room-update" class="col-3 col-m-3 col-s-12 align-right">
-                    <a href="#">
-                        <button id="update-btn">Simpoll 하러 가기</button>
-                    </a>
-                </div>
-            </div>
-            
+        <!-- room info and vote list -->
+        <div>
+            <!-- 방 정보 표시창 -->
+            <?php include 'room_head.php';?>
             <!-- 투표 정보 표시창 -->
-<?php
-    if(empty($list)){
-?>
-            <!-- 아직 방에 투표가 없는 경우 -->
-            <div id="roomList">
-                <p>아직 simpoll이 없네요. 새로운 simpoll을 만들어보세요~</p>
-                <a href="make_vote.html">
-                    <i class="far fa-plus-square"></i>
-                </a>
-            </div>
-<?php  
-  }
-?>
 
 <?php
-    foreach($list as $vote){
+    // 투표가 없는 경우
+    if(empty($list)){
 ?>
-        <!-- 투표가 있는 경우 -->
+        <?php include 'empty_vote.php';?>   
+<?php  
+    //투표가 있는 경우
+    }else{
+        echo "<!-- list of vote -->";
+        echo "<div class='col-12'>";
+        foreach($list as $vote){
+?>
         <?php include 'vote.php';?>
 <?php
+        }
+        echo "</div>";
     }
 ?>
         </div>
-        <!-- contents end -->
+        <!-- room info and vote list end -->
     </body>
 
     <!-- vote add button -->
     <div id="add-button" class="align-center">
         <span>
-            <a href="make_vote01.html">
+            <a href="#">
                 <i class="fas fa-plus" style="color:white"></i>
             </a>
         </span>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </html>
