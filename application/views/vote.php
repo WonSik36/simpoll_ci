@@ -38,7 +38,7 @@
     </ul>
 </div>
 <!-- vote contents -->
-<div class="contents" id="v_con_<?=$vote['sid']?>">
+<div class="vote_contents" id="v_con_<?=$vote['sid']?>">
     <div class="vote">
             <p>투표 결과</p>
             <canvas id="vote_result_<?=$vote['sid']?>"></canvas>
