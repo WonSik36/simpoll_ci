@@ -237,7 +237,12 @@ if($room['deadline_check']==1){
                         <div class="title">
                             마감 날짜:
                             <br>
-                            ~ <?=$room['deadline']?>
+                            ~
+<?php
+                            $time = $room['deadline'];
+                            $dateString = date("Y-m-d", strtotime($time));
+                            echo $dateString;
+?>
                         </div>
 <?php
 }
