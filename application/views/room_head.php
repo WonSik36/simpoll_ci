@@ -33,9 +33,7 @@
         <a href="#">
             <button id="update-btn">수정</button>
         </a>
-    </div>
-    <!-- link to participant page -->
-    <div id="room-update" class="col-3 col-m-3 col-s-12 align-right">
+
         <a href="#">
             <button id="update-btn">Simpoll 하러 가기</button>
         </a>
