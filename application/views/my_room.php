@@ -189,7 +189,7 @@
                 overflow: hidden;
             }
 
-            .contents {
+            .vote-contents {
                 background-color: #eee;
                 padding-top: 10px;
             }
@@ -257,4 +257,13 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script>
+        function toggleVoteContents(id){
+            var voteResult = document.getElementById('v_con_'+id);
+            if(voteResult.style.visibility == "none")
+                voteResult.style.visibility = "block";  
+            else
+                voteResult.style.visibility = "none";
+        }
+    </script>
 </html>
