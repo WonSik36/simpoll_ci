@@ -229,8 +229,8 @@
     // 투표가 없는 경우
     if(empty($list)){
 ?>
-        <?php include 'empty_vote.php';?>   
-<?php  
+        <?php include 'empty_vote.php';?>
+<?php
     //투표가 있는 경우
     }else{
         echo "<!-- list of vote -->";
@@ -258,12 +258,20 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script>
+window.onload = function() {
+<?php
+foreach ($list as $vote) {
+    echo "vote_view_".$vote['sid']."()\n";
+}
+?>
+};
         function toggleVoteContents(id){
             var voteResult = document.getElementById('v_con_'+id);
-            if(voteResult.style.visibility == "none")
-                voteResult.style.visibility = "block";  
+            var dis = voteResult.style.display;
+            if(dis=="none")
+                voteResult.style.display = "block";
             else
-                voteResult.style.visibility = "none";
+                voteResult.style.display = "none";
         }
     </script>
 </html>

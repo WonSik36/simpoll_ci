@@ -254,7 +254,7 @@ if($room['deadline_check']==1){
                         <a href="">
                             <button class="btn-del pair-btn">삭제</button>
                         </a>
-                        <a href="list_poll01.html">
+                        <a href="/index.php/room/speacker_myroom/<?=$room['room_id']?>">
                             <button class="btn-go pair-btn">이동</button>
                         </a>
                     </div>
