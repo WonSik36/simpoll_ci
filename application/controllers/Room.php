@@ -32,7 +32,7 @@ class Room extends CI_Controller {
 
             // 성공
             if($result){
-                $this->load->view('result',array('message'=>"방이 생성되었습니다.",'location'=>"/index.php/room/speacker"));
+                $this->load->view('result',array('message'=>"방이 생성되었습니다.",'location'=>"/index.php/room/myroom"));
             // 실패
             }else{
                 $this->load->view('make_room');
@@ -45,11 +45,17 @@ class Room extends CI_Controller {
         }
     }
 
+    // 방 생성 후 강연자 시점 페이지
+    function myroom() {
+        // 방 제목, room_id, 
+        $this->load->view('my_room',array('nickname'=>$nickname));
+    }
+
     // 자신이 개설한 방 목록
     function speacker(){
         $user_id = $this->session->userdata('sid');
         $nickname = $this->session->userdata('nickname');
-        
+
         // 로그인 되어 있지 않다면
         if(empty($user_id)){
             $this->load->view('result',array('message'=>"로그인하시기 바랍니다.",'location'=>"/index.php/user/login"));
