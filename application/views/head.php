@@ -1,6 +1,7 @@
 <?php
-    if(empty($nickname)){
-      ?>
+    if(empty($_SESSION['nickname'])){    
+?>
+
 <div class="header">
     <span class="title">
         <a href="/index.php/home">Simpoll</a>
@@ -25,7 +26,8 @@
 </div>
 <?php
     }else{
-      ?>
+        $nickname = $_SESSION['nickname'];
+?>
 <div class="header">
     <span class="title">
         <a href="/index.php/home">Simpoll</a>
