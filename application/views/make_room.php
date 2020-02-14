@@ -92,7 +92,7 @@ input[type=submit]:hover{
 </head>
 <body>
 <!-- navigation -->
-<?php include 'head.php';?>
+<?php include 'component/head.php';?>
 
 <!-- contents -->
 <div class="col-12 col-m-12 col-s-12">

@@ -217,19 +217,32 @@
     </head>
     <body>
         <!-- navigation -->
-        <?php include 'head.php';?>
+        <?php include 'component/head.php';?>
 
         <!-- room info and vote list -->
         <div>
             <!-- 방 정보 표시창 -->
-            <?php include 'room_head.php';?>
+            <?php include 'component/room_head.php';?>
+
+            <!-- 투표 필터링 -->
+            <div class="col-12 col-m-12 col-s-12">
+            <h3>검색</h3>
+            <input type="text" placeholder="검색어를 입력해주세요.">
+
+            <br><br><br>
+
+            <h3>정렬</h3>
+            <button class="filter">시간순</button>
+            <button class="filter">투표제목순</button>
+        </div>
+
             <!-- 투표 정보 표시창 -->
 
 <?php
     // 투표가 없는 경우
     if(empty($list)){
 ?>
-        <?php include 'empty_vote.php';?>
+        <?php include 'component/empty_vote.php';?>
 <?php
     //투표가 있는 경우
     }else{
@@ -237,7 +250,7 @@
         echo "<div class='col-12'>";
         foreach($list as $vote){
 ?>
-        <?php include 'vote.php';?>
+        <?php include 'component/vote.php';?>
 <?php
         }
         echo "</div>";

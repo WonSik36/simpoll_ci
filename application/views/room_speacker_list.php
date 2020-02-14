@@ -82,13 +82,6 @@
             }
 
             /* contents */
-            #list_left {
-                height: 1000px;
-                border-right: 1px solid grey;
-            }
-            #list_right {
-                height: 1000px;
-            }
             input[type=text] {
                 width: 100%;
                 height: 50px;
@@ -171,97 +164,28 @@
     </head>
     <body>
         <!-- navigation -->
-        <?php include 'head.php';?>
+        <?php include 'component/head.php';?>
 
         <!-- contents -->
-        <!-- left side -->
-        <div class="col-4 col-m-3 col-s-0" id="list_left">
+        <!-- room filter -->
+        <div class="col-12 col-m-12 col-s-12">
             <h3>검색</h3>
             <input type="text" placeholder="검색어를 입력해주세요.">
 
             <br><br><br>
 
-            <h3>필터</h3>
-            <button class="filter">중요</button>
-            <button class="filter">참여필요</button>
-            <button class="filter">알림</button>
-            <button class="filter">진행중</button>
-            <button class="filter">종료</button>
-
-            <br><br><br>
-
             <h3>정렬</h3>
             <button class="filter">시간순</button>
-            <button class="filter">이름순</button>
-            <button class="filter">좋아요순</button>
+            <button class="filter">방제목순</button>
         </div>
 
-        <!-- left side : mobile -->
-        <div class="col-0 col-m-0 col-s-12" id="nav-bar">
-            <div class="col-s-3"></div>
-            <div class="col-s-6 align-center">검색</div>
-            <div class="col-s-3 align-right">
-                <a href="#">V</a>
-            </div>
-        </div>
-
-        <!-- right side -->
-        <div class="col-8 col-m-9 col-s-12" id="list_right">
+        <!-- list of room -->
+        <div class="col-12 col-m-12 col-s-12">
             <div class="col-1"></div>
             <div class="col-10">
 
-<?php
-    foreach($list as $room){
-?>
-                <!-- top -->
-                <div class="col-12 room">
-                    <div class="title"><?=$room['title']?></div>
-                    <div class="tags">
-                        <div class="label color-code">#<?=$room['room_id']?></div>
-                    </div>
-
-                    <!-- left -->
-                    <div class="col-5 col-m-5 col-s-5" style="clear: both;">
-                        <div class="title">
-                            방장: <?=$room['master_nickname']?>
-                            <br>
-                            참여인원: <?=$room['part_num']?>명
-                        </div>
-                    </div>
-
-                    <!-- mid -->
-                    <div class="col-4 col-m-4 col-s-4">
-<?php
-if($room['deadline_check']==1){
-?>
-                        <div class="title">
-                            마감 날짜:
-                            <br>
-                            ~
-<?php
-                            $time = $room['deadline'];
-                            $dateString = date("Y-m-d", strtotime($time));
-                            echo $dateString;
-?>
-                        </div>
-<?php
-}
-?>
-                    </div>
-
-                    <!-- right -->
-                    <div class="col-3 col-m-3 col-s-3 align-right btn-holder" style="height: 100%;">
-                        <a href="">
-                            <button class="btn-del pair-btn">삭제</button>
-                        </a>
-                        <a href="/index.php/room/speacker_myroom/<?=$room['room_id']?>">
-                            <button class="btn-go pair-btn">이동</button>
-                        </a>
-                    </div>
-                </div>
-<?php
-    }
-?>
+            <!-- navigation -->
+            <?php include 'component/room_list_content.php';?>
 
             </div>
             <div class="col-1"></div>
