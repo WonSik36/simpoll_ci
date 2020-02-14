@@ -3,12 +3,12 @@
 -- sp_user Table Create SQL
 CREATE TABLE sp_user
 (
-    `sid`       INT            NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
-    `email`     VARCHAR(45)    NOT NULL    COMMENT '사용자 이메일', 
-    `name`      VARCHAR(45)    NOT NULL    COMMENT '사용자 이름', 
-    `deleted`   TINYINT(1)     NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
-    `nickname`  VARCHAR(45)    NOT NULL    COMMENT '닉네임', 
-    `password`  VARCHAR(255)    NOT NULL    COMMENT '패스워드',
+    `sid`       INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
+    `email`     VARCHAR(255)    NOT NULL    COMMENT '사용자 이메일', 
+    `name`      VARCHAR(255)    NOT NULL    COMMENT '사용자 이름', 
+    `deleted`   TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
+    `nickname`  VARCHAR(255)    NOT NULL    COMMENT '닉네임', 
+    `password`  VARCHAR(255)    NOT NULL    COMMENT '패스워드', 
     PRIMARY KEY (sid)
 );
 
@@ -24,16 +24,13 @@ ALTER TABLE sp_user
 -- sp_room Table Create SQL
 CREATE TABLE sp_room
 (
-    `sid`               INT            NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
-    `room_id`           VARCHAR(4)     NOT NULL    COMMENT '방 아이디 (네글자)', 
-    `master`            INT            NOT NULL    COMMENT '방장', 
-    `title`             VARCHAR(45)    NOT NULL    COMMENT '방 제목', 
-    `deleted`           TINYINT(1)     NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
-    `user_name_type`    INT            NOT NULL    COMMENT '참여자 실명/닉네임 여부', 
-    `vote_create_auth`  INT            NOT NULL    COMMENT '투표 생성권한', 
-    `deadline_check`    TINYINT(1)     NOT NULL    COMMENT '마감날짜 설정여부', 
-    `deadline`          TIMESTAMP      NULL        COMMENT '마감날짜', 
-    `part_num`          INT            NOT NULL    DEFAULT 1 COMMENT '참여 인원', 
+    `sid`               INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
+    `url_name`          VARCHAR(255)    NULL        COMMENT 'url 이름', 
+    `master`            INT             NOT NULL    COMMENT '방장', 
+    `title`             VARCHAR(255)    NOT NULL    COMMENT '방 제목', 
+    `deleted`           TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
+    `user_name_type`    INT             NOT NULL    COMMENT '참여자 실명/닉네임 여부', 
+    `vote_create_auth`  INT             NOT NULL    COMMENT '투표 생성권한', 
     PRIMARY KEY (sid)
 );
 
@@ -44,25 +41,24 @@ ALTER TABLE sp_room
         REFERENCES sp_user (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE sp_room 
-    ADD UNIQUE UK_sp_room_room_id (room_id);
+    ADD UNIQUE UK_sp_room_url_name (url_name);
 
 
 -- sp_vote Table Create SQL
 CREATE TABLE sp_vote
 (
-    `sid`              INT            NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
-    `vote_id`          VARCHAR(6)     NOT NULL    COMMENT '투표 아이디 (여섯글자)', 
-    `room_id`          INT            NOT NULL    COMMENT '방 아이디', 
-    `user_id`          INT            NOT NULL    COMMENT '사용자 아이디', 
-    `title`            VARCHAR(45)    NOT NULL    COMMENT '투표 제목', 
-    `deadline`         TIMESTAMP      NOT NULL    COMMENT '마감날짜', 
-    `deleted`          TINYINT(1)     NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
-    `contents`         TEXT           NOT NULL    COMMENT '선택지', 
-    `result`           TEXT           NULL        COMMENT '투표 수', 
-    `vote_type`        INT            NOT NULL    COMMENT '투표 타입', 
-    `comment_check`    TINYINT(1)     NOT NULL    COMMENT '댓글여부', 
-    `anonymous_check`  TINYINT(1)     NOT NULL    COMMENT '익명 여부', 
-    `part_auth`        INT            NOT NULL    COMMENT '참여권한', 
+    `sid`              INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
+    `url_name`         VARCHAR(255)    NULL        COMMENT 'url 이름', 
+    `room_id`          INT             NOT NULL    COMMENT '방 아이디', 
+    `user_id`          INT             NOT NULL    COMMENT '사용자 아이디', 
+    `title`            VARCHAR(255)    NOT NULL    COMMENT '투표 제목', 
+    `deadline`         TIMESTAMP       NOT NULL    COMMENT '마감날짜', 
+    `deleted`          TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
+    `contents`         TEXT            NOT NULL    COMMENT '선택지', 
+    `vote_type`        INT             NOT NULL    COMMENT '투표 타입', 
+    `comment_check`    TINYINT(1)      NOT NULL    COMMENT '댓글여부', 
+    `anonymous_check`  TINYINT(1)      NOT NULL    COMMENT '익명 여부', 
+    `part_auth`        INT             NOT NULL    COMMENT '참여권한', 
     PRIMARY KEY (sid)
 );
 
@@ -77,8 +73,8 @@ ALTER TABLE sp_vote
         REFERENCES sp_room (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE sp_vote 
-    ADD UNIQUE UK_sp_vote_vote_id (vote_id);
-
+    ADD UNIQUE UK_sp_vote_url_name (url_name);
+    
 
 -- sp_room_user Table Create SQL
 CREATE TABLE sp_room_user
@@ -93,6 +89,11 @@ CREATE TABLE sp_room_user
 
 ALTER TABLE sp_room_user COMMENT '방:사용자 매칭 테이블';
 
+CREATE INDEX sp_room_user_Index_1 ON sp_room_user
+(
+    auth
+);
+
 ALTER TABLE sp_room_user
     ADD CONSTRAINT FK_sp_room_user_user_id_sp_user_sid FOREIGN KEY (user_id)
         REFERENCES sp_user (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
@@ -101,18 +102,17 @@ ALTER TABLE sp_room_user
     ADD CONSTRAINT FK_sp_room_user_room_id_sp_room_sid FOREIGN KEY (room_id)
         REFERENCES sp_room (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-CREATE INDEX sp_room_user_Index_1 ON sp_room_user (auth);
-
 
 -- sp_comment Table Create SQL
 CREATE TABLE sp_comment
 (
-    `sid`       INT           NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
-    `vote_id`   INT           NOT NULL    COMMENT '투표 아이디', 
-    `user_id`   INT           NOT NULL    COMMENT '사용자 아이디', 
-    `contents`  TEXT          NOT NULL    COMMENT '내용', 
-    `deleted`   TINYINT(1)    NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
-    `mod_date`  TIMESTAMP     NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '수정 날짜', 
+    `sid`       INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
+    `vote_id`   INT             NOT NULL    COMMENT '투표 아이디', 
+    `mod_date`  TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '수정 날짜', 
+    `user_id`   INT             NOT NULL    COMMENT '사용자 아이디', 
+    `cur_name`  VARCHAR(255)    NOT NULL    COMMENT '현재 아이디', 
+    `contents`  TEXT            NOT NULL    COMMENT '내용', 
+    `deleted`   TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
     PRIMARY KEY (sid)
 );
 
@@ -130,11 +130,12 @@ ALTER TABLE sp_comment
 -- sp_user_vote_choice Table Create SQL
 CREATE TABLE sp_user_vote_choice
 (
-    `sid`              INT    NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
-    `user_id`          INT    NULL        COMMENT '사용자 아이디', 
-    `vote_id`          INT    NOT NULL    COMMENT '투표 아이디', 
-    `contents_number`  INT    NOT NULL    COMMENT '선택지 번호', 
-    `type`             INT    NULL        DEFAULT null COMMENT '좋아요 유형', 
+    `sid`              INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
+    `user_id`          INT             NULL        COMMENT '사용자 아이디', 
+    `cur_name`         VARCHAR(255)    NOT NULL    COMMENT '현재 아이디', 
+    `type`             INT             NULL        DEFAULT null COMMENT '좋아요 유형', 
+    `vote_id`          INT             NOT NULL    COMMENT '투표 아이디', 
+    `contents_number`  INT             NOT NULL    COMMENT '선택지 번호', 
     PRIMARY KEY (sid)
 );
 
