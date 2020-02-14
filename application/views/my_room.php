@@ -217,19 +217,19 @@
     </head>
     <body>
         <!-- navigation -->
-        <?php include 'head.php';?>
+        <?php include 'component/head.php';?>
 
         <!-- room info and vote list -->
         <div>
             <!-- 방 정보 표시창 -->
-            <?php include 'room_head.php';?>
+            <?php include 'component/room_head.php';?>
             <!-- 투표 정보 표시창 -->
 
 <?php
     // 투표가 없는 경우
     if(empty($list)){
 ?>
-        <?php include 'empty_vote.php';?>
+        <?php include 'component/empty_vote.php';?>
 <?php
     //투표가 있는 경우
     }else{
@@ -237,7 +237,7 @@
         echo "<div class='col-12'>";
         foreach($list as $vote){
 ?>
-        <?php include 'vote.php';?>
+        <?php include 'component/vote.php';?>
 <?php
         }
         echo "</div>";

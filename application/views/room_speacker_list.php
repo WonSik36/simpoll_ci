@@ -171,7 +171,7 @@
     </head>
     <body>
         <!-- navigation -->
-        <?php include 'head.php';?>
+        <?php include 'component/head.php';?>
 
         <!-- contents -->
         <!-- left side -->
