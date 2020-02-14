@@ -1,6 +1,6 @@
 <!-- vote tab -->
 <!-- vote header -->
-<div class="vote-tab" onclick="toggleVoteContents(<?=$room['sid']?>)">
+<div class="vote-tab" onclick="toggleVoteContents(<?=$vote['sid']?>)">
     <ul class="vote-ul">
         <li class="check_icon">
             <i class="far fa-check-square"></i>
@@ -18,9 +18,9 @@
     </ul>
 </div>
 <!-- vote contents -->
-<div class="vote_contents" id="v_con_<?=$room['sid']?>" style="display:none;">
+<div class="vote_contents" id="v_con_<?=$vote['sid']?>" style="display:none;">
     <div class="vote">
-            <p>투표 결과</p>
-            <canvas id="vote_result_<?=$room['sid']?>"></canvas>
+            <p style="margin-top: 0px;">투표 결과</p>
+            <canvas id="vote_result_<?=$vote['sid']?>"></canvas>
     </div>
 </div>

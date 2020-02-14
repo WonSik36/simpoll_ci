@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -123,6 +123,10 @@
                 background-color: #ff9999;
             }
 
+            .vote_contents{
+                background-color: #cccccc;
+            }
+
             ul.vote-ul {
                 list-style-type: none;
                 margin: 0;
@@ -225,7 +229,7 @@
             <?php include 'component/room_head.php';?>
 
             <!-- 투표 필터링 -->
-            <div class="col-12 col-m-12 col-s-12">
+            <div class="col-12 col-m-12 col-s-12"  style="border-top: 1px solid black; border-bottom: 1px solid black;">
             <h3>검색</h3>
             <input type="text" placeholder="검색어를 입력해주세요.">
 
@@ -298,8 +302,9 @@
             let xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    let res = JSON.parse(xhttp.responseText);
-                    updateVoteResult(res);           
+                    alert(this.responseText);
+                    // let res = JSON.parse(this.responseText);
+                    // updateVoteResult(res);           
                 }
             };
             xhttp.open("GET", "ajax_info.txt", true);
