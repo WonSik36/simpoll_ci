@@ -19,26 +19,6 @@
         </div>
     </div>
 
-    <!-- mid -->
-    <div class="col-4 col-m-4 col-s-4">
-<?php
-    if($room['deadline_check']==1){
-?>
-        <div class="title">
-            마감 날짜:
-            <br>
-            ~
-<?php
-    $time = $room['deadline'];
-    $dateString = date("Y-m-d", strtotime($time));
-    echo $dateString;
-?>
-        </div>
-<?php
-    }
-?>
-    </div>
-
     <!-- right -->
     <div class="col-3 col-m-3 col-s-3 align-right btn-holder" style="height: 100%;">
         <a href="">
