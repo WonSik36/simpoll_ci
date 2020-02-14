@@ -5,7 +5,7 @@
 <div class="col-12 room">
     <div class="title"><?=$room['title']?></div>
     <div class="tags">
-        <div class="label color-code">#<?=$room['room_id']?></div>
+        <div class="label color-code">#<?=$room['sid']?></div>
     </div>
 
     <!-- left -->
@@ -44,7 +44,7 @@
         <a href="">
             <button class="btn-del pair-btn">삭제</button>
         </a>
-        <a href="/index.php/room/speacker_myroom/<?=$room['room_id']?>">
+        <a href="/index.php/room/speacker_myroom/<?=$room['sid']?>">
             <button class="btn-go pair-btn">이동</button>
         </a>
     </div>
