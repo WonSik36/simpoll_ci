@@ -19,7 +19,7 @@ class Room extends CI_Controller {
         if(!empty($this->input->post('title'))){
             $title = $this->input->post('title');
             $url_name = $this->input->post('url_name');
-            if(strlen($url_name)==0) $url_name = NULL; 
+            if(strlen($url_name)==0) $url_name = NULL;
             $vote_create_auth = $this->input->post('vote_create_auth');
             $user_name_type= $this->input->post('user_name_type');
             $master = $this->session->userdata('sid');
@@ -45,7 +45,7 @@ class Room extends CI_Controller {
     }
 
     // 방 생성 후 강연자 시점 페이지
-    function speacker_myroom($room_id) {
+    function speacker_myroom($room_sid) {
         $nickname = $this->session->userdata('nickname');
         // 로그인 되어 있지 않다면
         if(empty($nickname)){
@@ -53,9 +53,9 @@ class Room extends CI_Controller {
             return;
         }
         // $room_id로 array('room'=>$room, 'list'=>$list)를 가져오기.
-        $result = $this->room_service->get_room_and_list($room_id);
-        //$this->load->view('debug',array('debug'=>var_dump($result)));
-        $this->load->view('my_room',$result);
+        $result = $this->room_service->get_room_and_list($room_sid);
+        $this->load->view('debug',array('debug'=>var_dump($result)));
+        //$this->load->view('my_room',$result);
     }
 
     // 자신이 개설한 방 목록
