@@ -202,8 +202,8 @@ button {
       <tr><td class="align-left">복수 선택</td><td><input type="checkbox" name="have_comment" value="comment"></td></tr>
       </table>
       <p id="add_option">참여 권한</p>
-      <input type="radio" name="participants" value="room_user" checked> 방 참여자만<br>
-      <input type="radio" name="participants" value="every_one"> 아무나<br>
+      <input type="radio" name="participants" value="0" checked> 방 참여자만<br>
+      <input type="radio" name="participants" value="1"> 아무나<br>
       <p id="add_option">마감시간</p><input type="date" name="vote_end_date" value="vote_end_date"> <input type="time" name="vote_end_time" value="vote_end_time"><br>
       <div id="submit">
         <ul class="submit">

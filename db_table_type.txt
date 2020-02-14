@@ -1,6 +1,6 @@
 TINYINT(1)의 경우 boolean 이므로 0 -> FALSE, 1 -> TRUE 로 한다.
 
-sp_room
+--- sp_room ---
 
 `user_name_type`    INT            NOT NULL    COMMENT '참여자 실명/닉네임 여부', 
 0: 실명, 1: 닉네임
@@ -12,7 +12,21 @@ sp_room
 0: 마감 날짜 미설정, 1: 마감 날짜 설정
 
 
-sp_room_user
+--- sp_room_user ---
 
 `auth`     INT           NOT NULL    COMMENT '권한',
 1: 방장, 2: 일반 참여자
+
+--- sp_vote ---
+
+`vote_type`        INT             NOT NULL    COMMENT '투표 타입',
+0: 하나만 선택, 1: 복수 선택
+
+`comment_check`    TINYINT(1)      NOT NULL    COMMENT '댓글여부', 
+0: False, 1: True
+
+`anonymous_check`  TINYINT(1)      NOT NULL    COMMENT '익명 여부', 
+0: False, 1: True
+
+`part_auth`        INT             NOT NULL    COMMENT '투표참여권한', 
+0: 방 참가자만, 1: 아무나
