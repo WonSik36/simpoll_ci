@@ -10,7 +10,7 @@ CREATE TABLE sp_user
     `nickname`  VARCHAR(255)    NOT NULL    COMMENT '닉네임', 
     `password`  VARCHAR(255)    NOT NULL    COMMENT '패스워드', 
     PRIMARY KEY (sid)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 ALTER TABLE sp_user COMMENT '사용자';
 
@@ -32,7 +32,7 @@ CREATE TABLE sp_room
     `user_name_type`    INT             NOT NULL    COMMENT '참여자 실명/닉네임 여부', 
     `vote_create_auth`  INT             NOT NULL    COMMENT '투표 생성권한', 
     PRIMARY KEY (sid)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 ALTER TABLE sp_room COMMENT '방';
 
@@ -60,7 +60,7 @@ CREATE TABLE sp_vote
     `anonymous_check`  TINYINT(1)      NOT NULL    COMMENT '익명 여부', 
     `part_auth`        INT             NOT NULL    COMMENT '참여권한', 
     PRIMARY KEY (sid)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 ALTER TABLE sp_vote COMMENT '투표';
 
@@ -74,7 +74,7 @@ ALTER TABLE sp_vote
 
 ALTER TABLE sp_vote 
     ADD UNIQUE UK_sp_vote_url_name (url_name);
-    
+
 
 -- sp_room_user Table Create SQL
 CREATE TABLE sp_room_user
@@ -85,7 +85,7 @@ CREATE TABLE sp_room_user
     `deleted`  TINYINT(1)    NOT NULL    DEFAULT 0 COMMENT '방 탈퇴 여부', 
     `auth`     INT           NOT NULL    COMMENT '권한', 
     PRIMARY KEY (sid)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 ALTER TABLE sp_room_user COMMENT '방:사용자 매칭 테이블';
 
@@ -114,7 +114,7 @@ CREATE TABLE sp_comment
     `contents`  TEXT            NOT NULL    COMMENT '내용', 
     `deleted`   TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
     PRIMARY KEY (sid)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 ALTER TABLE sp_comment COMMENT '댓글';
 
@@ -137,7 +137,7 @@ CREATE TABLE sp_user_vote_choice
     `vote_id`          INT             NOT NULL    COMMENT '투표 아이디', 
     `contents_number`  INT             NOT NULL    COMMENT '선택지 번호', 
     PRIMARY KEY (sid)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 ALTER TABLE sp_user_vote_choice COMMENT '사용자:선택지 매칭 테이블';
 
