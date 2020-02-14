@@ -98,19 +98,6 @@ class Room_model extends CI_Model {
         $result = $this->db->query($sql, array($room_sid))->row_array();
         return $result;
     }
-
-    /*
-        get_list
-        room_sid를 이용해서 sp_vote의 모든 정보를 반환한다.
-        param: 방 시퀀스 아이디
-        return: 투표 정보 array
-    */
-    function get_list($room_sid){
-        $sql = "SELECT * FROM sp_vote WHERE room_id = ?";
-        $result = $this->db->query($sql, array($room_sid))->result_array();
-        return $result;
-    }
-
     /*
         speacker_room_list
         $user_id가 master로 있는 방 목록 반환
@@ -118,8 +105,8 @@ class Room_model extends CI_Model {
         return: 방(array) array
     */
     function speacker_room_list($user_id){
-        $sql = "SELECT sp_room.sid as sid, sp_room.room_id as room_id, sp_user.nickname as master_nickname, sp_room.title as title, ";
-        $sql .= "sp_room.deadline_check as deadline_check, sp_room.deadline as deadline, sp_room.part_num as part_num ";
+        $sql = "SELECT sp_room.sid as sid, sp_room.url_name as url_name, sp_user.nickname as master_nickname, sp_room.title as title, ";
+        $sql .= "sp_room.part_num as part_num ";
         $sql .= "FROM sp_room INNER JOIN sp_user ON sp_room.master = sp_user.sid ";
         $sql .= "WHERE sp_room.master=? AND sp_room.deleted=0 ORDER BY sp_room.sid DESC";
 

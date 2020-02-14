@@ -3,14 +3,14 @@
 -- sp_vote Table Create SQL
 CREATE TABLE sp_vote
 (
-    `id`          VARCHAR(6)     NOT NULL    COMMENT '투표 아이디 (여섯글자)', 
-    `room_id`     VARCHAR(4)     NOT NULL    COMMENT '방 아이디 (네글자)', 
-    `user_id`     INT            NOT NULL    COMMENT '사용자 아이디', 
-    `title`       VARCHAR(45)    NOT NULL    COMMENT '투표 제목', 
-    `start_date`  TIMESTAMP      NOT NULL    COMMENT '시작일', 
-    `end_date`    TIMESTAMP      NOT NULL    COMMENT '종료일', 
-    `type`        INT            NOT NULL    COMMENT '투표 유형', 
-    `deleted`     TINYINT(1)     NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
+    `id`          VARCHAR(6)     NOT NULL    COMMENT '투표 아이디 (여섯글자)',
+    `room_id`     VARCHAR(4)     NOT NULL    COMMENT '방 아이디 (네글자)',
+    `user_id`     INT            NOT NULL    COMMENT '사용자 아이디',
+    `title`       VARCHAR(45)    NOT NULL    COMMENT '투표 제목',
+    `start_date`  TIMESTAMP      NOT NULL    COMMENT '시작일',
+    `end_date`    TIMESTAMP      NOT NULL    COMMENT '종료일',
+    `type`        INT            NOT NULL    COMMENT '투표 유형',
+    `deleted`     TINYINT(1)     NOT NULL    DEFAULT 0 COMMENT '삭제 여부',
     PRIMARY KEY (id)
 );
 
@@ -26,8 +26,22 @@ ALTER TABLE sp_vote
 */
 class Vote_model extends CI_Model {
     function __construct()
-    {       
+    {
         parent::__construct();
+        $this->load->database();
     }
+
+    /*
+        get_list
+        room_sid를 이용해서 sp_vote의 모든 정보를 반환한다.
+        param: 방 시퀀스 아이디
+        return: 투표 정보 array
+    */
+    function get_list($room_sid){
+        $sql = "SELECT * FROM sp_vote WHERE room_id = ?";
+        $result = $this->db->query($sql, array($room_sid))->result_array();
+        return $result;
+    }
+
 }
 ?>
