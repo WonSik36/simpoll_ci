@@ -31,6 +31,7 @@ CREATE TABLE sp_room
     `deleted`           TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
     `user_name_type`    INT             NOT NULL    COMMENT '참여자 실명/닉네임 여부', 
     `vote_create_auth`  INT             NOT NULL    COMMENT '투표 생성권한', 
+    `part_num`          INT             NOT NULL    DEFAULT 1 COMMENT '참여자수', 
     PRIMARY KEY (sid)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
