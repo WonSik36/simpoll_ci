@@ -243,17 +243,21 @@
     if(empty($list)){
 ?>
         <?php include 'component/empty_vote.php';?>
+
 <?php
     //투표가 있는 경우
     }else{
-        echo "<!-- list of vote -->";
-        echo "<div class='col-12'>";
+        echo "<!-- list of vote -->\n";
+        echo "<div class='col-12'>\n";
+
+        $idx = 0;
         foreach($list as $vote){
 ?>
         <?php include 'component/vote.php';?>
 <?php
+            $idx++;
         }
-        echo "</div>";
+        echo "</div>\n";
     }
 ?>
         </div>
@@ -271,20 +275,75 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script>
-window.onload = function() {
-<?php
-foreach ($list as $vote) {
-    echo "vote_view_".$vote['sid']."()\n";
-}
-?>
-};
-        function toggleVoteContents(id){
-            var voteResult = document.getElementById('v_con_'+id);
+        var vList = new Array();
+
+        function toggleVoteContents(sid){
+            var voteResult = document.getElementById("v_con_"+sid);
             var dis = voteResult.style.display;
-            if(dis=="none")
+            if(dis=="none"){
                 voteResult.style.display = "block";
-            else
+                getVoteResult(sid);
+            }else
                 voteResult.style.display = "none";
+        }
+
+        class Vote{
+            constructor(colArr ,resArr){
+                this.columnArray = colArr;
+                this.resultArray = resArr;
+            }
+        }
+
+        function getVoteResult(sid){
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let res = JSON.parse(xhttp.responseText);
+                    updateVoteResult(res);           
+                }
+            };
+            xhttp.open("GET", "ajax_info.txt", true);
+            xhttp.send();
+        }
+
+        function updateVoteResult(res){
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: res.label,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: res.data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
         }
     </script>
 </html>
