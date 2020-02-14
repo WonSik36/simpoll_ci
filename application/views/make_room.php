@@ -105,6 +105,12 @@ input[type=submit]:hover{
             <label for="title"><input type="text" id="title" name="title" required></label>
         </div>
 
+        <!-- poll url_name -->
+        <div>
+        <h3>방 url_name</h3>
+            <label for="url_name"><input type="text" id="url_name" name="url_name"></label>
+        </div>
+
         <!-- poll create authority -->
         <div>
         <h3>Simpoll 생성 권한</h3>
@@ -117,30 +123,15 @@ input[type=submit]:hover{
         <h3>참여자 실명/닉네임 여부</h3>
             <label for="nick_check_0"><input type="radio" id="user_name_type_0" name="user_name_type" value="0" checked> 실명</label>
             <label for="nick_check_1"><input type="radio" id="user_name_type_1" name="user_name_type" value="1"> 닉네임</label>
-
         <br>
         </div>
-
-        <!-- deadline check -->
-        <div style="margin-block-start: 1em; margin-block-end: 1em;">
-        <h3 style="display: inline;">마감 날짜 설정 여부</h3>
-        <input type="checkbox" name="deadline_check" value="1" onclick="deadlineChecked(this)">
-        </div>
-
-        <!-- deadline -->
-        <!-- if deadline is checked than it appears -->
-        <div id="dead_div" style="visibility: hidden;">
-          <h3>마감 날짜</h3>
-          <label for="deadline"><input type="date" id="deadline" name="deadline"></label>
-        </div>
-
         <br><br><br>
 
         <input class="col-4 col-m-6 col-s-12" type="submit" value="방 생성">
     </form>
 
     <script>
-
+/*
       function deadlineChecked(checkbox){
         let deadlineDiv = document.getElementById("dead_div");
 
@@ -149,7 +140,7 @@ input[type=submit]:hover{
         else
         deadlineDiv.style.visibility = "hidden";
       }
-
+*/
     </script>
 </div>
 </body>

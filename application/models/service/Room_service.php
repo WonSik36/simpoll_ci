@@ -14,6 +14,7 @@ class Room_service extends CI_Model {
         실패시 : NULL을 return 한다.
     */
     function register($room){
+        /*
         $room_id = "";
         for($j = 0; $j < 5; $j++){
             if($j == 4) return NULL;
@@ -46,19 +47,15 @@ class Room_service extends CI_Model {
         //room에 room_id를 넣어준다.
         $room['room_id']=$room_id;
         //return $room;
-
+        */
         //dao에 room insert를 요청한다.
-        if(empty($room['deadline'])){
-            $this->room_model->insert_no_deadline($room);
-        }else{
-            $this->room_model->insert_deadline($room);
-        }
-        //room_id를 이용해서 해당 방의 sid를 검색한다.
-        $room_sid = $this->room_model->find_sid($room_id);
-        //room의 sid와 user_id를 이용해서 방장을 해당 방에 넣어준다.
+        $this->room_model->insert_room($room);
         $master = $room['master'];
+        //master를 이용해서 해당 방의 sid를 검색한다.
+        $room_sid = $this->room_model->find_sid($master);
+        //room의 sid와 user_id를 이용해서 방장을 해당 방에 넣어준다.
         $this->room_model->insert_sp_room_user($room_sid, $master);
-        return $room_id;
+        return $room_sid;
     }
 
     /*

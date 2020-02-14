@@ -3,18 +3,15 @@
 -- sp_room Table Create SQL
 CREATE TABLE sp_room
 (
-    `sid`               INT            NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디',
-    `room_id`           VARCHAR(4)     NOT NULL    COMMENT '방 아이디 (네글자)',
-    `master`            INT            NOT NULL    COMMENT '방장',
-    `title`             VARCHAR(45)    NOT NULL    COMMENT '방 제목',
-    `deleted`           TINYINT(1)     NOT NULL    DEFAULT 0 COMMENT '삭제 여부',
-    `user_name_type`    INT            NOT NULL    COMMENT '참여자 실명/닉네임 여부',
-    `vote_create_auth`  INT            NOT NULL    COMMENT '투표 생성권한',
-    `deadline_check`    TINYINT(1)     NOT NULL    COMMENT '마감날짜 설정여부',
-    `deadline`          TIMESTAMP      NULL        COMMENT '마감날짜',
-    `part_num`          INT            NOT NULL    DEFAULT 1 COMMENT '참여 인원',
+    `sid`               INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디',
+    `url_name`          VARCHAR(255)    NULL        COMMENT 'url 이름',
+    `master`            INT             NOT NULL    COMMENT '방장',
+    `title`             VARCHAR(255)    NOT NULL    COMMENT '방 제목',
+    `deleted`           TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부',
+    `user_name_type`    INT             NOT NULL    COMMENT '참여자 실명/닉네임 여부',
+    `vote_create_auth`  INT             NOT NULL    COMMENT '투표 생성권한',
     PRIMARY KEY (sid)
-);
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 ALTER TABLE sp_room COMMENT '방';
 
@@ -23,7 +20,8 @@ ALTER TABLE sp_room
         REFERENCES sp_user (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE sp_room
-    ADD UNIQUE UK_sp_room_room_id (room_id);
+    ADD UNIQUE UK_sp_room_url_name (url_name);
+
 */
 class Room_model extends CI_Model {
     function __construct()
@@ -37,31 +35,11 @@ class Room_model extends CI_Model {
         room 생성 - deadline이 있는 경우.
         param: 방(array)
     */
-    function insert_deadline($room){
-        $sql = "INSERT INTO sp_room (`room_id`,`master`,`title`,`user_name_type`,`vote_create_auth`,`deadline_check`,`deadline`) VALUES (?,?,?,?,?,?,?)";
+    function insert_room($room){
+        $sql = "INSERT INTO sp_room (`url_name`,`master`,`title`,`user_name_type`,`vote_create_auth`) VALUES (?,?,?,?,?)";
 
         // $query is TRUE or FALSE
-        $query = $this->db->query($sql, array($room['room_id'],$room['master'],$room['title'], $room['user_name_type'], $room['vote_create_auth'], $room['deadline_check'], $room['deadline']));
-
-        if($query)
-            return $query;
-        else
-            return false;
-            // return $this->db->error();
-            // array(2) { ["code"]=> int(1062) ["message"]=> string(62) "Duplicate entry 'id@example.com' for key 'UK_sp_user_email'" }
-    }
-
-
-    /*
-        insert_no_deadline
-        room 생성 - deadline이 없는 경우.
-        param: 방(array)
-    */
-    function insert_no_deadline($room){
-        $sql = "INSERT INTO sp_room (`room_id`,`master`,`title`,`user_name_type`,`vote_create_auth`,`deadline_check`) VALUES (?,?,?,?,?,?)";
-
-        // $query is TRUE or FALSE
-        $query = $this->db->query($sql, array($room['room_id'],$room['master'],$room['title'], $room['user_name_type'], $room['vote_create_auth'], $room['deadline_check']));
+        $query = $this->db->query($sql, array($room['url_name'],$room['master'],$room['title'], $room['user_name_type'], $room['vote_create_auth']));
 
         if($query)
             return $query;
@@ -93,10 +71,10 @@ class Room_model extends CI_Model {
         param: 방 아이디 (네글자)
         return: 방 시퀀스 아이디
     */
-    function find_sid($room_id){
-        $sql = "SELECT sid FROM sp_room WHERE room_id = ?";
-        $result = $this->db->query($sql, array($room_id))->row();
-        return $result->sid;
+    function find_sid($master){
+        $sql = "SELECT sid FROM sp_room  WHERE master = ? ORDER BY sid DESC limit 1";
+        $result = $this->db->query($sql, array($master));
+        return $result;
     }
 
     /*
