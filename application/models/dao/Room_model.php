@@ -72,9 +72,9 @@ class Room_model extends CI_Model {
         return: 방 시퀀스 아이디
     */
     function find_sid($master){
-        $sql = "SELECT sid FROM sp_room  WHERE master = ? ORDER BY sid DESC limit 1";
-        $result = $this->db->query($sql, array($master));
-        return $result;
+        $sql = "SELECT * FROM sp_room  WHERE master = ? ORDER BY sid DESC limit 1";
+        $result = $this->db->query($sql, array($master))->row_array();
+        return $result['sid'];
     }
 
     /*
