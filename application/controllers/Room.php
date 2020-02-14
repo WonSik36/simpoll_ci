@@ -19,11 +19,9 @@ class Room extends CI_Controller {
         if(!empty($this->input->post('title'))){
             $title = $this->input->post('title');
             $url_name = $this->input->post('url_name');
+            if(strlen($url_name)==0) $url_name = NULL; 
             $vote_create_auth = $this->input->post('vote_create_auth');
             $user_name_type= $this->input->post('user_name_type');
-            //$deadline_check = $this->input->post('deadline_check');
-            //if(empty($deadline_check)) $deadline_check = 0;
-            //$deadline = $this->input->post('deadline');
             $master = $this->session->userdata('sid');
 
             $room = array('master'=>$master, 'title'=> $title, 'url_name'=>$url_name, 'vote_create_auth'=> $vote_create_auth, 'user_name_type'=> $user_name_type);
