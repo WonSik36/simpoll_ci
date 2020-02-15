@@ -40,7 +40,7 @@
 </head>
 <body>
     <div class="align-center" style="margin-top: 100px;">
-        <h1 style="margin-bottom: 100px;"><a href="index.html">Simpoll</a></h1>
+        <h1 style="margin-bottom: 100px;"><a href="/index.php/home">Simpoll</a></h1>
         <form action="login" method="post">
             <p>
                 <input type="text" placeholder="아이디" name="email">
@@ -59,7 +59,7 @@
         </form>
         <hr>
         <div>
-            <a href="id_inquiry.php">아이디 찾기</a> | <a href="pw_inquiry.php">비밀번호 찾기</a> | <a href="signup.php">회원가입</a>
+            <a href="id_inquiry.php">아이디 찾기</a> | <a href="pw_inquiry.php">비밀번호 찾기</a> | <a href="/index.php/user/signup">회원가입</a>
         </div>
     </div>
 </body>
