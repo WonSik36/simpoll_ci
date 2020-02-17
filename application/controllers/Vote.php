@@ -16,7 +16,7 @@ class Vote extends CI_Controller {
 
         // 로그인 되어 있으면
         // post 요청 - 사용자가 투표 생성 요청시
-        
+
         if(!empty($this->input->post('pollName'))){
 
             // $title = $this->input->post('title');
@@ -47,7 +47,7 @@ class Vote extends CI_Controller {
             $this->load->model('service/room_service');
             $room = $this->room_service->get_room_by_sid($this->input->get("room_id"));
             if(!$room)
-                $this->load->view('result',array("message"=>"존재하지 않는 방입니다."));    
+                $this->load->view('result',array("message"=>"존재하지 않는 방입니다."));
             else
                 $this->load->view('make_vote',array("room"=>$room));
         }
@@ -61,10 +61,10 @@ class Vote extends CI_Controller {
 
         if(!empty($res)) {
             //return json_encode($res); //string
-            $this->load->view('debug', array('debug'=>var_dump(json_encode($res))));
+            $this->load->view('debug', array('debug'=>json_encode($res)));
         }else {
             //return json_encode($res); //string
-            $this->load->view('debug', array('debug'=>var_dump(json_encode($res))));
+            $this->load->view('debug', array('debug'=>json_encode($res)));
         }
 
     }

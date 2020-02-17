@@ -74,7 +74,7 @@ class Vote_service extends CI_Model {
         */
 
         if(!empty($label)){
-            return array('result'=>"success", 'label'=>$label,'count'=>$count,'data'=>$data);
+            return array('result'=>"success", 'label'=>$label,'data'=>$data);
             //return $data;
         }
         else {
