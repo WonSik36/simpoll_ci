@@ -5,7 +5,6 @@ class Room_service extends CI_Model {
     {
         parent::__construct();
         $this->load->model('dao/room_model');
-        $this->load->model('dao/vote_model');
     }
 
     /*
@@ -27,14 +26,24 @@ class Room_service extends CI_Model {
 
     /*
         get_room_and_list
-        param: room_id (네글자 방 코드)
+        param: room_sid (방 시퀀스 아이디)
         return: array('room'=>$room, 'list'=>$list)
     */
     function get_room_and_list($room_sid) {
+        $this->load->model('dao/vote_model');
         //room_sid를 이용해서 방 제목, 방 id, 기간 가져오기 -> $room
         $room = $this->room_model->get_room($room_sid);
         $list = $this->vote_model->get_list($room_sid);
         return array('room'=>$room, 'list'=>$list);
+    }
+
+    /*
+        get_room_by_sid
+        param: sid (방 시퀀스 아이디)
+        return: 방(array)
+    */
+    function get_room_by_sid($sid){
+        return $this->room_model->get_room($sid);
     }
 
     /*

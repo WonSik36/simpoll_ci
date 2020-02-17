@@ -15,8 +15,10 @@ window.onload = function(){
         echo "history.back();";
     }else{
         echo "alert('".$message."');";
-        //echo "history.back();";
-        echo "location.href = '".$location."';";
+        if(empty($location))
+            echo "history.back();";
+        else
+            echo "location.href = '".$location."';";
     }
 ?>
 

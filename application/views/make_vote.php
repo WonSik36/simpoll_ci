@@ -116,7 +116,7 @@
                 }
             }
         </style>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="/static/css/style.css">
     </head>
     <body>
         <!-- navigation -->

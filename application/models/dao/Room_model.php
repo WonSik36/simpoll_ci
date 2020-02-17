@@ -94,7 +94,7 @@ class Room_model extends CI_Model {
         return: 방 정보 array
     */
     function get_room($room_sid){
-        $sql = "SELECT * FROM sp_room WHERE sid = ?";
+        $sql = "SELECT * FROM sp_room WHERE sid = ? AND deleted=0";
         $result = $this->db->query($sql, array($room_sid))->row_array();
         return $result;
     }

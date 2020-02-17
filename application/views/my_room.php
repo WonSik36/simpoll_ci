@@ -197,7 +197,7 @@
     <!-- vote add button -->
     <div id="add-button" class="align-center">
         <span>
-            <a href="#">
+            <a href="/index.php/vote/make_vote?room_id=<?=$room['sid']?>">
                 <i class="fas fa-plus" style="color:white"></i>
             </a>
         </span>
