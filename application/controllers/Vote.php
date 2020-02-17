@@ -48,5 +48,21 @@ class Vote extends CI_Controller {
         }*/
         $this->load->view('make_vote');
     }
+    function vote_result($sid) {
+        //투표가 존재하면 array('result'=>$result, 'label'=>$label, 'data'=>$data);
+        //투표가 존재하지 않으면 array('result'=>$result, 'errormsg'=>'There are no vote in this room.');
+        //를 결과 값으로 받는다.
+        $res = $this->vote_service->vote_result($sid);
+        //$this->load->view('debug', array('debug'=>var_dump($res)));
+
+        if(!empty($res)) {
+            //return json_encode($res); //string
+            $this->load->view('debug', array('debug'=>var_dump(json_encode($res))));
+        }else {
+            //return json_encode($res); //string
+            $this->load->view('debug', array('debug'=>var_dump(json_encode($res))));
+        }
+
+    }
 }
 ?>
