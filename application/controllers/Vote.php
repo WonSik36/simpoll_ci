@@ -20,7 +20,6 @@ class Vote extends CI_Controller {
             // post 요청 받기
             $title = $this->input->post('title');
             $url_name = $this->input->post('url_name');
-            $contents = $this->input->post('contents');
             $comment_check = $this->input->post('comment_check');
             $anonymous_check = $this->input->post('anonymous_check');
             $vote_type = $this->input->post('vote_type');
@@ -31,11 +30,17 @@ class Vote extends CI_Controller {
             $choice_count = (int)$this->input->post('cho_cnt');
             $user_id =  $this->session->userdata('sid');
             
-
             // post 요청 파싱
             if(empty($comment_check)) $comment_check = "0";
             if(empty($anonymous_check)) $anonymous_check = "0";
             if(empty($vote_type)) $vote_type = "0";
+            // contents 합치기
+            $contents = array();
+            for($i=0;$i<$choice_count;$i++){
+                $content = $this->input->post("content_".$i);
+                if(!empty($content))
+                    array_push($contents, $content);
+            }
 
             // make deadline
             // 32400 = 60*60*9 -> timezone offset, 86400 = 60*60*24

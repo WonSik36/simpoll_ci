@@ -150,23 +150,19 @@
                             </button><br>
 
                             <!-- choice list -->
-                            <div id="cho_div_" style="display: none;">
-                                <input class="answer_inputForm" type="text" id="cho_" name="contents_" placeholder="항목을 입력하세요." required>
-                                <button type="button" class="delButton attr-btn" onclick="delOption()">
-                                    <i class="fas fa-minus"></i>
-                                </button><br>
-                            </div>
-                            <div id="cho_div_0">
-                                <input class="answer_inputForm" type="text" id="cho_0" name="contents_0" placeholder="항목을 입력하세요." required>
-                                <button type="button" class="delButton attr-btn" onclick="delOption(0)">
-                                    <i class="fas fa-minus"></i>
-                                </button><br>
-                            </div>
-                            <div id="cho_div_1">
-                                <input class="answer_inputForm" type="text" id="cho_1" name="contents_1" placeholder="항목을 입력하세요." required>
-                                <button type="button" class="delButton attr-btn" onclick="delOption(1)">
-                                    <i class="fas fa-minus"></i>
-                                </button><br>
+                            <div id="choice-list">
+                                <div id="cho_div_0">
+                                    <input class="answer_inputForm" type="text" name="content_0" placeholder="항목을 입력하세요." required>
+                                    <button type="button" class="delButton attr-btn" onclick="delOption(0)">
+                                        <i class="fas fa-minus"></i>
+                                    </button><br>
+                                </div>
+                                <div id="cho_div_1">
+                                    <input class="answer_inputForm" type="text" name="content_1" placeholder="항목을 입력하세요." required>
+                                    <button type="button" class="delButton attr-btn" onclick="delOption(1)">
+                                        <i class="fas fa-minus"></i>
+                                    </button><br>
+                                </div>
                             </div>
 
                             <table>
@@ -190,7 +186,7 @@
                             <!-- part_auth: participation authority -->
                             <p id="add_option">참여 권한</p>
                             <input type="radio" name="part_auth" value="0" checked="checked"> 방 참여자만<br>
-                            <input type="radio" name="part_auth" value="1"> 아무나<br>
+                            <input type="radio" name="part_auth" value="1"> 링크를 가진 누구나<br>
 
                             <!-- deadline -->
                             <p id="add_option">마감시간</p><input type="date" name="vote_end_date" value="vote_end_date" required>
@@ -221,18 +217,37 @@
                 </div>
             </div>
         </div>
-        <!-- option 추가 삭제 -->
+        
+        <!-- for copy choice -->
+        <!-- div.id, div.style, input.name, button.onclick should be changed-->
+        <div id="cho_div_" style="display: none;">
+            <input class="answer_inputForm" type="text" name="content_" placeholder="항목을 입력하세요." required>
+            <button type="button" class="delButton attr-btn" onclick="delOption()">
+                <i class="fas fa-minus"></i>
+            </button><br>
+        </div>
+
         <script>
             var numOfChoice = 2;
             var choice_count = document.getElementById("cho_cnt");
+            var choice_template = document.getElementById("cho_div_"); 
+            var choice_list = document.getElementById("choice-list");
 
             function addOption(){
-                
-                choice_count.value = String(Number(choice_count.value)+1);
+                let node = choice_template.cloneNode(true);
+                node.style.display = "block";
+                node.setAttribute('id','cho_div_'+numOfChoice);
+                node.getElementsByClassName("answer_inputForm")[0].setAttribute('name',"content_"+numOfChoice);
+                node.getElementsByTagName("button")[0].setAttribute('onclick',"delOption("+numOfChoice+")");
+
+                choice_list.appendChild(node);
+
+                numOfChoice++;
+                choice_count.value = String(numOfChoice);
             }
 
-            function delOption($idx){
-
+            function delOption(idx){
+                document.getElementById('cho_div_'+idx).remove();
             }
 
             function goBack(){
