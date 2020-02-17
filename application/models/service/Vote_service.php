@@ -31,26 +31,32 @@ class Vote_service extends CI_Model {
             $data[$i-1] = $count[$i-1]['count'];
         }
 */
-
-        $index = 0;
-        $offset = 0;
-        if((int)$count[0]['cn'] == 0){
-            $index = 1;
-            $offset = -1;
-        }
-        for($i = 1; $i <= count($label); $i++){
-            $index = $i-1-$offset;
-            if($index<count($count)){
-                if((int)$count[$index]['cn'] == $i){
-                    $data[$i-1] = (int)$count[$index]['count'];
-                }else {
+        if(empty($count)){
+            for($i=0;$i<count($label);$i++){
+                $data[$i] = 0;
+            }
+        }else{
+            $index = 0;
+            $offset = 0;
+            if((int)$count[0]['cn'] == 0){
+                $index = 1;
+                $offset = -1;
+            }
+            for($i = 1; $i <= count($label); $i++){
+                $index = $i-1-$offset;
+                if($index<count($count)){
+                    if((int)$count[$index]['cn'] == $i){
+                        $data[$i-1] = (int)$count[$index]['count'];
+                    }else {
+                        $data[$i-1] = 0;
+                        $offset++;
+                    }
+                }else{
                     $data[$i-1] = 0;
-                    $offset++;
                 }
-            }else{
-                $data[$i-1] = 0;
             }
         }
+
 
 
 /*
@@ -71,7 +77,7 @@ class Vote_service extends CI_Model {
             }
 
         }
-        */
+*/      
 
         if(!empty($label)){
             return array('result'=>"success", 'label'=>$label,'data'=>$data);
