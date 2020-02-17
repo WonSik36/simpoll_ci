@@ -39,7 +39,7 @@ class Vote extends CI_Controller {
 
             // make deadline
             // 32400 = 60*60*9 -> timezone offset, 86400 = 60*60*24
-            $deadline = date("Y-m-d A h:i",strtotime($vote_end_date)+(strtotime($vote_end_time)+60*60*9)%(60*60*24));
+            $deadline = date("Y-m-d A h:i",strtotime($vote_end_date)+(strtotime($vote_end_time)+32400)%(86400));
             
             $vote = array('title'=>$title, 'contents'=>$contents, 'comment_check'=>$comment_check, 'anonymous_check'=>$anonymous_check,
                     'vote_type'=>$vote_type, 'part_auth'=>$part_auth, 'room_id'=>$room_id, 'user_id'=>$user_id, 'deadline'=>$deadline);
@@ -69,10 +69,10 @@ class Vote extends CI_Controller {
         //$this->load->view('debug', array('debug'=>var_dump($res)));
 
         if(!empty($res)) {
-            return json_encode($res); //string
+            echo json_encode($res); //string
             // $this->load->view('debug', array('debug'=>json_encode($res)));
         }else {
-            return json_encode($res); //string
+            echo json_encode($res); //string
             // $this->load->view('debug', array('debug'=>json_encode($res)));
         }
 

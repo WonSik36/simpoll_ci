@@ -224,7 +224,7 @@
                         updateVoteResult(res, sid);
                 }
             };
-            xhttp.open("GET", "/test_json.txt", true);
+            xhttp.open("GET", "/index.php/vote/vote_result/"+sid, true);
             xhttp.send();
         }
 
