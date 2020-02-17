@@ -1,0 +1,5 @@
+{
+    "result": "success",
+    "label": ["choice1","choice2","choice3","choice4"],
+    "data": [0,1,2,8]
+}

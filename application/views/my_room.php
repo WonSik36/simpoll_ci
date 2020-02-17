@@ -279,8 +279,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script>
-        var vList = new Array();
-
         function toggleVoteContents(sid){
             var voteResult = document.getElementById("v_con_"+sid);
             var dis = voteResult.style.display;
@@ -291,28 +289,21 @@
                 voteResult.style.display = "none";
         }
 
-        class Vote{
-            constructor(colArr ,resArr){
-                this.columnArray = colArr;
-                this.resultArray = resArr;
-            }
-        }
-
         function getVoteResult(sid){
             let xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    alert(this.responseText);
-                    // let res = JSON.parse(this.responseText);
-                    // updateVoteResult(res);           
+                    let res = JSON.parse(this.responseText);
+                    if(res.result == "success")
+                        updateVoteResult(res, sid);
                 }
             };
-            xhttp.open("GET", "ajax_info.txt", true);
+            xhttp.open("GET", "/test_json.txt", true);
             xhttp.send();
         }
 
-        function updateVoteResult(res){
-            var ctx = document.getElementById('myChart').getContext('2d');
+        function updateVoteResult(res,sid){
+            var ctx = document.getElementById("vote_result_"+sid).getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
