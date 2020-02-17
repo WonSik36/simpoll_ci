@@ -62,12 +62,6 @@
             .pollchoice {
                 padding-bottom: 200px;
             }
-            button {
-                font-size: 20px;
-                margin: 5px;
-                border-radius: 5px;
-                background-color: #eee;
-            }
             #poll_info {
                 padding: 20px 0;
             }
@@ -101,7 +95,11 @@
             input.answer_inputForm {
                 border-bottom: 2px solid #00e6b8;
             }
-            button {
+            button.attr-btn {
+                font-size: 20px;
+                margin: 5px;
+                border-radius: 5px;
+                background-color: #eee;
                 background-color: #fff;
             }
             @media screen and (max-width: 600px) {
@@ -135,70 +133,87 @@
                 </div>
                 <div id="makeVote">
                     <div id="poll_info">
-                        <form
-                            name="myForm"
-                            action="list_poll01.html"
-                            onsubmit="return onsubmiT()"
-                            method="post">
+                        <form action="/index.php/vote/make_vote" method="post">
                             <p style="font-size: 25px;">Simpoll 생성</p>
+                            <!-- title -->
                             <p>Simpoll name</p>
-                            <input
-                                type="text"
-                                name="pollName"
-                                placeholder="투표 제목을 입력하세요."
-                                equired="equired">
-                            <p>question</p>
-                            <input type="text" name="question" placeholder="질문을 입력하세요." required="required">
+                            <input type="text" name="title" placeholder="Simpoll 이름을 입력하세요." required>
+
+                            <!-- title -->
+                            <p>URL 설정</p>
+                            <input type="text" name="url_name" placeholder="URL을 입력하세요" required>
+
+                            <!-- add choice -->
                             <p id="add_option">add option</p>
-                            <button type="button" class="addButton" onclick="addOption()">
+                            <button type="button" class="attr-btn" id="addButton" onclick="addOption()">
                                 <i class="fas fa-plus"></i>
                             </button><br>
-                            <input
-                                class="answer_inputForm"
-                                type="text"
-                                name="Answer01"
-                                placeholder="항목을 입력하세요."
-                                required="required">
-                            <button type="button" class="delButton" onclick="delOption()">
-                                <i class="fas fa-minus"></i>
-                            </button><br>
-                            <input
-                                class="answer_inputForm"
-                                type="text"
-                                name="Answer02"
-                                placeholder="항목을 입력하세요."
-                                required="required">
-                            <button type="button" class="delButton" onclick="delOption()">
-                                <i class="fas fa-minus"></i>
-                            </button><br>
+
+                            <!-- choice list -->
+                            <div id="cho_div_" style="display: none;">
+                                <input class="answer_inputForm" type="text" id="cho_" name="contents_" placeholder="항목을 입력하세요." required>
+                                <button type="button" class="delButton attr-btn" onclick="delOption()">
+                                    <i class="fas fa-minus"></i>
+                                </button><br>
+                            </div>
+                            <div id="cho_div_0">
+                                <input class="answer_inputForm" type="text" id="cho_0" name="contents_0" placeholder="항목을 입력하세요." required>
+                                <button type="button" class="delButton attr-btn" onclick="delOption(0)">
+                                    <i class="fas fa-minus"></i>
+                                </button><br>
+                            </div>
+                            <div id="cho_div_1">
+                                <input class="answer_inputForm" type="text" id="cho_1" name="contents_1" placeholder="항목을 입력하세요." required>
+                                <button type="button" class="delButton attr-btn" onclick="delOption(1)">
+                                    <i class="fas fa-minus"></i>
+                                </button><br>
+                            </div>
+
                             <table>
+                                <!-- comment_check: check comment -->
                                 <tr>
                                     <td class="align-left">Comment 생성</td>
-                                    <td><input type="checkbox" name="have_comment" value="comment"></td>
+                                    <td><input type="checkbox" name="comment_check" value="1"></td>
                                 </tr>
+                                <!-- anonymous_check: check anonymous -->
                                 <tr>
                                     <td class="align-left">익명 투표</td>
-                                    <td><input type="checkbox" name="have_comment" value="comment"></td>
+                                    <td><input type="checkbox" name="anonymous_check" value="1"></td>
                                 </tr>
+                                <!-- vote_type: vote type -->
                                 <tr>
                                     <td class="align-left">복수 선택</td>
-                                    <td><input type="checkbox" name="have_comment" value="comment"></td>
+                                    <td><input type="checkbox" name="vote_type" value="1"></td>
                                 </tr>
                             </table>
+
+                            <!-- part_auth: participation authority -->
                             <p id="add_option">참여 권한</p>
-                            <input type="radio" name="participants" value="0" checked="checked">
-                            방 참여자만<br>
-                            <input type="radio" name="participants" value="1">
-                            아무나<br>
-                            <p id="add_option">마감시간</p><input type="date" name="vote_end_date" value="vote_end_date">
-                            <input type="time" name="vote_end_time" value="vote_end_time"><br>
+                            <input type="radio" name="part_auth" value="0" checked="checked"> 방 참여자만<br>
+                            <input type="radio" name="part_auth" value="1"> 아무나<br>
+
+                            <!-- deadline -->
+                            <p id="add_option">마감시간</p><input type="date" name="vote_end_date" value="vote_end_date" required>
+                            <input type="time" name="vote_end_time" value="vote_end_time" required><br>
+
+                            <!-- room_sid -->
+                            <input type="hidden" name="room_id" value="<?=$room['sid']?>">
+
+                            <!-- choice count -->
+                            <input type="hidden" id="cho_cnt" name="cho_cnt" value="2">
+
+                            <!-- buttons -->
                             <div id="submit">
                                 <ul class="submit">
+                                    <!-- go back page button -->
                                     <li>
-                                        <button id="back" onclick="goBack()"></button>
-                                        <a href="#">CANCEL</a>
+                                        <button id="back" onclick="goBack()">CANCEL</button>
                                     </li>
-                                    <li class="right"><input type="submit" value="submit"></li>
+
+                                    <!-- submit button -->
+                                    <li class="right">
+                                        <input type="submit" value="submit">
+                                    </li>
                                 </ul>
                             </div>
                         </form>
@@ -208,6 +223,18 @@
         </div>
         <!-- option 추가 삭제 -->
         <script>
+            var numOfChoice = 2;
+            var choice_count = document.getElementById("cho_cnt");
+
+            function addOption(){
+                
+                choice_count.value = String(Number(choice_count.value)+1);
+            }
+
+            function delOption($idx){
+
+            }
+
             function goBack(){
                 history.back();
             }

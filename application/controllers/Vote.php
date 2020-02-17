@@ -16,30 +16,39 @@ class Vote extends CI_Controller {
 
         // 로그인 되어 있으면
         // post 요청 - 사용자가 투표 생성 요청시
-        
-        if(!empty($this->input->post('pollName'))){
+        if(!empty($this->input->post('title'))){
+            // post 요청 받기
+            $title = $this->input->post('title');
+            $url_name = $this->input->post('url_name');
+            $contents = $this->input->post('contents');
+            $comment_check = $this->input->post('comment_check');
+            $anonymous_check = $this->input->post('anonymous_check');
+            $vote_type = $this->input->post('vote_type');
+            $part_auth = $this->input->post('part_auth');
+            $vote_end_date = $this->input->post('vote_end_date');
+            $vote_end_time = $this->input->post('vote_end_time');
+            $room_id = $this->input->post('room_id');
+            $choice_count = (int)$this->input->post('cho_cnt');
+            $user_id =  $this->session->userdata('sid');
+            
 
-            // $title = $this->input->post('title');
-            // $vote_create_auth = $this->input->post('vote_create_auth');
-            // $user_name_type= $this->input->post('user_name_type');
-            // $deadline_check = $this->input->post('deadline_check');
-            // if(empty($deadline_check)) $deadline_check = 0;
-            // $deadline = $this->input->post('deadline');
-            // $master = $this->session->userdata('sid');
+            // post 요청 파싱
+            if(empty($comment_check)) $comment_check = "0";
+            if(empty($anonymous_check)) $anonymous_check = "0";
+            if(empty($vote_type)) $vote_type = "0";
 
-            // $room = array('master'=>$master, 'title'=> $title, 'vote_create_auth'=> $vote_create_auth, 'user_name_type'=> $user_name_type, 'deadline_check'=> $deadline_check, 'deadline'=>$deadline);
-            // $result = $this->room_service->register($room);
+            // make deadline
+            // 32400 = 60*60*9 -> timezone offset, 86400 = 60*60*24
+            $deadline = date("Y-m-d A h:i",strtotime($vote_end_date)+(strtotime($vote_end_time)+60*60*9)%(60*60*24));
+            
+            $vote = array('title'=>$title, 'contents'=>$contents, 'comment_check'=>$comment_check, 'anonymous_check'=>$anonymous_check,
+                    'vote_type'=>$vote_type, 'part_auth'=>$part_auth, 'room_id'=>$room_id, 'user_id'=>$user_id, 'deadline'=>$deadline);
+            // service 에 vote 생성 요청
 
-            $this->load->view('debug', array('debug'=>var_dump($this->input->post)));
+            // 성공시
+            // 실패시
 
-
-            // if(!empty($result)){
-            //     $this->load->view('result',array('message'=>"방이 생성되었습니다.",'location'=>"/index.php/room/speacker_myroom/".$result));
-
-            // }else{
-            //     $this->load->view('make_vote');
-            // }
-
+            $this->load->view('debug', array('debug'=>var_dump($vote)));
 
 
         // get 요청 - 사용자가 투표 생성 페이지를 요청시
