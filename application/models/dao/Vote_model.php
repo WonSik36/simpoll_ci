@@ -43,5 +43,18 @@ class Vote_model extends CI_Model {
         return $result;
     }
 
+    function get_contents($sid) {
+        $sql = "SELECT * FROM sp_vote WHERE sid = ?";
+        $result = $this->db->query($sql, array($sid))->row_array();
+        return $result['contents'];
+    }
+
+    function get_contents_number($sid) {
+        $sql = "SELECT contents_number as cn, COUNT(Contents_number) as count ";
+        $sql .="FROM sp_user_vote_choice ";
+        $sql .="WHERE vote_id = ? GROUP BY contents_number";
+        $result = $this->db->query($sql, array($sid))->result_array();
+        return $result;
+    }
 }
 ?>
