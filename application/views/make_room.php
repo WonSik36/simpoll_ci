@@ -68,19 +68,6 @@ input[type=submit]:hover{
 
         <input class="col-4 col-m-6 col-s-12" type="submit" value="방 생성">
     </form>
-
-    <script>
-/*
-      function deadlineChecked(checkbox){
-        let deadlineDiv = document.getElementById("dead_div");
-
-        if(checkbox.checked)
-          deadlineDiv.style.visibility = "visible";
-        else
-        deadlineDiv.style.visibility = "hidden";
-      }
-*/
-    </script>
 </div>
 </body>
 </html>
