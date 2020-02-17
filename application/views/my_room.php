@@ -7,80 +7,6 @@
         <script src="https://kit.fontawesome.com/228af79543.js" crossorigin="anonymous"></script>
         <title>Simpoll</title>
         <style>
-            /* navigation */
-            body {
-                margin: 0;
-            }
-            div.header {
-                border-bottom: 1px solid #ccc;
-            }
-            ul.topnav {
-                list-style-type: none;
-                margin: 0;
-                padding: 0;
-                overflow: hidden;
-                float: right;
-            }
-            ul.topnav li {
-                float: left;
-            }
-            ul.topnav li a {
-                display: block;
-                text-align: center;
-                padding: 18px 16px;
-                text-decoration: none;
-            }
-            span.title {
-                display: inline-block;
-                font-size: 20px;
-                padding: 16px;
-            }
-            a:link {
-                text-decoration: none;
-                color: #595959;
-            }
-            a:visited {
-                text-decoration: none;
-                color: #595959;
-            }
-            i {
-                color: #ccc;
-                padding: 10px 0;
-                font-size: 30px;
-            }
-            a.nickname {
-                float: right;
-            }
-            ul.topnav li a.nickname {
-                padding: 18px 0;
-            }
-            li#info {
-                display: block;
-                text-align: center;
-                text-decoration: none;
-                padding: 18px 5px;
-                color: #595959;
-            }
-            @media screen and (max-width: 600px) {
-                span.title {
-                    text-align: center;
-                    display: block;
-                }
-                ul.topnav li.right {
-                    float: none;
-                }
-                ul.topnav li {
-                    float: none;
-                }
-                ul.topnav {
-                    float: none;
-                }
-                ul.topnav #icon,
-                ul.topnav #info {
-                    display: none;
-                }
-            }
-
             /* contents */
             /* room title, code, duration, and update button */
             div#room-header {
@@ -271,7 +197,7 @@
     <!-- vote add button -->
     <div id="add-button" class="align-center">
         <span>
-            <a href="#">
+            <a href="/index.php/vote/make_vote?room_id=<?=$room['sid']?>">
                 <i class="fas fa-plus" style="color:white"></i>
             </a>
         </span>
@@ -279,8 +205,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script>
-        var vList = new Array();
-
         function toggleVoteContents(sid){
             var voteResult = document.getElementById("v_con_"+sid);
             var dis = voteResult.style.display;
@@ -291,28 +215,21 @@
                 voteResult.style.display = "none";
         }
 
-        class Vote{
-            constructor(colArr ,resArr){
-                this.columnArray = colArr;
-                this.resultArray = resArr;
-            }
-        }
-
         function getVoteResult(sid){
             let xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    alert(this.responseText);
-                    // let res = JSON.parse(this.responseText);
-                    // updateVoteResult(res);           
+                    let res = JSON.parse(this.responseText);
+                    if(res.result == "success")
+                        updateVoteResult(res, sid);
                 }
             };
-            xhttp.open("GET", "ajax_info.txt", true);
+            xhttp.open("GET", "/test_json.txt", true);
             xhttp.send();
         }
 
-        function updateVoteResult(res){
-            var ctx = document.getElementById('myChart').getContext('2d');
+        function updateVoteResult(res,sid){
+            var ctx = document.getElementById("vote_result_"+sid).getContext('2d');
             var myChart = new Chart(ctx, {
                 type: 'bar',
                 data: {

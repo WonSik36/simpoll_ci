@@ -21,6 +21,6 @@
 <div class="vote_contents" id="v_con_<?=$vote['sid']?>" style="display:none;">
     <div class="vote">
             <p style="margin-top: 0px;">투표 결과</p>
-            <canvas id="vote_result_<?=$vote['sid']?>"></canvas>
+            <canvas id="vote_result_<?=$vote['sid']?>" style="background-color: white;"></canvas>
     </div>
 </div>
