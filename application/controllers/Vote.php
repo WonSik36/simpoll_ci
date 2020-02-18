@@ -47,14 +47,20 @@ class Vote extends CI_Controller {
             // 32400 = 60*60*9 -> timezone offset, 86400 = 60*60*24
             $deadline = date("Y-m-d A h:i",strtotime($vote_end_date)+(strtotime($vote_end_time)+32400)%(86400));
 
-            $vote = array('title'=>$title, 'contents'=>$contents, 'comment_check'=>$comment_check, 'anonymous_check'=>$anonymous_check,
+            $vote = array('title'=>$title, 'url_name'=>$url_name, 'contents'=>$contents, 'comment_check'=>$comment_check, 'anonymous_check'=>$anonymous_check,
                     'vote_type'=>$vote_type, 'part_auth'=>$part_auth, 'room_id'=>$room_id, 'user_id'=>$user_id, 'deadline'=>$deadline);
             // service 에 vote 생성 요청
-
-            // 성공시
-            // 실패시
-
-            $this->load->view('debug', array('debug'=>var_dump($vote)));
+            $result = $this->vote_service->vote_register($vote);
+            if($result){
+                // 성공시 $result는 true를 반환한다.
+                // 방에 투표 목록이 추가가 된다.
+                $this->load->view('result',array("message"=>"투표가 생성되었습니다.", "location"=>"/index.php/room/speacker_myroom/".$room_id));
+            }else{
+                // 실패시 $result는 false를 반환한다.
+                // 다시 투표 생성페이지.
+                $this->load->view('result',array("message"=>"투표 생성에 실패하였습니다.", "location"=>"/index.php/vote/make_vote?room_id=".$room_id));
+            }
+            //$this->load->view('debug', array('debug'=>var_dump($result)));
 
 
         // get 요청 - 사용자가 투표 생성 페이지를 요청시
