@@ -60,11 +60,11 @@ class Vote extends CI_Controller {
         //$this->load->view('debug', array('debug'=>var_dump($res)));
 
         if(!empty($res)) {
-            //return json_encode($res); //string
-            $this->load->view('debug', array('debug'=>json_encode($res)));
+            echo json_encode($res);//string
+            //$this->load->view('debug', array('debug'=>json_encode($res)));
         }else {
-            //return json_encode($res); //string
-            $this->load->view('debug', array('debug'=>json_encode($res)));
+            echo json_encode($res); //string
+            //$this->load->view('debug', array('debug'=>json_encode($res)));
         }
 
     }
