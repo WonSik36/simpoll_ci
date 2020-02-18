@@ -1,5 +1,5 @@
 <?php
-    $contents = explode($vote['contents']);
+    $contents = explode("|",$vote['contents']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -118,7 +118,7 @@
         <!-- vote contents -->
         <div class="vote_contents" id="v_con_<?=$vote['sid']?>">
             <div class="vote">
-                <form action="/index.php/vote/page/<?=$vote['vote_id']?>" method="post">
+                <form action="/index.php/vote/page/<?=$vote['sid']?>" method="post">
 <?php
     $i = 1;
     foreach($contents as $cont){

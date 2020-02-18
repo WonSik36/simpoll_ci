@@ -26,7 +26,12 @@ class Vote extends CI_Controller {
     function page($sid){
         // post 요청 - 사용자가 투표를 제출 한 후
         if(!empty($this->input->post('contents_number'))){
+
+
+            
             $nickname = $this->session->userdata('nickname');
+
+            // $this->load->view('debug',array('debug'=>var_dump($this->input->post(NULL))));
             // 로그인 되어 있지 않다면
             if(empty($nickname)){
                 $this->load->view('result',array('message'=>"투표가 완료되었습니다.",'location'=>"/index.php/home"));
