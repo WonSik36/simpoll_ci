@@ -123,7 +123,7 @@
     $i = 1;
     foreach($contents as $cont){
 ?>
-                <input type="radio" name="gender" value="<?=$i?>">
+                <input type="radio" name="contents_number" value="<?=$i?>">
                 <?=$cont?><br>
 <?php
     $i++;
