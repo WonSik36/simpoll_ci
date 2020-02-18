@@ -101,7 +101,14 @@
                 <li>
                     <i class="far fa-thumbs-down"></i>
                 </li>
-                <li class="right"><?=$vote['deadline']?></li>
+                <li class="right">
+                    ~
+<?php
+            $time = $vote['deadline'];
+            $dateString = date("Y-m-d A h:i", strtotime($time));
+            echo $dateString;
+?>
+                </li>
             </ul>
         </div>
 

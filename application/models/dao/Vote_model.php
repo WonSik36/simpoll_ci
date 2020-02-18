@@ -79,7 +79,7 @@ class Vote_model extends CI_Model {
         else
             return $query->row_array();
     }
-    
+
     function get_part_num($sid) {
         $sql = "SELECT COUNT(Contents_number) as count ";
         $sql .="FROM sp_user_vote_choice ";
@@ -88,16 +88,10 @@ class Vote_model extends CI_Model {
         return $result['count'];
     }
 
-    function get_title($sid) {
+    function get_title_deadline($sid) {
         $sql = "SELECT * FROM sp_vote WHERE sid = ?";
         $result = $this->db->query($sql, array($sid))->row_array();
-        return $result['title'];
-    }
-
-    function get_deadline($sid) {
-        $sql = "SELECT * FROM sp_vote WHERE sid = ?";
-        $result = $this->db->query($sql, array($sid))->row_array();
-        return $result['deadline'];
+        return $result;
     }
 }
 ?>

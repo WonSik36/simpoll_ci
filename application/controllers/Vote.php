@@ -38,8 +38,8 @@ class Vote extends CI_Controller {
             $contents = $this->vote_service->get_contents($sid);
             $deadline = $this->vote_service->get_deadline($sid);
             $vote = array('part_num'=>$part_num, 'title'=>$title, 'contents'=>$contents, 'deadline'=>$deadline);
-            //$this->load->view('debug', array('debug'=>var_dump($vote)));
-            return $vote;
+            $this->load->view('debug', array('debug'=>var_dump($vote)));
+            //return $vote;
         }
     }
 

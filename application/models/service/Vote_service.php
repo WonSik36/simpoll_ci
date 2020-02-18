@@ -87,8 +87,8 @@ class Vote_service extends CI_Model {
     }
 
     function get_title($sid) {
-        $title = $this->vote_model->get_title($sid);
-        return $title;
+        $title = $this->vote_model->get_title_deadline($sid);
+        return $title['title'];
     }
 
     function get_contents($sid) {
@@ -97,8 +97,8 @@ class Vote_service extends CI_Model {
     }
 
     function get_deadline($sid) {
-        $deadline = $this->vote_model->get_deadline($sid);
-        return $deadline;
+        $deadline = $this->vote_model->get_title_deadline($sid);
+        return $deadline['deadline'];
     }
 
 }
