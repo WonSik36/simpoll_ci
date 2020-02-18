@@ -68,5 +68,16 @@ class Vote_model extends CI_Model {
         else
             return false;
     }
+
+    function selectVoteByUrl($url) {
+        $sql = "SELECT * FROM sp_vote WHERE url_name=? AND deleted=0";
+
+        $query = $this->db->query($sql, array($url));
+
+        if($query == false)
+            return null;
+        else
+            return $query->row_array();
+    }
 }
 ?>

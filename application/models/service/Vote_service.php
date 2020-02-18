@@ -78,5 +78,8 @@ class Vote_service extends CI_Model {
         return $result;
     }
 
+    function searchVoteByUrl($url){
+        return $this->vote_model->selectVoteByUrl($url);
+    }
 }
 ?>

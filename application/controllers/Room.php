@@ -6,8 +6,12 @@ class Room extends CI_Controller {
         $this->load->library('session');
     }
 
-    function index($vote_id){
+    function url($url){
 
+    }
+
+    function page($sid){
+        
     }
 
     function register(){

@@ -6,10 +6,21 @@ class Vote extends CI_Controller {
         $this->load->library('session');
     }
 
-    function index($url){
+    function url($url){
         //url을 기준으로 sid를 찾아준다
-        $sid = $vote['sid'];
-        page($sid);
+        $vote = $this->vote_service->searchVoteByUrl($url);
+
+        // $this->load->view('debug',array('debug'=>var_dump($vote)));
+
+        // 검색 성공
+        if(!empty($vote)){
+            $sid = $vote['sid'];
+            $this->page($sid);
+
+        // 검색 실패
+        }else{
+            $this->load->view('result',array('message'=>"해당하는 Simpoll을 찾지 못하였습니다."));
+        }
     }
 
     function page($sid){
