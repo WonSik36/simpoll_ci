@@ -14,23 +14,6 @@ class Vote_service extends CI_Model {
         $contents = [];
         $data = [];
 
-
-
-    /*    $index = count($label);
-        for($i = count($count); $i>0; $i--){
-            if((int)$count[$i-1]['cn'] != $i){
-                $count[$index]['cn'] = $count[$i-1]['cn'];
-                $count[$index]['count'] = $count[$i-1]['count'];
-                $count[$i-1]['cn'] = $i;
-                $count[$i-1]['count'] = 0;
-                $index--;
-            }
-
-        }
-        for($i = 1; $i <= count($label); $i++) {
-            $data[$i-1] = $count[$i-1]['count'];
-        }
-*/
         if(empty($count)){
             for($i=0;$i<count($label);$i++){
                 $data[$i] = 0;
@@ -77,7 +60,7 @@ class Vote_service extends CI_Model {
             }
 
         }
-*/      
+*/
 
         if(!empty($label)){
             return array('result'=>"success", 'label'=>$label,'data'=>$data);
@@ -88,6 +71,11 @@ class Vote_service extends CI_Model {
             //return $data;
         }
 
+    }
+
+    function vote_register($vote){
+        $result = $this->vote_model->insert_vote($vote);
+        return $result;
     }
 
 }

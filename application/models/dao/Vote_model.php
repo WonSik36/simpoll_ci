@@ -56,5 +56,17 @@ class Vote_model extends CI_Model {
         $result = $this->db->query($sql, array($sid))->result_array();
         return $result;
     }
+
+    function insert_vote($vote) {
+        $sql = "INSERT INTO sp_vote (`title`,`url_name`,`contents`, `comment_check`,`anonymous_check`,`vote_type`,`part_auth`,`user_id`,`room_id`,`deadline`) VALUES (?,?,?,?,?,?,?,?,?,?)";
+
+        // $query is TRUE or FALSE
+        $query = $this->db->query($sql, array($vote['title'],$vote['url_name'],$vote['contents'],$vote['comment_check'],$vote['anonymous_check'],$vote['vote_type'],$vote['part_auth'],$vote['user_id'],$vote['room_id'],$vote['deadline']));
+
+        if($query)
+            return $query;
+        else
+            return false;
+    }
 }
 ?>
