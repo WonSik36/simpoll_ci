@@ -1,3 +1,6 @@
+<?php
+    $contents = explode($vote['contents']);
+?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -115,18 +118,25 @@
         <!-- vote contents -->
         <div class="contents">
             <div class="vote">
-                <form class="radio" action="index.html">
-                    <input type="radio" name="gender" value="삼촌네 찜닭" checked="checked">
-                    삼촌네 찜닭<br>
-                    <input type="radio" name="gender" value="파닭">
-                    파닭<br>
-                    <input type="radio" name="gender" value="학관">
-                    학관<br>
+                <form action="/index.php/vote/page/<?=$vote['vote_id']?>" method="post">
+<?php
+    $i = 1;
+    foreach($contents as $cont){
+?>
+                <input type="radio" name="gender" value="<?=$i?>">
+                <?=$cont?><br>
+<?php
+    $i++;
+    }
+?>
+                <input type="hidden" name="room_id" value="<?=$vote['room_id']?>">
+                <input type="hidden" name="vote_type" value="<?=$vote['vote_type']?>">
+                <input type="hidden" name="comment_check" value="<?=$vote['comment_check']?>">
+                <input type="hidden" name="anonymous_check" value="<?=$vote['anonymous_check']?>">
+                <input type="hidden" name="part_auth" value="<?=$vote['part_auth']?>">
                     <div id="submit">
                         <ul class="submit">
-                            <li class="cancel">
-                                <a href="list_poll03.html" style="color: #00e6b8;">방으로 이동</a>
-                            </li>
+                            <li class="cancel"></li>
                             <li class="right"><input type="submit" style="color: #00e6b8;"></li>
                         </ul>
                     </div>
