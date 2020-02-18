@@ -29,4 +29,4 @@ TINYINT(1)의 경우 boolean 이므로 0 -> FALSE, 1 -> TRUE 로 한다.
 0: False, 1: True
 
 `part_auth`        INT             NOT NULL    COMMENT '투표참여권한', 
-0: 방 참가자만, 1: 아무나
+0: 방 참가자만, 1: 링크를 가진 누구나
