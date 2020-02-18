@@ -6,7 +6,13 @@ class Vote extends CI_Controller {
         $this->load->library('session');
     }
 
-    function index($vote_id){
+    function index($url){
+        //url을 기준으로 sid를 찾아준다
+        $sid = $vote['sid'];
+        page($sid);
+    }
+
+    function page($sid){
 
     }
 
