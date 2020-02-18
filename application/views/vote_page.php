@@ -67,7 +67,7 @@
                 padding: 0;
                 overflow: hidden;
             }
-            .contents {
+            .vote_contents {
                 background-color: #eee;
                 padding-top: 10px;
             }
@@ -113,7 +113,7 @@
             </ul>
         </div>
         <!-- vote contents -->
-        <div class="contents">
+        <div class="vote_contents" id="v_con_<?=$vote['sid']?>">
             <div class="vote">
                 <form class="radio" action="index.html">
                     <input type="radio" name="gender" value="삼촌네 찜닭" checked="checked">
