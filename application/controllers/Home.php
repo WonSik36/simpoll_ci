@@ -14,10 +14,29 @@ class Home extends CI_Controller {
     }
 
     function search(){
-        $this->input->get('code');
-        $this->input->get('type');
+        $code = $this->input->get('code');
+        $type = $this->input->get('type');
 
+        $message;
+        $location;
 
+        if($type=="room"){
+            $message = "해당하는 방으로 이동합니다.";
+            
+            if(is_numeric($code))
+                $location = "/index.php/room/page/".$code;
+            else
+                $location = "/index.php/room/url/".$code;
+        }else{
+            $message = "해당하는 Simpoll로 이동합니다.";
+
+            if(is_numeric($code))
+                $location = "/index.php/vote/page/".$code;
+            else
+                $location = "/index.php/vote/url/".$code;
+        }
+
+        $this->load->view("result", array('message'=>$message, 'location'=>$location));
     }
 }
 ?>
