@@ -109,7 +109,7 @@ input[type=submit]{
         <!-- main -->
         <div class="col-5 col-m-12 col-s-12 align-center" id="index_left">
             <h1>당신의 방에 참여하세요!</h1>
-            <form action="search" method="get">
+            <form action="/index.php/home/search" method="get">
               <input id="code" type="text" name="code" placeholder="방 코드를 입력하세요">
               <input type="radio" name="type" value="room" onclick="checkType(this)" checked> Room
               <input type="radio" name="type" value="vote" onclick="checkType(this)"> Simpoll
