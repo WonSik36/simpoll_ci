@@ -35,12 +35,13 @@ class Vote extends CI_Controller {
             if(empty($anonymous_check)) $anonymous_check = "0";
             if(empty($vote_type)) $vote_type = "0";
             // contents 합치기
-            $contents = array();
+            $contents = "";
             for($i=0;$i<$choice_count;$i++){
                 $content = $this->input->post("content_".$i);
                 if(!empty($content))
-                    array_push($contents, $content);
+                    $contents = $contents.$content."|";
             }
+            $contents = substr($contents,0,strlen($contents)-1);
 
             // make deadline
             // 32400 = 60*60*9 -> timezone offset, 86400 = 60*60*24
