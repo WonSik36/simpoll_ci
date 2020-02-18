@@ -94,20 +94,19 @@
                 <li class="check_icon">
                     <i class="far fa-check-square"></i>
                 </li>
-                <li class="title">점심식사<br>참여인원 13명</li>
+                <li class="title"><?=$vote['title']?><br><?=$vote['part_num']?></li>
                 <li>
                     <i class="far fa-thumbs-up"></i>
                 </li>
                 <li>
                     <i class="far fa-thumbs-down"></i>
                 </li>
-                <li class="right">2020-03-10</li>
+                <li class="right"><?=$vote['deadline']?></li>
             </ul>
         </div>
 
         <div class="contents">
             <div class="vote">
-                <p>점심메뉴 투표하세요~</p>
                 <form class="radio" action="index.html">
                     <input type="radio" name="gender" value="삼촌네 찜닭" checked="checked">
                     삼촌네 찜닭<br>
