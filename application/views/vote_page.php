@@ -89,6 +89,7 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <!-- vote header -->
         <div class="header">
             <ul class="vote_tab">
                 <li class="check_icon">
@@ -111,7 +112,7 @@
                 </li>
             </ul>
         </div>
-
+        <!-- vote contents -->
         <div class="contents">
             <div class="vote">
                 <form class="radio" action="index.html">

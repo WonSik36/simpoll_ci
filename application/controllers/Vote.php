@@ -34,12 +34,12 @@ class Vote extends CI_Controller {
             $part_num = $this->vote_service->get_part_num($sid);
             // 제목, 선택지, 마감일자 구하기. (sp_vote)
             // array로 반환.
-            $title = $this->vote_service->get_title($sid);
+            $title = $this->vote_service->get_vote($sid)['title'];
             $contents = $this->vote_service->get_contents($sid);
-            $deadline = $this->vote_service->get_deadline($sid);
+            $deadline = $this->vote_service->get_vote($sid)['deadline'];
             $vote = array('part_num'=>$part_num, 'title'=>$title, 'contents'=>$contents, 'deadline'=>$deadline);
-            $this->load->view('debug', array('debug'=>var_dump($vote)));
-            //return $vote;
+            //$this->load->view('debug', array('debug'=>var_dump($vote)));
+            return $vote;
         }
     }
 
