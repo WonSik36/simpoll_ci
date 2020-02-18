@@ -6,9 +6,30 @@ class Vote extends CI_Controller {
         $this->load->library('session');
     }
 
-    function index($vote_id){
+    function index($url){
 
     }
+
+    function page($sid){
+        // post 요청 - 사용자가 투표를 제출 한 후
+        if(!empty($this->input->post('title'))){
+
+
+        // get 요청 - 사용자가 투표 페이지를 요청시
+        }else{
+            // 참여 인원 구하기. (sp_vote, sp_user_vote_choice)
+            $part_num = $this->vote_service->get_part_num($sid);
+            // 제목, 선택지, 마감일자 구하기. (sp_vote)
+            // array로 반환.
+            $title = $this->vote_service->get_title($sid);
+            $contents = $this->vote_service->get_contents($sid);
+            $deadline = $this->vote_service->get_deadline($sid);
+            $vote = array('part_num'=>$part_num, 'title'=>$title, 'contents'=>$contents, 'deadline'=>$deadline);
+            //$this->load->view('debug', array('debug'=>var_dump($vote)));
+            return $vote;
+        }
+    }
+
 
     function make_vote(){
         $nickname = $this->session->userdata('nickname');

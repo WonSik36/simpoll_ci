@@ -37,7 +37,7 @@ class Vote_model extends CI_Model {
         param: 방 시퀀스 아이디
         return: 투표 정보 array
     */
-    function get_list($room_sid){
+    function get_list($room_sid) {
         $sql = "SELECT * FROM sp_vote WHERE room_id = ?";
         $result = $this->db->query($sql, array($room_sid))->result_array();
         return $result;
@@ -67,6 +67,26 @@ class Vote_model extends CI_Model {
             return $query;
         else
             return false;
+    }
+
+    function get_part_num($sid) {
+        $sql = "SELECT COUNT(Contents_number) as count ";
+        $sql .="FROM sp_user_vote_choice ";
+        $sql .="WHERE vote_id = ?";
+        $result = $this->db->query($sql, array($sid))->row_array();
+        return $result['count'];
+    }
+
+    function get_title($sid) {
+        $sql = "SELECT * FROM sp_vote WHERE sid = ?";
+        $result = $this->db->query($sql, array($sid))->row_array();
+        return $result['title'];
+    }
+
+    function get_deadline($sid) {
+        $sql = "SELECT * FROM sp_vote WHERE sid = ?";
+        $result = $this->db->query($sql, array($sid))->row_array();
+        return $result['deadline'];
     }
 }
 ?>
