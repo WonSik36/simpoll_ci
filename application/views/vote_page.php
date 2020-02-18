@@ -70,7 +70,7 @@
                 padding: 0;
                 overflow: hidden;
             }
-            .contents {
+            .vote_contents {
                 background-color: #eee;
                 padding-top: 10px;
             }
@@ -116,7 +116,7 @@
             </ul>
         </div>
         <!-- vote contents -->
-        <div class="contents">
+        <div class="vote_contents" id="v_con_<?=$vote['sid']?>">
             <div class="vote">
                 <form action="/index.php/vote/page/<?=$vote['vote_id']?>" method="post">
 <?php

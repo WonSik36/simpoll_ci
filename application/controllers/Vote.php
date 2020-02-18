@@ -25,8 +25,15 @@ class Vote extends CI_Controller {
 
     function page($sid){
         // post 요청 - 사용자가 투표를 제출 한 후
-        if(!empty($this->input->post('title'))){
-
+        if(!empty($this->input->post('contents_number'))){
+            $nickname = $this->session->userdata('nickname');
+            // 로그인 되어 있지 않다면
+            if(empty($nickname)){
+                $this->load->view('result',array('message'=>"투표가 완료되었습니다.",'location'=>"/index.php/home"));
+            }else{
+                $room_id = $this->vote_service->get_vote($sid)['room_id'];
+                $this->load->view('result',array('message'=>"투표가 완료되었습니다.",'location'=>"/index.php/room/page/".$room_id));
+            }
 
         // get 요청 - 사용자가 투표 페이지를 요청시
         }else{
