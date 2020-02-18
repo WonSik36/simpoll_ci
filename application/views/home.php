@@ -109,8 +109,10 @@ input[type=submit]{
         <!-- main -->
         <div class="col-5 col-m-12 col-s-12 align-center" id="index_left">
             <h1>당신의 방에 참여하세요!</h1>
-            <form action="vote_page.html" method="get">
-              <input type="text" placeholder="방코드를 입력하세요">
+            <form action="search" method="get">
+              <input id="code" type="text" name="code" placeholder="방 코드를 입력하세요">
+              <input type="radio" name="type" value="room" onclick="checkType(this)" checked> Room
+              <input type="radio" name="type" value="vote" onclick="checkType(this)"> Simpoll
               <input type="submit" value="Search">
             </form>
         </div>
@@ -118,6 +120,14 @@ input[type=submit]{
         <!-- img -->
         <div class="col-7 col-m-0 col-s-0" id="index_right"></div>
     </div>
-
+    <script>
+      function checkType(input){
+        let codeInput = document.getElementById('code');
+        if(input.value == "room")
+          codeInput.placeholder = "방 코드를 입력하세요";
+        else
+          codeInput.placeholder = "Simpoll 코드를 입력하세요";
+      }
+    </script>
 </body>
 </html>

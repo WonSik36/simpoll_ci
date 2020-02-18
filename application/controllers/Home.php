@@ -6,11 +6,18 @@ class Home extends CI_Controller {
     }
 
     function session(){
-      $this->load->view('debug',array('debug'=>var_dump($this->session->all_userdata())));
+        $this->load->view('debug',array('debug'=>var_dump($this->session->all_userdata())));
     }
 
     function index(){
-      $this->load->view('home');
+        $this->load->view('home');
+    }
+
+    function search(){
+        $this->input->get('code');
+        $this->input->get('type');
+
+
     }
 }
 ?>

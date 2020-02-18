@@ -6,6 +6,10 @@ class Room extends CI_Controller {
         $this->load->library('session');
     }
 
+    function index($vote_id){
+
+    }
+
     function register(){
         $nickname = $this->session->userdata('nickname');
         // 로그인 되어 있지 않다면

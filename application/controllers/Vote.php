@@ -6,6 +6,10 @@ class Vote extends CI_Controller {
         $this->load->library('session');
     }
 
+    function index($vote_id){
+
+    }
+
     function make_vote(){
         $nickname = $this->session->userdata('nickname');
         // 로그인 되어 있지 않다면
