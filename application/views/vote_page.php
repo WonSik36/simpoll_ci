@@ -133,9 +133,9 @@
             location.href = "/index.php/home";
         }
 
-        function mergeChoice(){
-            let cns = document.getElementsByClassName('cn');
-            let contentsNumber = document.getElementById('contents_number');
+        function mergeChoice(sid){
+            let cns = document.getElementsByClassName('cn_'+sid);
+            let contentsNumber = document.getElementById('contents_number_'+sid);
 
             let cnStr = "";
             for(let i=0;i<cns.length;i++){

@@ -30,7 +30,7 @@
     <div id="submit">
         <ul class="submit">
             <li class="cancel"><input type="button" style="color: #00e6b8;" onclick="goBack()" value="Back"></li>
-            <li class="right"><input type="button" style="color: #00e6b8;" onclick="mergeChoice()" value="Update"></li>
+            <li class="right"><input type="button" style="color: #00e6b8;" onclick="mergeChoice(<?=$vote['sid']?>)" value="Update"></li>
         </ul>
     </div>
     -->
