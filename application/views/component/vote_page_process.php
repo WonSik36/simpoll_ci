@@ -16,7 +16,7 @@
     }
 ?>
     <input type="hidden" name="room_id" value="<?=$vote['room_id']?>">
-    <input id="contents_number" type="hidden" name="contents_number_<?=$vote['sid']?>">
+    <input name="contents_number" type="hidden" id="contents_number_<?=$vote['sid']?>">
     <div id="submit">
         <ul class="submit">
             <li class="cancel"><input type="button" style="color: #00e6b8;" onclick="goBack()" value="Back"></li>

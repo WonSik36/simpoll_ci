@@ -220,7 +220,7 @@
                 }
             };
             xhttp.open("POST", "/index.php/room/vote_ajax", true);
-            let vote_choice = JSON stringfy({vote_id : sid, contents_number : contentsNumber.value});
+            let vote_choice = JSON.stringify({vote_id : sid, contents_number : contentsNumber.value});
             xhttp.send(vote_choice);
         }
     </script>

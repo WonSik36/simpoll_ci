@@ -15,9 +15,9 @@
     $i = 1;
     foreach($contents as $cont){
         if(in_array($i, $choices))
-            echo '<input class="cn" type="'.$type.'" name="cn" value="'.$i.'" disabled checked>';
+            echo '<input class="cn_"'.$sid.' type="'.$type.'" name="cn" value="'.$i.'" disabled checked>';
         else
-            echo '<input class="cn" type="'.$type.'" name="cn" value="'.$i.'" disabled>';
+            echo '<input class="cn_"'.$sid.' type="'.$type.'" name="cn" value="'.$i.'" disabled>';
         echo $cont.'<br>';
         $i++;
     }
@@ -25,7 +25,7 @@
     <!-- updating vote needs to update -->
     <!--
     <input type="hidden" name="room_id" value="<?=$vote['room_id']?>">
-    <input id="contents_number" type="hidden" name="contents_number">
+    <input id="contents_number_<?=$sid?>" type="hidden" name="contents_number">
     <input type="hidden" name="_method" value="put">
     <div id="submit">
         <ul class="submit">
