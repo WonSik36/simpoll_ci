@@ -40,7 +40,6 @@ class Room extends CI_Controller {
         $user_choice = $this->vote_service->get_choice_by_vote_id_and_user_id($sid, $this->session->userdata('sid'));
         $result = $this->room_service->get_room_and_list($sid);
         $this->load->view('my_room_audience', $result, array('vote'=>$vote,'user_choice'=>$user_choice));
-        return $vote;
     }
 
     function vote_ajax() {

@@ -194,9 +194,9 @@
             location.href = "/index.php/home";
         }
 
-        function mergeChoice(){
-            let cns = document.getElementsByClassName('cn');
-            let contentsNumber = document.getElementById('contents_number');
+        function mergeChoice(sid){
+            let cns = document.getElementsByClassName('cn_'+sid);
+            let contentsNumber = document.getElementById('contents_number_'+sid);
 
             let cnStr = "";
             for(let i=0;i<cns.length;i++){
@@ -206,7 +206,22 @@
                 }
             }
             contentsNumber.value = cnStr.substring(0,cnStr.length-1);
-        }
 
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let ret = JSON.parse(this.responseText);
+                    if(ret.result=="success"){
+                        alert("투표가 되었습니다.");
+                    }else {
+                        alert("투표에 실패하였습니다.");
+                    }
+                }
+            };
+            xhttp.open("POST", "/index.php/room/vote_ajax", true);
+            let vote_choice = JSON stringfy({vote_id : sid, contents_number : contentsNumber.value});
+            xhttp.send(vote_choice);
+        }
     </script>
 </html>
