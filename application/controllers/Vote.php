@@ -29,16 +29,18 @@ class Vote extends CI_Controller {
 
 
             
-            $nickname = $this->session->userdata('nickname');
+            
+            $this->load->view('debug',array('debug'=>var_dump($this->input->post(NULL))));
 
-            // $this->load->view('debug',array('debug'=>var_dump($this->input->post(NULL))));
-            // 로그인 되어 있지 않다면
-            if(empty($nickname)){
-                $this->load->view('result',array('message'=>"투표가 완료되었습니다.",'location'=>"/index.php/home"));
-            }else{
-                $room_id = $this->vote_service->get_vote($sid)['room_id'];
-                $this->load->view('result',array('message'=>"투표가 완료되었습니다.",'location'=>"/index.php/room/page/".$room_id));
-            }
+            // 로그인 여부에 따라 방 혹은 홈페이지로 리다이렉션
+            // $nickname = $this->session->userdata('nickname');
+            // // 로그인 되어 있지 않다면
+            // if(empty($nickname)){
+            //     $this->load->view('result',array('message'=>"투표가 완료되었습니다.",'location'=>"/index.php/home"));
+            // }else{
+            //     $room_id = $this->vote_service->get_vote($sid)['room_id'];
+            //     $this->load->view('result',array('message'=>"투표가 완료되었습니다.",'location'=>"/index.php/room/page/".$room_id));
+            // }
 
         // get 요청 - 사용자가 투표 페이지를 요청시
         }else{
@@ -48,7 +50,8 @@ class Vote extends CI_Controller {
             // array로 반환.
             $vote = $this->vote_service->get_vote($sid);
             $vote['part_num'] = $part_num;
-            $this->load->view('vote_page', array('vote'=>$vote));
+            $user_choice = $this->vote_service->get_choice_by_vote_id_and_user_id($sid, $this->session->userdata('sid'));
+            $this->load->view('vote_page', array('vote'=>$vote,'user_choice'=>$user_choice));
             return $vote;
         }
     }

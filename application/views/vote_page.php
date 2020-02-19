@@ -115,34 +115,38 @@
                 </li>
             </ul>
         </div>
+
         <!-- vote contents -->
         <div class="vote_contents" id="v_con_<?=$vote['sid']?>">
             <div class="vote">
-                <form action="/index.php/vote/page/<?=$vote['sid']?>" method="post">
-<?php
-    $i = 1;
-    foreach($contents as $cont){
+<?php 
+    // 이미 선택을 한경우
+    if(empty($user_choice))
+        include 'component/vote_page_process.php';
+    else
+        include 'component/vote_page_result.php';
 ?>
-                <input type="radio" name="contents_number" value="<?=$i?>">
-                <?=$cont?><br>
-<?php
-    $i++;
-    }
-?>
-                <input type="hidden" name="room_id" value="<?=$vote['room_id']?>">
-                <input type="hidden" name="vote_type" value="<?=$vote['vote_type']?>">
-                <input type="hidden" name="comment_check" value="<?=$vote['comment_check']?>">
-                <input type="hidden" name="anonymous_check" value="<?=$vote['anonymous_check']?>">
-                <input type="hidden" name="part_auth" value="<?=$vote['part_auth']?>">
-                    <div id="submit">
-                        <ul class="submit">
-                            <li class="cancel"></li>
-                            <li class="right"><input type="submit" style="color: #00e6b8;"></li>
-                        </ul>
-                    </div>
-                </form>
             </div>
         </div>
+    <script>
+        function goBack(){
+            location.href = "/index.php/home";
+        }
 
+        function mergeChoice(){
+            let cns = document.getElementsByClassName('cn');
+            let contentsNumber = document.getElementById('contents_number');
+
+            let cnStr = "";
+            for(let i=0;i<cns.length;i++){
+                if(cns[i].checked){
+                    cnStr += cns[i].value;
+                    cnStr += "|";
+                }
+            }
+            contentsNumber.value = cnStr.substring(0,cnStr.length-1);
+            document.getElementById('frm').submit();
+        }
+    </script>
     </body>
 </html>

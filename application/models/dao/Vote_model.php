@@ -93,5 +93,21 @@ class Vote_model extends CI_Model {
         $result = $this->db->query($sql, array($sid))->row_array();
         return $result;
     }
+
+    /*
+        get_choice_by_vote_id_and_user_id
+        parameter: 투표 아이디(sid)와 유저 아이디(sid)
+        return: sp_user_vote_choice의 배열 (값이 하나여도 배열로 리턴)
+                NULL (결과 값이 없는 경우)
+    */
+    function get_choice_by_vote_id_and_user_id($vote_id, $user_id){
+        $sql = "SELECT * FROM sp_user_vote_choice WHERE vote_id=? AND user_id=?";
+        $query = $this->db->query($sql, array($vote_id, $user_id));
+        
+        if($query == false)
+            return NULL;
+        else
+            return $query->result_array();
+    }
 }
 ?>
