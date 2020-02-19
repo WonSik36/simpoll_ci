@@ -127,12 +127,12 @@ class Vote_service extends CI_Model {
             $inputs = $this->makeInputs($contents_number, $vote['sid'], $user['sid'], $user['nickname']);
             $result = $this->vote_model->voting($inputs);
         
-        // case3: 익명이면서 아무나 투표 가능 -> user_id = NULL, cur_name = 'anonymous' 
+        // case3: 익명이면서 링크를 가진 누구나 투표 가능 -> user_id = NULL, cur_name = 'anonymous' 
         }else if($anonymous_check==1 && $part_auth==1){
             $inputs = $this->makeInputs($contents_number, $vote['sid'], NULL, 'anonymous');
             $result = $this->vote_model->voting($inputs);
 
-        // case4: 실명이면서 아무나 투표 가능 -> 불가능한 경우
+        // case4: 실명이면서 링크를 가진 누구나 투표 가능 -> 불가능한 경우
         }else{
             return false;
         }
