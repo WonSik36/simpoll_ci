@@ -107,5 +107,60 @@ class Vote_service extends CI_Model {
 
         return $this->vote_model->get_choice_by_vote_id_and_user_id($vote_id, $user_id);
     }
+
+    /*
+        voting
+        parameter: 투표(배열)와 유저의 선택지("|"로 나누어져있음)
+    */
+    function voting($vote, $contents_number, $user){
+        $anonymous_check = $vote['anonymous_check'];
+        $part_auth = $vote['part_auth'];
+        $contents_number = explode("|",$contents_number);
+
+        // case1: 실명이면서 로그인 한 사람만 참여 가능 -> user_id = 사용자 id, cur_name = name
+        if($anonymous_check==0 && $part_auth==0){
+            $inputs = $this->makeInputs($contents_number, $vote['sid'], $user['sid'], $user['name']);
+            $result = $this->vote_model->voting($inputs);
+
+        // case2: 익명이면서 로그인 한 사람만 참여 가능 -> user_id = 사용자 id, cur_name = nickname
+        }else if($anonymous_check==1 && $part_auth==0){
+            $inputs = $this->makeInputs($contents_number, $vote['sid'], $user['sid'], $user['nickname']);
+            $result = $this->vote_model->voting($inputs);
+        
+        // case3: 익명이면서 아무나 투표 가능 -> user_id = NULL, cur_name = 'anonymous' 
+        }else if($anonymous_check==1 && $part_auth==1){
+            $inputs = $this->makeInputs($contents_number, $vote['sid'], NULL, 'anonymous');
+            $result = $this->vote_model->voting($inputs);
+
+        // case4: 실명이면서 아무나 투표 가능 -> 불가능한 경우
+        }else{
+            return false;
+        }
+
+        // 로그인 한 경우이므로 사용자를 방에 추가한다
+        if($part_auth == 0){
+            $this->load->model('dao/room_model');
+
+            // 방에 포함되어 있지 않은 경우
+            if(empty($this->room_model->select_sp_room_user_by_room_and_user_id($vote['room_id'], $user['sid'])))
+                $this->room_model->insert_sp_room_user($vote['room_id'], $user['sid'], 2);
+        }
+
+        return $result;
+    }
+
+    function makeInputs($contents_number, $vote_id, $user_id, $cur_name){
+        $inputs = array();
+        foreach($contents_number as $cn){
+            array_push($inputs, array(
+                'user_id' => $user_id,
+                'cur_name' => $cur_name,
+                'vote_id' => $vote_id,
+                'contents_number' => $cn
+            ));
+        }
+
+        return $inputs;
+    }
 }
 ?>

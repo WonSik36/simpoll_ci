@@ -20,7 +20,7 @@ class Room_service extends CI_Model {
         //master를 이용해서 해당 방의 sid를 검색한다.
         $room_sid = $this->room_model->find_sid($master);
         //room의 sid와 user_id를 이용해서 방장을 해당 방에 넣어준다.
-        $this->room_model->insert_sp_room_user($room_sid, $master);
+        $this->room_model->insert_sp_room_user($room_sid, $master,1);
         return $room_sid;
     }
 

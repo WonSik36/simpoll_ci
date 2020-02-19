@@ -89,7 +89,7 @@ class Vote_model extends CI_Model {
     }
 
     function get_title_deadline($sid) {
-        $sql = "SELECT * FROM sp_vote WHERE sid = ?";
+        $sql = "SELECT * FROM sp_vote WHERE sid = ? AND deleted=0";
         $result = $this->db->query($sql, array($sid))->row_array();
         return $result;
     }
@@ -108,6 +108,14 @@ class Vote_model extends CI_Model {
             return NULL;
         else
             return $query->result_array();
+    }
+
+    function voting($inputs){
+        $this->db->insert_batch('sp_user_vote_choice', $inputs);
+        if($this->db->affected_rows() > 0)
+            return true;
+        else
+            return false;
     }
 }
 ?>
