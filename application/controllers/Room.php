@@ -6,15 +6,49 @@ class Room extends CI_Controller {
         $this->load->library('session');
     }
 
-    function url($url){
+    function url($url) {
+        //url을 기준으로 sid를 찾아준다
+        $vote = $this->vote_service->searchVoteByUrl($url);
 
+        // $this->load->view('debug',array('debug'=>var_dump($vote)));
+
+        // 검색 성공
+        if(!empty($vote)){
+            $sid = $vote['sid'];
+            $this->page($sid);
+
+        // 검색 실패
+        }else{
+            $this->load->view('result',array('message'=>"해당하는 Simpoll을 찾지 못하였습니다."));
+        }
     }
 
-    function page($sid){
-        
+    function page($sid) {
+        $nickname = $this->session->userdata('nickname');
+        // 로그인 되어 있지 않다면
+        if(empty($nickname)){
+            $this->load->view('result',array('message'=>"로그인하시기 바랍니다.",'location'=>"/index.php/user/login"));
+            return;
+        }
+        $this->load->model('service/vote_service');
+        // 참여 인원 구하기. (sp_vote, sp_user_vote_choice)
+        $part_num = $this->vote_service->get_part_num($sid);
+        // 제목, 선택지, 마감일자 구하기. (sp_vote)
+        // array로 반환.
+        $vote = $this->vote_service->get_vote($sid);
+        $vote['part_num'] = $part_num;
+        $user_choice = $this->vote_service->get_choice_by_vote_id_and_user_id($sid, $this->session->userdata('sid'));
+        $result = $this->room_service->get_room_and_list($sid);
+        $this->load->view('my_room_audience', $result, array('vote'=>$vote,'user_choice'=>$user_choice));
+        return $vote;
     }
 
-    function register(){
+    function vote_ajax() {
+        $this->load->view('debug', array('debug'=>var_dump('contentsNumber.value')));
+        //$vote_result = $this->input->post('contentsNumber.value');
+    }
+
+    function register() {
         $nickname = $this->session->userdata('nickname');
         // 로그인 되어 있지 않다면
         if(empty($nickname)){
