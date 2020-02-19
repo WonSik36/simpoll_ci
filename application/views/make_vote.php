@@ -185,7 +185,7 @@
 
                             <!-- part_auth: participation authority -->
                             <p id="add_option">참여 권한</p>
-                            <input type="radio" name="part_auth" value="0" checked="checked"> 방 참여자만<br>
+                            <input type="radio" name="part_auth" value="0" checked="checked"> 로그인 한 누구나<br>
                             <input type="radio" name="part_auth" value="1"> 링크를 가진 누구나<br>
 
                             <!-- deadline -->
