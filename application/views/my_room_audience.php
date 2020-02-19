@@ -212,15 +212,17 @@
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     let ret = JSON.parse(this.responseText);
-                    if(ret.result=="success"){
-                        alert("투표가 되었습니다.");
-                    }else {
-                        alert("투표에 실패하였습니다.");
-                    }
+                    alert(ret.result);
+                    // if(ret.result=="success"){
+                    //     alert("투표가 되었습니다.");
+                    // }else {
+                    //     alert("투표에 실패하였습니다.");
+                    // }
                 }
             };
             xhttp.open("POST", "/index.php/room/vote_ajax", true);
-            let vote_choice = JSON.stringify({vote_id : sid, contents_number : contentsNumber.value});
+            xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            let vote_choice = "vote_id="+sid+"&contents_number="+contentsNumber.value;
             xhttp.send(vote_choice);
         }
     </script>
