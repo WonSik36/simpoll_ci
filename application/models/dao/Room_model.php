@@ -82,9 +82,24 @@ class Room_model extends CI_Model {
         room_sid와 방장의 sid를 sp_room_user에 추가한다.
         param: 방 시퀀스 아이디, 방장
     */
-    function insert_sp_room_user($room_sid, $master) {
-        $sql = "INSERT INTO sp_room_user (`room_id`,`user_id`) VALUES (?,?)";
-        $query = $this->db->query($sql, array($room_sid,$master));
+    function insert_sp_room_user($room_sid, $user, $auth) {
+        $sql = "INSERT INTO sp_room_user (`room_id`,`user_id`,`auth`) VALUES (?,?,?)";
+        $query = $this->db->query($sql, array($room_sid,$user,$auth));
+    }
+
+    /*
+        select_sp_room_user_by_room_and_user_id
+        방 아이디와 유저 아이디로 해당 방에 포함된 사람을 반환한다.
+        param: 방 시퀀스 아이디, 유저 아이디
+    */
+    function select_sp_room_user_by_room_and_user_id($room_id, $user_id){
+        $sql = "SELECT * FROM sp_room_user  WHERE room_id = ? AND user_id=?";
+        $query = $this->db->query($sql, array($room_id,$user_id));
+
+        if($query == false)
+            return null;
+        else
+            return $query->row_array();
     }
 
     /*
