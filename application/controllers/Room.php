@@ -43,9 +43,38 @@ class Room extends CI_Controller {
     }
 
     function vote_ajax() {
-        $vote_id = $this->input->post('vote_id');
-        $contents_number = $this->input->post('contents_number');
-        echo '{"result": "'.$contents_number.'"}';
+        $this->load->model('service/vote_service');
+
+        $vote_choice = file_get_contents('php://input'); //($_POST doesn't work here)
+        $response = json_decode($vote_choice,true);
+        $contents_number = $response['contents_number'];
+        $vote_id = $response['vote_id'];
+
+        
+        // 해당하는 시퀀스 아이디를 찾지 못한 경우
+        $vote = $this->vote_service->get_vote($vote_id);
+        if(empty($vote)){
+            echo '{"result": "fail"}';
+            return;
+        }
+        
+        // 로그인 한 경우에만 투표가 가능한 경우
+        $nickname = $this->session->userdata('nickname');
+        if($vote['part_auth'] == 0 && empty($nickname)){
+            echo '{"result": "fail"}';
+            return;
+        }
+
+        $userdata = $this->session->userdata();
+        $result = $this->vote_service->voting($vote, $contents_number, $userdata);
+        // 투표 성공
+        if($result){
+            echo '{"result": "success"}';
+
+        // 투표 실패
+        }else{
+            echo '{"result": "fail"}';
+        }
     }
 
     function register() {

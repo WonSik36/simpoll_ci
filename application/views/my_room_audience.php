@@ -221,9 +221,12 @@
                 }
             };
             xhttp.open("POST", "/index.php/room/vote_ajax", true);
-            xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
-            let vote_choice = "vote_id="+sid+"&contents_number="+contentsNumber.value;
+            // xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            // let vote_choice = "vote_id="+sid+"&contents_number="+contentsNumber.value;
+            // xhttp.send(vote_choice);
+            let vote_choice = JSON.stringify({vote_id : sid, contents_number : contentsNumber.value});
             xhttp.send(vote_choice);
+
         }
     </script>
 </html>
