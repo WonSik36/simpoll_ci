@@ -127,5 +127,21 @@ class Room_model extends CI_Model {
 
         return $this->db->query($sql, array($user_id))->result_array();
     }
+
+    /*
+        audience_room_list
+        $user_id에 해당하는 방 목록 반환
+        param: 유저 시퀀스 아이디
+        return: 방(array) array
+    */
+    function audience_room_list($user_id) {
+        $sql = "SELECT sp_room.sid as sid, sp_room.url_name as url_name, sp_room.title as title, ";
+        $sql .= "sp_room.part_num as part_num ";
+        $sql .= "FROM sp_room INNER JOIN sp_room_user ON sp_room.sid = sp_room_user.room_id ";
+        $sql .= "WHERE sp_room_user.user_id=? AND sp_room.deleted=0 ORDER BY sp_room.sid DESC";
+
+        $result = $this->db->query($sql, array($user_id))->result_array();
+        return $result;
+    }
 }
 ?>

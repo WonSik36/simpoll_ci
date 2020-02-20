@@ -13,7 +13,7 @@ class Room_service extends CI_Model {
         성공시 : room_id를 return 한다.
         실패시 : NULL을 return 한다.
     */
-    function register($room){
+    function register($room) {
         //dao에 room insert를 요청한다.
         $this->room_model->insert_room($room);
         $master = $room['master'];
@@ -42,7 +42,7 @@ class Room_service extends CI_Model {
         param: sid (방 시퀀스 아이디)
         return: 방(array)
     */
-    function get_room_by_sid($sid){
+    function get_room_by_sid($sid) {
         return $this->room_model->get_room($sid);
     }
 
@@ -52,8 +52,18 @@ class Room_service extends CI_Model {
         param: 유저 시퀀스 아이디
         return: 방(array) array
     */
-    function speacker_room_list($user_id){
+    function speacker_room_list($user_id) {
         return $this->room_model->speacker_room_list($user_id);
+    }
+
+    /*
+        audience_room_list
+        자신이 참여하고 있는 방 목록 반환
+        param: 유저 시퀀스 아이디
+        return: 방(array) array
+    */
+    function audience_room_list($user_id) {
+        return $this->room_model->audience_room_list($user_id);
     }
 }
 ?>
