@@ -211,18 +211,22 @@
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    let ret = this.responseText;
-                    alert(ret);
-                    //if(ret.result=="success"){
-                    //    alert("투표가 되었습니다.");
-                    //}else {
-                    //    alert("투표에 실패하였습니다.");
-                    //}
+                    let ret = JSON.parse(this.responseText);
+                    alert(ret.result);
+                    // if(ret.result=="success"){
+                    //     alert("투표가 되었습니다.");
+                    // }else {
+                    //     alert("투표에 실패하였습니다.");
+                    // }
                 }
             };
             xhttp.open("POST", "/index.php/room/vote_ajax", true);
+            // xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            // let vote_choice = "vote_id="+sid+"&contents_number="+contentsNumber.value;
+            // xhttp.send(vote_choice);
             let vote_choice = JSON.stringify({vote_id : sid, contents_number : contentsNumber.value});
             xhttp.send(vote_choice);
+
         }
     </script>
 </html>
