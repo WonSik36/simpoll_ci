@@ -167,6 +167,7 @@
         echo "<div class='col-12'>\n";
 
         $idx = 0;
+        // echo "<!--".var_dump($user_choices)."-->";
         foreach($list as $vote){
 ?>
         <?php include 'component/vote_audience.php';?>
@@ -212,16 +213,19 @@
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     let ret = JSON.parse(this.responseText);
-                    alert(ret.result);
-                    // if(ret.result=="success"){
-                    //     alert("투표가 되었습니다.");
-                    // }else {
-                    //     alert("투표에 실패하였습니다.");
-                    // }
+                    if(ret.result=="success"){
+                        alert("투표가 되었습니다.");
+                        for(let i=0;i<cns.length;i++){
+                            cns[i].disabled = true;
+                        }
+                        document.getElementById("submit_"+sid).style.display = "none";
+                    }else {
+                        alert("투표에 실패하였습니다.");
+                    }
                 }
             };
             xhttp.open("POST", "/index.php/room/vote_ajax", true);
-            // xhttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+            xhttp.setRequestHeader("Content-Type","application/json");
             // let vote_choice = "vote_id="+sid+"&contents_number="+contentsNumber.value;
             // xhttp.send(vote_choice);
             let vote_choice = JSON.stringify({vote_id : sid, contents_number : contentsNumber.value});

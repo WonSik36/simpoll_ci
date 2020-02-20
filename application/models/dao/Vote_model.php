@@ -38,7 +38,7 @@ class Vote_model extends CI_Model {
         return: 투표 정보 array
     */
     function get_list($room_sid) {
-        $sql = "SELECT * FROM sp_vote WHERE room_id = ?";
+        $sql = "SELECT * FROM sp_vote WHERE room_id = ? AND deleted=0";
         $result = $this->db->query($sql, array($room_sid))->result_array();
         return $result;
     }

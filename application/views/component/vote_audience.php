@@ -1,5 +1,16 @@
 <?php
     $contents = explode("|",$vote['contents']);
+    $user_choice = null;
+    // for($i=0;$i<count($user_choices);$i++){
+    //     for($j=0;$j<count($user_choices[$i]);$j++){
+
+    //         if($user_choices[$i][$j]['vote_id'] == $vote['sid']){
+    //             $user_choice = $user_choices[$i][$j];
+    //             break;
+    //         }
+    //     }
+
+    // }
 ?>
 <!-- vote tab -->
 <!-- vote header -->

@@ -17,7 +17,7 @@
 ?>
     <input type="hidden" name="room_id" value="<?=$vote['room_id']?>">
     <input name="contents_number" type="hidden" id="contents_number_<?=$vote['sid']?>">
-    <div id="submit">
+    <div id="submit_<?=$vote['sid']?>">
         <ul class="submit">
             <li class="cancel"><input type="button" style="color: #00e6b8;" onclick="goBack()" value="Back"></li>
             <li class="right"><input type="button" style="color: #00e6b8;" onclick="mergeChoice(<?=$vote['sid']?>)" value="Submit"></li>

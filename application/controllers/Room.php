@@ -32,14 +32,16 @@ class Room extends CI_Controller {
         }
         $this->load->model('service/vote_service');
         // 참여 인원 구하기. (sp_vote, sp_user_vote_choice)
-        $part_num = $this->vote_service->get_part_num($sid);
+        $part_num = $this->vote_service->get_part_num($sid);    // need to fixed it 
         // 제목, 선택지, 마감일자 구하기. (sp_vote)
         // array로 반환.
-        $vote = $this->vote_service->get_vote($sid);
-        $vote['part_num'] = $part_num;
-        $user_choice = $this->vote_service->get_choice_by_vote_id_and_user_id($sid, $this->session->userdata('sid'));
-        $result = $this->room_service->get_room_and_list($sid);
-        $this->load->view('my_room_audience', $result, array('vote'=>$vote,'user_choice'=>$user_choice));
+        $vote = $this->vote_service->get_vote($sid);    // need to fixed it 
+        $vote['part_num'] = $part_num;  // need to fixed it 
+        $user_choices = $this->vote_service->get_choice_by_room_id_and_user_id($sid, $this->session->userdata('sid'));
+        $room_and_vote_list = $this->room_service->get_room_and_list($sid);
+        $room_and_vote_list['user_choices'] = $user_choices;
+        // $this->load->view('my_room_audience', $room_and_vote_list, array('vote'=>$vote,'user_choices'=>$user_choices));
+        $this->load->view('my_room_audience', $room_and_vote_list);
     }
 
     function vote_ajax() {

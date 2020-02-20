@@ -174,7 +174,7 @@
                                 <!-- anonymous_check: check anonymous -->
                                 <tr>
                                     <td class="align-left">익명 투표</td>
-                                    <td><input type="checkbox" name="anonymous_check" value="1"></td>
+                                    <td><input id="anonymous_check" type="checkbox" name="anonymous_check" value="1"></td>
                                 </tr>
                                 <!-- vote_type: vote type -->
                                 <tr>
@@ -185,8 +185,8 @@
 
                             <!-- part_auth: participation authority -->
                             <p id="add_option">참여 권한</p>
-                            <input type="radio" name="part_auth" value="0" checked="checked"> 로그인 한 누구나<br>
-                            <input type="radio" name="part_auth" value="1"> 링크를 가진 누구나<br>
+                            <input type="radio" name="part_auth" value="0" checked="checked" onclick="markAnonymous(0)"> 로그인 한 누구나<br>
+                            <input type="radio" name="part_auth" value="1" onclick="markAnonymous(1)"> 링크를 가진 누구나<br>
 
                             <!-- deadline -->
                             <p id="add_option">마감시간</p><input type="date" name="vote_end_date" value="vote_end_date" required>
@@ -254,6 +254,19 @@
                 history.back();
             }
 
+            function markAnonymous(auth_type){
+                let anonymousCheck = document.getElementById("anonymous_check");
+
+                // 로그인한 누구나
+                if(auth_type == 0){
+                    anonymousCheck.disabled = false;
+                
+                // 링크를 가진 누구나
+                }else{
+                    anonymousCheck.checked = true;
+                    anonymousCheck.disabled = true;
+                }
+            }
         </script>
     </body>
 </html>

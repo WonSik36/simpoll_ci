@@ -109,6 +109,27 @@ class Vote_service extends CI_Model {
     }
 
     /*
+        get_choice_by_room_id_and_user_id
+        parameter: 방 아이디(sid)와 유저 아이디(sid)
+        return: sp_user_vote_choice 배열의 배열 (값이 하나여도 배열로 리턴)
+                array(empty) (결과 값이 없는 경우)
+    */
+    function get_choice_by_room_id_and_user_id($room_id, $user_id){
+        if(empty($user_id))
+            return NULL;
+
+        $user_choices = array();
+        $vote_list = $this->vote_model->get_list($room_id);
+        foreach($vote_list as $vote){
+            $choice = $this->get_choice_by_vote_id_and_user_id($vote['sid'], $user_id);
+            if(!empty($choice))
+                array_push($user_choices, $choice);
+        }
+
+        return $user_choices;
+    }
+
+    /*
         voting
         parameter: 투표(배열)와 유저의 선택지("|"로 나누어져있음)
     */
