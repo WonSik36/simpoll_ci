@@ -211,12 +211,13 @@
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                    let ret = JSON.parse(this.responseText);
-                    if(ret.result=="success"){
-                        alert("투표가 되었습니다.");
-                    }else {
-                        alert("투표에 실패하였습니다.");
-                    }
+                    let ret = this.responseText;
+                    alert(ret);
+                    //if(ret.result=="success"){
+                    //    alert("투표가 되었습니다.");
+                    //}else {
+                    //    alert("투표에 실패하였습니다.");
+                    //}
                 }
             };
             xhttp.open("POST", "/index.php/room/vote_ajax", true);

@@ -43,9 +43,11 @@ class Room extends CI_Controller {
     }
 
     function vote_ajax() {
-        echo '{"result": "success"}';
-        //$this->load->view('debug', array('debug'=>var_dump('contentsNumber.value')));
-        //$vote_result = $this->input->post('contentsNumber.value');
+        $vote_choice = file_get_contents('php://input'); //($_POST doesn't work here)
+        $response = json_decode($vote_choice,true);
+        $contents_number = $response['contents_number'];
+        $vote_id = $response['vote_id'];
+        echo '{"result": "'.print_r($response).'"}';
     }
 
     function register() {
