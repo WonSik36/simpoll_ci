@@ -26,7 +26,7 @@ class Vote extends CI_Controller {
     function page($sid){
         $vote = $this->vote_service->get_vote($sid);
         $nickname = $this->session->userdata('nickname');
-        
+
         // 해당하는 시퀀스 아이디를 찾지 못한 경우
         if(empty($vote)){
             $this->load->view('result',array('message'=>"해당하는 Simpoll을 찾지 못하였습니다."));
@@ -51,7 +51,7 @@ class Vote extends CI_Controller {
 
             // 투표 성공
             if($result){
-                
+
                 // 로그인 여부에 따라 방 혹은 홈페이지로 리다이렉션
                 // 로그인 되어 있지 않다면
                 if(empty($nickname)){

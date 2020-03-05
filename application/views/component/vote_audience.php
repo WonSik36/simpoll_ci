@@ -19,7 +19,7 @@
         <li class="check_icon">
             <i class="far fa-check-square"></i>
         </li>
-        <li class="title"><?=$vote['title']?></li>
+        <li class="title"><?=$vote['title']?><br></li>
 
         <li class="right">
             ~
