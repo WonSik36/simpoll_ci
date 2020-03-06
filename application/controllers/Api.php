@@ -18,7 +18,7 @@ class Api extends CI_Controller {
         // 검색 성공
         if(!empty($vote)){
             $sid = $vote['sid'];
-            $this->page($sid);
+            $this->vote_page($sid);
 
         // 검색 실패
         }else{
@@ -58,15 +58,18 @@ class Api extends CI_Controller {
                 // 로그인 여부에 따라 방 혹은 홈페이지로 리다이렉션
                 // 로그인 되어 있지 않다면
                 if(empty($nickname)){
-                    $this->load->view('result',array('message'=>"투표가 완료되었습니다.",'location'=>"/index.php/home"));
+                    //$this->load->view('result',array('message'=>"투표가 완료되었습니다.",'location'=>"/index.php/home"));
+                    echo '{"result": "success"}'
                 }else{
                     $room_id = $vote['room_id'];
-                    $this->load->view('result',array('message'=>"투표가 완료되었습니다.",'location'=>"/index.php/room/page/".$room_id));
+                    //$this->load->view('result',array('message'=>"투표가 완료되었습니다.",'location'=>"/index.php/room/page/".$room_id));
+                    echo json_encode($room_id);;
                 }
 
             // 투표 실패
             }else{
-                $this->load->view('result',array('message'=>"투표가 실패하였습니다.",'location'=>"/index.php/vote/page/".$sid));
+                //$this->load->view('result',array('message'=>"투표가 실패하였습니다.",'location'=>"/index.php/vote/page/".$sid));
+                echo '{"result": "fail"}';
             }
 
         // get 요청 - 사용자가 투표 페이지를 요청시
@@ -90,7 +93,7 @@ class Api extends CI_Controller {
         // 검색 성공
         if(!empty($vote)){
             $sid = $vote['sid'];
-            $this->page($sid);
+            $this->room_page($sid);
 
         // 검색 실패
         }else{
@@ -115,6 +118,7 @@ class Api extends CI_Controller {
         $user_choice = $this->vote_service->get_choice_by_vote_id_and_user_id($sid, $this->session->userdata('sid'));
         $result = $this->room_service->get_room_and_list($sid);
         //$this->load->view('my_room_audience', $result, array('vote'=>$vote,'user_choice'=>$user_choice));
+        echo json_encode($result);;
     }
 }
 ?>
