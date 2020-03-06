@@ -77,22 +77,6 @@ class Room extends CI_Controller {
         }
     }
 
-    function find_room_ajax() {
-        
-        $f_room = file_get_contents('php://input');
-
-        $room = $this->room_service->get_room_and_list($f_room);
-        // 해당하는 방을 찾지 못한 경우
-        if(empty($room)){
-            echo '{"result": "fail"}';
-            return;
-        }else {
-            echo '{"result": "success"}';
-            // q: $this->load->view()로 반환해야 하는지???
-            return $room;
-        }
-    }
-
     function register() {
         $nickname = $this->session->userdata('nickname');
         // 로그인 되어 있지 않다면

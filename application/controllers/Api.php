@@ -82,5 +82,21 @@ class Api extends CI_Controller {
         $result = $this->room_service->get_room_by_sid($sid);
         echo json_encode($result);
     }
+
+    function find_user_rooms() {
+        $user_id = $this->session->userdata('sid');
+        if(empty($user_id)){
+            $this->load->view('result',array('message'=>"로그인하시기 바랍니다.",'location'=>"/index.php/user/login"));
+            return;
+        }
+        $room = $this->room_service->audience_room_list($user_id);
+        // 해당하는 방을 찾지 못한 경우
+        if(empty($room)){
+            echo '{"result": "noRoom"}';
+            return;
+        }else {
+            echo json_encode($room);
+        }
+    }
 }
 ?>
