@@ -37,29 +37,7 @@ class Room_service extends CI_Model {
         return array('room'=>$room, 'list'=>$list);
     }
 
-    /*
-        get_room_and_list
-        param: room_sid (방 시퀀스 아이디)
-        return: all_list
-    */
-    function get_list_by_room_id($room_sid) {
-        $this->load->model('dao/vote_model');
-        $all_list = $this->vote_model->get_all_list($room_sid);
-        $voted_list = $this->vote_model->get_voted_list($room_sid);
 
-        for($i = 0; $i < count($all_list); $i++) {
-            for($j = 0; $j < count($voted_list); $j++){
-                if((int)$all_list[$i]['sid'] == (int)$voted_list[$j]['sid']) {
-                    // 투표했으면 true, 아직 안했으면 false를 voted라는 항목에 넣어준다.
-                    $all_list[$i]['voted'] = "TRUE";
-                }else {
-                    $all_list[$i]['voted'] = "FALSE";
-                }
-            }
-        }
-        return $all_list;
-        //return array('all_list'=>$all_list, 'voted_list'=>$voted_list);
-    }
 
     /*
         get_room_by_sid

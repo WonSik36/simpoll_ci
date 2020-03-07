@@ -7,6 +7,29 @@ class Vote_service extends CI_Model {
         $this->load->model('dao/vote_model');
     }
 
+    /*
+        get_room_and_list
+        param: room_sid (방 시퀀스 아이디)
+        return: all_list
+    */
+    function get_list_by_room_id($room_sid) {
+        $this->load->model('dao/vote_model');
+        $all_list = $this->vote_model->get_all_list($room_sid);
+        $voted_list = $this->vote_model->get_voted_list($room_sid);
+
+        for($i = 0; $i < count($all_list); $i++) {
+            for($j = 0; $j < count($voted_list); $j++){
+                if((int)$all_list[$i]['sid'] == (int)$voted_list[$j]['sid']) {
+                    // 투표했으면 true, 아직 안했으면 false를 voted라는 항목에 넣어준다.
+                    $all_list[$i]['voted'] = TRUE;
+                }else {
+                    $all_list[$i]['voted'] = FALSE;
+                }
+            }
+        }
+        return $all_list;
+        //return array('all_list'=>$all_list, 'voted_list'=>$voted_list);
+    }
     function vote_result($sid) {
         $label = $this->vote_model->get_contents($sid);
         $label = explode ("|" , $label);
@@ -147,8 +170,8 @@ class Vote_service extends CI_Model {
         }else if($anonymous_check==1 && $part_auth==0){
             $inputs = $this->makeInputs($contents_number, $vote['sid'], $user['sid'], $user['nickname']);
             $result = $this->vote_model->voting($inputs);
-        
-        // case3: 익명이면서 링크를 가진 누구나 투표 가능 -> user_id = NULL, cur_name = 'anonymous' 
+
+        // case3: 익명이면서 링크를 가진 누구나 투표 가능 -> user_id = NULL, cur_name = 'anonymous'
         }else if($anonymous_check==1 && $part_auth==1){
             $inputs = $this->makeInputs($contents_number, $vote['sid'], NULL, 'anonymous');
             $result = $this->vote_model->voting($inputs);

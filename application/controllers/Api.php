@@ -49,10 +49,10 @@ class Api extends CI_Controller {
         // 제목, 선택지, 마감일자 구하기. (sp_vote)
         // array로 반환.
         $vote['part_num'] = $part_num;
-        $user_choice = $this->vote_service->get_choice_by_vote_id_and_user_id($sid, $this->session->userdata('sid'));
+        //$user_choice = $this->vote_service->get_choice_by_vote_id_and_user_id($sid, $this->session->userdata('sid'));
         //$this->load->view('vote_page', array('vote'=>$vote,'user_choice'=>$user_choice));
-        $vote_page = array('vote'=>$vote,'user_choice'=>$user_choice);
-        echo json_encode($vote_page);
+        //$vote_page = array('vote'=>$vote,'user_choice'=>$user_choice);
+        echo json_encode($vote);
 
     }
 
@@ -105,7 +105,7 @@ class Api extends CI_Controller {
             $this->load->view('result',array('message'=>"로그인하시기 바랍니다.",'location'=>"/index.php/user/login"));
             return;
         }
-        $vote = $this->room_service->get_list_by_room_id($room_id);
+        $vote = $this->vote_service->get_list_by_room_id($room_id);
         // 해당하는 방을 찾지 못한 경우
         if(empty($vote)){
             echo '{"result": "noVote"}';

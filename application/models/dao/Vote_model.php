@@ -50,10 +50,10 @@ class Vote_model extends CI_Model {
         return $result;
     }
 
-    function get_voted_list($room_sid) {
+    function get_voted_list($room_sid,$user_id) {
         $sql = "SELECT * FROM sp_vote LEFT JOIN sp_user_vote_choice ON ";
         $sql .= "sp_vote.sid = sp_user_vote_choice.vote_id WHERE sp_vote.room_id = ? AND sp_user_vote_choice.user_id =?";
-        $result = $this->db->query($sql, array($room_sid,$room_sid))->result_array();
+        $result = $this->db->query($sql, array($room_sid,$user_id))->result_array();
         return $result;
     }
 
