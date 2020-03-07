@@ -98,5 +98,21 @@ class Api extends CI_Controller {
             echo json_encode($room);
         }
     }
+
+    function find_room_votes($room_id) {
+        $user_id = $this->session->userdata('sid');
+        if(empty($user_id)){
+            $this->load->view('result',array('message'=>"로그인하시기 바랍니다.",'location'=>"/index.php/user/login"));
+            return;
+        }
+        $vote = $this->room_service->get_list_by_room_id($room_id);
+        // 해당하는 방을 찾지 못한 경우
+        if(empty($vote)){
+            echo '{"result": "noVote"}';
+            return;
+        }else {
+            echo json_encode($vote);
+        }
+    }
 }
 ?>

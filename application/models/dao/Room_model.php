@@ -136,7 +136,7 @@ class Room_model extends CI_Model {
     */
     function audience_room_list($user_id) {
         $sql = "SELECT sp_room.sid as sid, sp_room.url_name as url_name, sp_room.title as title, ";
-        $sql .= "sp_room.part_num as part_num ";
+        $sql .= "sp_room.part_num as part_num, (SELECT sp_user.nickname FROM sp_user WHERE sp_room.master = sp_user.sid) as master_nickname ";
         $sql .= "FROM sp_room INNER JOIN sp_room_user ON sp_room.sid = sp_room_user.room_id ";
         $sql .= "WHERE sp_room_user.user_id=? AND sp_room.deleted=0 ORDER BY sp_room.sid DESC";
 
