@@ -37,8 +37,6 @@ class Room_service extends CI_Model {
         return array('room'=>$room, 'list'=>$list);
     }
 
-
-
     /*
         get_room_by_sid
         param: sid (방 시퀀스 아이디)

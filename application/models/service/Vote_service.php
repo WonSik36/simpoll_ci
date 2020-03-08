@@ -12,10 +12,10 @@ class Vote_service extends CI_Model {
         param: room_sid (방 시퀀스 아이디)
         return: all_list
     */
-    function get_list_by_room_id($room_sid) {
+    function get_list_by_room_id($room_sid,$user_id) {
         $this->load->model('dao/vote_model');
         $all_list = $this->vote_model->get_all_list($room_sid);
-        $voted_list = $this->vote_model->get_voted_list($room_sid);
+        $voted_list = $this->vote_model->get_voted_list($room_sid,$user_id);
 
         for($i = 0; $i < count($all_list); $i++) {
             for($j = 0; $j < count($voted_list); $j++){

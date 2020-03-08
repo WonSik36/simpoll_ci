@@ -160,7 +160,6 @@ class Vote extends CI_Controller {
             echo json_encode($res); //string
             // $this->load->view('debug', array('debug'=>json_encode($res)));
         }
-
     }
 }
 ?>

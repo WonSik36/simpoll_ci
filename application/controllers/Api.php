@@ -32,26 +32,19 @@ class Api extends CI_Controller {
 
         // 해당하는 시퀀스 아이디를 찾지 못한 경우
         if(empty($vote)){
-            //$this->load->view('result',array('message'=>"해당하는 Simpoll을 찾지 못하였습니다."));
-            //return;
             echo '{"result": "fail"}';
         }
 
         // 로그인 한 경우에만 투표가 가능한 경우
         if($vote['part_auth'] == 0 && empty($nickname)){
-            $this->load->view('result',array('message'=>"로그인하시기 바랍니다.",'location'=>"/index.php/user/login"));
-            return;
+            echo '{"result": "Login Please"}';
         }
 
         // get 요청 - 사용자가 투표 페이지를 요청시
         // 참여 인원 구하기. (sp_vote, sp_user_vote_choice)
         $part_num = $this->vote_service->get_part_num($sid);
-        // 제목, 선택지, 마감일자 구하기. (sp_vote)
         // array로 반환.
         $vote['part_num'] = $part_num;
-        //$user_choice = $this->vote_service->get_choice_by_vote_id_and_user_id($sid, $this->session->userdata('sid'));
-        //$this->load->view('vote_page', array('vote'=>$vote,'user_choice'=>$user_choice));
-        //$vote_page = array('vote'=>$vote,'user_choice'=>$user_choice);
         echo json_encode($vote);
 
     }
@@ -75,8 +68,7 @@ class Api extends CI_Controller {
         $nickname = $this->session->userdata('nickname');
         // 로그인 되어 있지 않다면
         if(empty($nickname)){
-            $this->load->view('result',array('message'=>"로그인하시기 바랍니다.",'location'=>"/index.php/user/login"));
-            return;
+            echo '{"result": "Login Please"}';
         }
 
         $result = $this->room_service->get_room_by_sid($sid);
@@ -86,8 +78,7 @@ class Api extends CI_Controller {
     function find_user_rooms() {
         $user_id = $this->session->userdata('sid');
         if(empty($user_id)){
-            $this->load->view('result',array('message'=>"로그인하시기 바랍니다.",'location'=>"/index.php/user/login"));
-            return;
+            echo '{"result": "Login Please"}';
         }
         $room = $this->room_service->audience_room_list($user_id);
         // 해당하는 방을 찾지 못한 경우
@@ -102,16 +93,59 @@ class Api extends CI_Controller {
     function find_room_votes($room_id) {
         $user_id = $this->session->userdata('sid');
         if(empty($user_id)){
-            $this->load->view('result',array('message'=>"로그인하시기 바랍니다.",'location'=>"/index.php/user/login"));
-            return;
+            echo '{"result": "Login Please"}';
         }
-        $vote = $this->vote_service->get_list_by_room_id($room_id);
+        $vote = $this->vote_service->get_list_by_room_id($room_id,$user_id);
         // 해당하는 방을 찾지 못한 경우
         if(empty($vote)){
             echo '{"result": "noVote"}';
             return;
         }else {
             echo json_encode($vote);
+        }
+    }
+
+    function return_vote_result($sid) {
+        $res = $this->vote_service->vote_result($sid);
+        //$this->load->view('debug', array('debug'=>var_dump($res)));
+
+        if(!empty($res)) {
+            echo json_encode($res); //string
+            // $this->load->view('debug', array('debug'=>json_encode($res)));
+        }else {
+            echo json_encode($res); //string
+            // $this->load->view('debug', array('debug'=>json_encode($res)));
+        }
+    }
+
+    function voting($sid) {
+        $vote = $this->vote_service->get_vote($sid);
+        $nickname = $this->session->userdata('nickname');
+
+        // 해당하는 시퀀스 아이디를 찾지 못한 경우
+        if(empty($vote)){
+            echo '{"result": "Could not find the corresponding simpoll."}'
+        }
+
+        // 로그인 한 경우에만 투표가 가능한 경우
+        if($vote['part_auth'] == 0 && empty($nickname)){
+            echo '{"result": "Login Please"}';
+        }
+
+        // post 요청 - 사용자가 투표를 제출 한 후
+        if(!empty($this->input->post('contents_number'))){
+            $contents_number = $this->input->post('contents_number');
+            $userdata = $this->session->userdata();
+
+            $result = $this->vote_service->voting($vote, $contents_number, $userdata);
+
+            // 투표 성공
+            if($result){
+                echo '{"result": "Simpoll complete."}';
+            // 투표 실패
+            }else{
+                echo '{"result": "Simpoll is not complete."}';
+            }
         }
     }
 }
