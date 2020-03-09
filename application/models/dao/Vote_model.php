@@ -102,7 +102,7 @@ class Vote_model extends CI_Model {
         return $result['count'];
     }
 
-    function get_title_deadline($sid) {
+    function get_vote_by_sid($sid) {
         $sql = "SELECT * FROM sp_vote WHERE sid = ? AND deleted=0";
         $result = $this->db->query($sql, array($sid))->row_array();
         return $result;

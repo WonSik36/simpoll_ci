@@ -14,6 +14,10 @@ class Vote extends CI_Controller {
 
         // 검색 성공
         if(!empty($vote)){
+            /* need to fix it */
+            /*
+                it call same logic one more
+            */
             $sid = $vote['sid'];
             $this->page($sid);
 

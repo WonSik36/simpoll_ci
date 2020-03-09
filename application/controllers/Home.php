@@ -38,5 +38,9 @@ class Home extends CI_Controller {
 
         $this->load->view("result", array('message'=>$message, 'location'=>$location));
     }
+
+    function dashboard(){
+        $this->load->view("dashboard");
+    }
 }
 ?>

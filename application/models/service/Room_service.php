@@ -66,5 +66,15 @@ class Room_service extends CI_Model {
         return $this->room_model->audience_room_list($user_id);
         //return array('room'=>$room, 'master'=>$master);
     }
+
+    /*
+        searchRoomByUrl
+        입력받은 URL에 매칭되는 방을 찾는다
+        param: 방 url
+        return: 성공시 방(array) 실패시 NULL
+    */
+    function searchRoomByUrl($url){
+        return $this->room_model->selectRoomByUrl($url);
+    }
 }
 ?>

@@ -143,5 +143,22 @@ class Room_model extends CI_Model {
         $result = $this->db->query($sql, array($user_id))->result_array();
         return $result;
     }
+
+    /*
+        selectRoomByUrl
+        입력받은 URL에 매칭되는 방을 찾는다
+        param: 방 url
+        return: 성공시 방(array) 실패시 NULL
+    */
+    function selectRoomByUrl($url) {
+        $sql = "SELECT * FROM sp_room WHERE url_name=? AND deleted=0";
+
+        $query = $this->db->query($sql, array($url));
+
+        if($query == false)
+            return null;
+        else
+            return $query->row_array();
+    }
 }
 ?>

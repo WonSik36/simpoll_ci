@@ -259,12 +259,12 @@
 
                 // 로그인한 누구나
                 if(auth_type == 0){
-                    anonymousCheck.disabled = false;
+                    anonymousCheck.readonly = false;
                 
                 // 링크를 가진 누구나
                 }else{
                     anonymousCheck.checked = true;
-                    anonymousCheck.disabled = true;
+                    anonymousCheck.setAttribute("readonly","readonly");
                 }
             }
         </script>

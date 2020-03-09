@@ -16,8 +16,8 @@ class User extends CI_Controller {
             //$this->load->view('debug',array('debug'=>var_dump($user)));
             // 성공
             if(!empty($user)){
-                $this->load->view('result',array('message'=>"로그인 성공",'location'=>"/index.php/home"));
                 $this->session->set_userdata(array('email'=>$user->email, 'sid'=>$user->sid, 'name'=>$user->name, 'nickname'=>$user->nickname));
+                $this->load->view('result',array('message'=>"로그인 성공",'location'=>"/index.php/home/dashboard"));
             // 실패
             }else{
                 $this->load->view('login');

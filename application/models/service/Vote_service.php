@@ -8,22 +8,24 @@ class Vote_service extends CI_Model {
     }
 
     /*
-        get_room_and_list
-        param: room_sid (방 시퀀스 아이디)
-        return: all_list
+        get_list_by_room_id
+        param: room_sid (방 시퀀스 아이디), user_id
+        return: 투표(배열)의 배열
+        유저가 투표를 했을경우, voted=true
+        안했을 경우 voted=false
     */
+    /* need to fix: O(N^2) */
     function get_list_by_room_id($room_sid,$user_id) {
         $this->load->model('dao/vote_model');
-        $all_list = $this->vote_model->get_all_list($room_sid);
+        $all_list = $this->vote_model->get_list($room_sid);
         $voted_list = $this->vote_model->get_voted_list($room_sid,$user_id);
 
         for($i = 0; $i < count($all_list); $i++) {
+            $all_list[$i]['voted'] = FALSE;
             for($j = 0; $j < count($voted_list); $j++){
-                if((int)$all_list[$i]['sid'] == (int)$voted_list[$j]['sid']) {
+                if((int)$all_list[$i]['sid'] == (int)$voted_list[$j]['vote_id']) {
                     // 투표했으면 true, 아직 안했으면 false를 voted라는 항목에 넣어준다.
                     $all_list[$i]['voted'] = TRUE;
-                }else {
-                    $all_list[$i]['voted'] = FALSE;
                 }
             }
         }
@@ -110,7 +112,7 @@ class Vote_service extends CI_Model {
     }
 
     function get_vote($sid) {
-        return $this->vote_model->get_title_deadline($sid);
+        return $this->vote_model->get_vote_by_sid($sid);
     }
 
     function get_contents($sid) {

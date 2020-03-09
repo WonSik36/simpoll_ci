@@ -17,12 +17,16 @@ class Api extends CI_Controller {
 
         // 검색 성공
         if(!empty($vote)){
+            /* need to fix it */
+            /*
+                it call same logic one more
+            */
             $sid = $vote['sid'];
             $this->vote_page($sid);
 
         // 검색 실패
         }else{
-            echo '{"result": "fail"}';
+            $this->response_json(null,false,"No Matching URL");
         }
     }
 
@@ -32,121 +36,144 @@ class Api extends CI_Controller {
 
         // 해당하는 시퀀스 아이디를 찾지 못한 경우
         if(empty($vote)){
-            echo '{"result": "fail"}';
+            $this->response_json(null,false,"No Matching Vote");
         }
 
         // 로그인 한 경우에만 투표가 가능한 경우
         if($vote['part_auth'] == 0 && empty($nickname)){
-            echo '{"result": "Login Please"}';
+            $this->response_json(null,false,"Login Please");
         }
 
-        // get 요청 - 사용자가 투표 페이지를 요청시
         // 참여 인원 구하기. (sp_vote, sp_user_vote_choice)
         $part_num = $this->vote_service->get_part_num($sid);
         // array로 반환.
         $vote['part_num'] = $part_num;
-        echo json_encode($vote);
-
+        $this->response_json($vote,true,null);
     }
 
     function room_url($url) {
         //url을 기준으로 sid를 찾아준다
-        $vote = $this->vote_service->searchVoteByUrl($url);
+        $room = $this->room_service->searchRoomByUrl($url);
 
         // 검색 성공
-        if(!empty($vote)){
-            $sid = $vote['sid'];
+        if(!empty($room)){
+            /* need to fix it */
+            /*
+                it call same logic one more
+            */
+            $sid = $room['sid'];
             $this->room_page($sid);
 
         // 검색 실패
         }else{
-            echo '{"result": "fail"}';
+            $this->response_json(null,false,"No Matching URL");
         }
     }
 
     function room_page($sid) {
-        $nickname = $this->session->userdata('nickname');
-        // 로그인 되어 있지 않다면
-        if(empty($nickname)){
-            echo '{"result": "Login Please"}';
+        $room = $this->room_service->get_room_by_sid($sid);
+
+        // 해당하는 방이 존재하지 않는다면
+        if(empty($room)){
+            $this->response_json($room,true,"No Matching Room");
         }
 
-        $result = $this->room_service->get_room_by_sid($sid);
-        echo json_encode($result);
+        $this->response_json($room,true,null);
     }
 
     function find_user_rooms() {
         $user_id = $this->session->userdata('sid');
         if(empty($user_id)){
-            echo '{"result": "Login Please"}';
+            $this->response_json(null,false,"Login Please");
         }
-        $room = $this->room_service->audience_room_list($user_id);
-        // 해당하는 방을 찾지 못한 경우
-        if(empty($room)){
-            echo '{"result": "noRoom"}';
-            return;
-        }else {
-            echo json_encode($room);
-        }
+
+        $roomList = $this->room_service->audience_room_list($user_id);
+        $this->response_json($roomList, true, null);
     }
 
     function find_room_votes($room_id) {
         $user_id = $this->session->userdata('sid');
+
         if(empty($user_id)){
-            echo '{"result": "Login Please"}';
+            $this->response_json(null,false,"Login Please");
         }
-        $vote = $this->vote_service->get_list_by_room_id($room_id,$user_id);
-        // 해당하는 방을 찾지 못한 경우
-        if(empty($vote)){
-            echo '{"result": "noVote"}';
-            return;
-        }else {
-            echo json_encode($vote);
-        }
+
+        $voteList = $this->vote_service->get_list_by_room_id($room_id,$user_id);
+        $this->response_json($voteList,true,null);
     }
 
     function return_vote_result($sid) {
-        $res = $this->vote_service->vote_result($sid);
-        //$this->load->view('debug', array('debug'=>var_dump($res)));
+        $voteResult = $this->vote_service->vote_result($sid);
+        $voteResult['voted'] = true;
+        $this->response_json($voteResult,true,null);
+    }
 
-        if(!empty($res)) {
-            echo json_encode($res); //string
-            // $this->load->view('debug', array('debug'=>json_encode($res)));
-        }else {
-            echo json_encode($res); //string
-            // $this->load->view('debug', array('debug'=>json_encode($res)));
+    function voting() {
+        $request = json_decode(file_get_contents('php://input'),true);
+        $contents_number = $request['contents_number'];
+        $vote_id = $request['vote_id'];
+
+        // 해당하는 시퀀스 아이디를 찾지 못한 경우
+        $vote = $this->vote_service->get_vote($vote_id);
+        if(empty($vote)){
+            $this->response_json(null, false, "Could not find the corresponding simpoll");
+        }
+
+        /* test start */
+        $userdata = array();
+        $userdata['sid'] = 1;
+        $userdata['name'] = "test";
+        $userdata['nickname'] = "test";
+        /* test end */
+        // 로그인 한 경우에만 투표가 가능한 경우
+        // $nickname = $this->session->userdata('nickname');
+        // if($vote['part_auth'] == 0 && empty($nickname)){
+        //     $this->response_json(null, false, "Login Please");
+        // }
+
+        // 투표 실행
+        // $userdata = $this->session->userdata();
+        $result = $this->vote_service->voting($vote, $contents_number, $userdata);
+
+        // 투표 성공
+        if($result){
+            $this->response_json(null, true, "Simpoll complete");
+            // 투표 실패
+        }else{
+            $this->response_json(null, false, "Simpoll is not complete");
         }
     }
 
-    function voting($sid) {
-        $vote = $this->vote_service->get_vote($sid);
-        $nickname = $this->session->userdata('nickname');
+    function response_json($data, $isSucceed, $message){
+        $res = array();
 
-        // 해당하는 시퀀스 아이디를 찾지 못한 경우
-        if(empty($vote)){
-            echo '{"result": "Could not find the corresponding simpoll."}'
+        // success
+        if($isSucceed){
+            $res['result'] = 'success';
+            $res['data'] = $data;
+            $res['message'] = $message;
+
+        // fail
+        }else{
+            $res['result'] = 'fail';
+            $res['message'] = $message;
         }
 
-        // 로그인 한 경우에만 투표가 가능한 경우
-        if($vote['part_auth'] == 0 && empty($nickname)){
-            echo '{"result": "Login Please"}';
+        echo json_encode($res); 
+        exit;
+    }
+
+    function user(){
+        if(empty($this->session->userdata('nickname'))){
+            $this->response_json(null, false, "Login Please");
         }
 
-        // post 요청 - 사용자가 투표를 제출 한 후
-        if(!empty($this->input->post('contents_number'))){
-            $contents_number = $this->input->post('contents_number');
-            $userdata = $this->session->userdata();
-
-            $result = $this->vote_service->voting($vote, $contents_number, $userdata);
-
-            // 투표 성공
-            if($result){
-                echo '{"result": "Simpoll complete."}';
-            // 투표 실패
-            }else{
-                echo '{"result": "Simpoll is not complete."}';
-            }
-        }
+        $user = array();
+        $user['nickname'] = $this->session->userdata('nickname');
+        $user['email'] = $this->session->userdata('email');
+        $user['sid'] = $this->session->userdata('sid');
+        $user['name'] = $this->session->userdata('name');
+        $this->response_json($user, true, null);
     }
 }
 ?>

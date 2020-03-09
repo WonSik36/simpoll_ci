@@ -6,6 +6,8 @@ class Room extends CI_Controller {
         $this->load->library('session');
     }
 
+    /* need to fix it */
+    /*
     function url($url) {
         //url을 기준으로 sid를 찾아준다
         $vote = $this->vote_service->searchVoteByUrl($url);
@@ -14,6 +16,8 @@ class Room extends CI_Controller {
 
         // 검색 성공
         if(!empty($vote)){
+            // need to fix it
+            // it call same logic one more
             $sid = $vote['sid'];
             $this->page($sid);
 
@@ -41,7 +45,10 @@ class Room extends CI_Controller {
         $result = $this->room_service->get_room_and_list($sid);
         //$this->load->view('my_room_audience', $result, array('vote'=>$vote,'user_choice'=>$user_choice));
     }
+    */
 
+    /* need to fix it */
+    /* not matching controller */
     function vote_ajax() {
         $this->load->model('service/vote_service');
 
