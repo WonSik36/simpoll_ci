@@ -6,11 +6,11 @@ CREATE TABLE sp_user
     `sid`          INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
     `email`        VARCHAR(255)    NOT NULL    COMMENT '사용자 이메일', 
     `name`         VARCHAR(255)    NOT NULL    COMMENT '사용자 이름', 
-    `deleted`      TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
     `nickname`     VARCHAR(255)    NOT NULL    COMMENT '닉네임', 
     `password`     VARCHAR(255)    NOT NULL    COMMENT '패스워드', 
     `create_date`  TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '생성날짜', 
     `edit_date`    TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정날짜', 
+    `is_deleted`   TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
     PRIMARY KEY (sid)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -28,14 +28,16 @@ CREATE TABLE sp_room
 (
     `sid`               INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
     `url_name`          VARCHAR(255)    NULL        COMMENT 'url 이름', 
-    `master`            INT             NOT NULL    COMMENT '방장', 
     `title`             VARCHAR(255)    NOT NULL    COMMENT '방 제목', 
-    `deleted`           TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
-    `user_name_type`    INT             NOT NULL    COMMENT '참여자 실명/닉네임 여부', 
+    `master`            INT             NOT NULL    COMMENT '방장', 
+    `master_nickname`   VARCHAR(255)    NOT NULL    COMMENT '방장 닉네임', 
+    `part_num`          INT             NOT NULL    DEFAULT 0 COMMENT '참여자수', 
+    `status`            INT             NOT NULL    DEFAULT 0 COMMENT '방 상태', 
     `vote_create_auth`  INT             NOT NULL    COMMENT '투표 생성권한', 
-    `part_num`          INT             NOT NULL    DEFAULT 1 COMMENT '참여자수', 
-    `crate_date`        TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '생성날짜', 
+    `user_name_type`    INT             NOT NULL    COMMENT '참여자 실명/닉네임 여부', 
+    `create_date`       TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '생성날짜', 
     `edit_date`         TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정날짜', 
+    `is_deleted`        TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
     PRIMARY KEY (sid)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -49,38 +51,58 @@ ALTER TABLE sp_room
     ADD UNIQUE UK_sp_room_url_name (url_name);
 
 
+-- sp_group Table Create SQL
+CREATE TABLE sp_group
+(
+    `sid`                INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
+    `room_id`            INT             NOT NULL    COMMENT '방 아이디', 
+    `titile`             VARCHAR(255)    NULL        COMMENT '그룹 제목', 
+    `url_name`           VARCHAR(255)    NULL        COMMENT 'url 이름', 
+    `user_id`            INT             NOT NULL    COMMENT '사용자 아이디', 
+    `user_nickname`      VARCHAR(255)    NOT NULL    COMMENT '사용자 닉네임', 
+    `deadline`           TIMESTAMP       NOT NULL    COMMENT '마감날짜', 
+    `is_comment_enable`  TINYINT(1)      NOT NULL    COMMENT '댓글여부', 
+    `is_anonymous`       TINYINT(1)      NOT NULL    COMMENT '익명 여부', 
+    `part_auth`          INT             NOT NULL    COMMENT '참여 권한', 
+    `create_date`        TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '생성날짜', 
+    `edit_date`          TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정날짜', 
+    `is_deleted`         TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
+    PRIMARY KEY (sid)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+ALTER TABLE sp_group COMMENT '투표 그룹';
+
+ALTER TABLE sp_group
+    ADD CONSTRAINT FK_sp_group_room_id_sp_room_sid FOREIGN KEY (room_id)
+        REFERENCES sp_room (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE sp_group
+    ADD CONSTRAINT FK_sp_group_user_id_sp_user_sid FOREIGN KEY (user_id)
+        REFERENCES sp_user (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+ALTER TABLE sp_group 
+    ADD UNIQUE UK_sp_vote_url_name (url_name);
+
+
 -- sp_vote Table Create SQL
 CREATE TABLE sp_vote
 (
-    `sid`              INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
-    `url_name`         VARCHAR(255)    NULL        COMMENT 'url 이름', 
-    `room_id`          INT             NOT NULL    COMMENT '방 아이디', 
-    `user_id`          INT             NOT NULL    COMMENT '사용자 아이디', 
-    `title`            VARCHAR(255)    NOT NULL    COMMENT '투표 제목', 
-    `deadline`         TIMESTAMP       NOT NULL    COMMENT '마감날짜', 
-    `deleted`          TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
-    `contents`         TEXT            NOT NULL    COMMENT '선택지', 
-    `vote_type`        INT             NOT NULL    COMMENT '투표 타입', 
-    `comment_check`    TINYINT(1)      NOT NULL    COMMENT '댓글여부', 
-    `anonymous_check`  TINYINT(1)      NOT NULL    COMMENT '익명 여부', 
-    `part_auth`        INT             NOT NULL    COMMENT '참여권한', 
-    `create_date`      TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '생성날짜', 
-    `edit_date`        TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정날짜', 
+    `sid`          INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
+    `group_id`     INT             NOT NULL    COMMENT '그룹 아이디', 
+    `title`        VARCHAR(255)    NOT NULL    COMMENT '투표 제목', 
+    `choices`      TEXT            NOT NULL    COMMENT '선택지', 
+    `vote_type`    INT             NOT NULL    COMMENT '투표 타입', 
+    `create_date`  TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '생성날짜', 
+    `edit_date`    TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정날짜', 
+    `is_deleted`   TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
     PRIMARY KEY (sid)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 ALTER TABLE sp_vote COMMENT '투표';
 
 ALTER TABLE sp_vote
-    ADD CONSTRAINT FK_sp_vote_user_id_sp_user_sid FOREIGN KEY (user_id)
-        REFERENCES sp_user (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
-ALTER TABLE sp_vote
-    ADD CONSTRAINT FK_sp_vote_room_id_sp_room_sid FOREIGN KEY (room_id)
-        REFERENCES sp_room (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
-ALTER TABLE sp_vote 
-    ADD UNIQUE UK_sp_vote_url_name (url_name);
+    ADD CONSTRAINT FK_sp_vote_group_id_sp_group_sid FOREIGN KEY (group_id)
+        REFERENCES sp_group (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 
 -- sp_room_user Table Create SQL
@@ -89,10 +111,10 @@ CREATE TABLE sp_room_user
     `sid`          INT           NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
     `room_id`      INT           NOT NULL    COMMENT '방 아이디', 
     `user_id`      INT           NOT NULL    COMMENT '사용자 아이디', 
-    `deleted`      TINYINT(1)    NOT NULL    DEFAULT 0 COMMENT '방 탈퇴 여부', 
     `auth`         INT           NOT NULL    COMMENT '권한', 
     `create_date`  TIMESTAMP     NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '생성날짜', 
     `edit_date`    TIMESTAMP     NOT NULL    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정날짜', 
+    `is_deleted`   TINYINT(1)    NOT NULL    DEFAULT 0 COMMENT '방 탈퇴 여부', 
     PRIMARY KEY (sid)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -115,14 +137,14 @@ ALTER TABLE sp_room_user
 -- sp_comment Table Create SQL
 CREATE TABLE sp_comment
 (
-    `sid`          INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
-    `vote_id`      INT             NOT NULL    COMMENT '투표 아이디', 
-    `edit_date`    TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정날짜', 
-    `user_id`      INT             NOT NULL    COMMENT '사용자 아이디', 
-    `cur_name`     VARCHAR(255)    NULL        COMMENT '현재 아이디', 
-    `contents`     TEXT            NOT NULL    COMMENT '내용', 
-    `deleted`      TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
-    `create_date`  TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '생성날짜', 
+    `sid`            INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
+    `group_id`       INT             NOT NULL    COMMENT '그룹 아이디', 
+    `user_id`        INT             NOT NULL    COMMENT '사용자 아이디', 
+    `user_nickname`  VARCHAR(255)    NOT NULL    COMMENT '사용자 닉네임', 
+    `contents`       TEXT            NOT NULL    COMMENT '내용', 
+    `create_date`    TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '생성날짜', 
+    `edit_date`      TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정날짜', 
+    `is_deleted`     TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
     PRIMARY KEY (sid)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -133,32 +155,32 @@ ALTER TABLE sp_comment
         REFERENCES sp_user (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE sp_comment
-    ADD CONSTRAINT FK_sp_comment_vote_id_sp_vote_sid FOREIGN KEY (vote_id)
-        REFERENCES sp_vote (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
+    ADD CONSTRAINT FK_sp_comment_group_id_sp_group_sid FOREIGN KEY (group_id)
+        REFERENCES sp_group (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 
--- sp_user_vote_choice Table Create SQL
-CREATE TABLE sp_user_vote_choice
+-- sp_choice Table Create SQL
+CREATE TABLE sp_choice
 (
-    `sid`              INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
-    `user_id`          INT             NULL        COMMENT '사용자 아이디', 
-    `cur_name`         VARCHAR(255)    NULL        COMMENT '현재 아이디', 
-    `kinds`            INT             NULL        DEFAULT null COMMENT '좋아요 유형', 
-    `vote_id`          INT             NOT NULL    COMMENT '투표 아이디', 
-    `contents_number`  VARCHAR(255)    NOT NULL    COMMENT '선택지 번호', 
-    `create_date`      TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '생성날짜', 
-    `edit_date`        TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정날짜', 
+    `sid`            INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
+    `user_id`        INT             NULL        COMMENT '사용자 아이디', 
+    `user_nickname`  VARCHAR(255)    NOT NULL    COMMENT '사용자 닉네임', 
+    `vote_id`        INT             NOT NULL    COMMENT '투표 아이디', 
+    `choice_no`      VARCHAR(255)    NOT NULL    COMMENT '선택지 번호', 
+    `create_date`    TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '생성날짜', 
+    `edit_date`      TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정날짜', 
+    `is_deleted`     TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
     PRIMARY KEY (sid)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-ALTER TABLE sp_user_vote_choice COMMENT '사용자:선택지 매칭 테이블';
+ALTER TABLE sp_choice COMMENT '사용자:선택지 매칭 테이블';
 
-ALTER TABLE sp_user_vote_choice
-    ADD CONSTRAINT FK_sp_user_vote_choice_user_id_sp_user_sid FOREIGN KEY (user_id)
+ALTER TABLE sp_choice
+    ADD CONSTRAINT FK_sp_choice_user_id_sp_user_sid FOREIGN KEY (user_id)
         REFERENCES sp_user (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-ALTER TABLE sp_user_vote_choice
-    ADD CONSTRAINT FK_sp_user_vote_choice_vote_id_sp_vote_sid FOREIGN KEY (vote_id)
+ALTER TABLE sp_choice
+    ADD CONSTRAINT FK_sp_choice_vote_id_sp_vote_sid FOREIGN KEY (vote_id)
         REFERENCES sp_vote (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 

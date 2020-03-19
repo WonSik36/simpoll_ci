@@ -2,32 +2,37 @@ TINYINT(1)의 경우 boolean 이므로 0 -> FALSE, 1 -> TRUE 로 한다.
 
 --- sp_room ---
 
-`user_name_type`    INT            NOT NULL    COMMENT '참여자 실명/닉네임 여부', 
+`user_name_type`    INT             NOT NULL    COMMENT '참여자 실명/닉네임 여부', 
 0: 실명, 1: 닉네임
 
-`vote_create_auth`  INT            NOT NULL    COMMENT '투표 생성권한', 
+`vote_create_auth`  INT             NOT NULL    COMMENT '투표 생성권한', 
 0: 방장만, 1: 방 참여자 모두
 
-`deadline_check`    TINYINT(1)     NOT NULL    COMMENT '마감날짜 설정여부', 
-0: 마감 날짜 미설정, 1: 마감 날짜 설정
+`status`            INT             NOT NULL    DEFAULT 0 COMMENT '방 상태', 
+0: 활성화, 1: 비활성화
+
 
 
 --- sp_room_user ---
 
-`auth`     INT           NOT NULL    COMMENT '권한',
+`auth`         INT           NOT NULL    COMMENT '권한', 
 1: 방장, 2: 일반 참여자
 
---- sp_vote ---
 
-`vote_type`        INT             NOT NULL    COMMENT '투표 타입',
-0: 하나만 선택, 1: 복수 선택
 
-`comment_check`    TINYINT(1)      NOT NULL    COMMENT '댓글여부', 
+--- sp_group ---
+
+`is_comment_enable`    TINYINT(1)      NOT NULL    COMMENT '댓글여부', 
 0: False, 1: True
 
-`anonymous_check`  TINYINT(1)      NOT NULL    COMMENT '익명 여부', 
+`is_anonymous`  TINYINT(1)      NOT NULL    COMMENT '익명 여부', 
 0: False, 1: True
 
 `part_auth`        INT             NOT NULL    COMMENT '투표참여권한', 
 0: 로그인 한 누구나, 1: 링크를 가진 누구나
-* 방 참여자 항목을 추가할 필요가 있음
+
+
+
+--- sp_vote ---
+`vote_type`    INT             NOT NULL    COMMENT '투표 타입', 
+0: 하나만 선택, 1: 복수 선택
