@@ -14,67 +14,80 @@ class Room_service extends CI_Model {
         실패시 : NULL을 return 한다.
     */
     function register($room) {
-        //dao에 room insert를 요청한다.
-        $this->room_model->insert_room($room);
-        $master = $room['master'];
-        //master를 이용해서 해당 방의 sid를 검색한다.
-        $room_sid = $this->room_model->find_sid($master);
-        //room의 sid와 user_id를 이용해서 방장을 해당 방에 넣어준다.
-        $this->room_model->insert_sp_room_user($room_sid, $master,1);
-        return $room_sid;
+        $this->db->trans_start();
+
+        // dao에 room insert를 요청한다.
+        $this->room_model->insertOne($room);
+        
+        // master를 이용해서 해당 방의 sid를 검색한다.
+        $user_id = $room['master'];
+        $newRoom = $this->room_model->selectListByMaster($user_id)[0];
+        $room_id = $newRoom['sid'];
+
+        // room의 sid와 user_id를 이용해서 방장을 해당 방에 넣어준다. $auth:1
+        $this->room_model->insertUser2Room($room_id, $user_id, 1);
+
+        // room의 part_num을 1 올려준다
+        $this->room_model->addPartNum($room_id);
+
+        $this->db->trans_complete();
+        return $room_id;
     }
 
     /*
-        get_room_and_list
-        param: room_sid (방 시퀀스 아이디)
-        return: array('room'=>$room, 'list'=>$list)
+        addAudience2Room
+        param: 방아이디, 유저아이디, 권한(1:방장, 2:일반)
     */
-    function get_room_and_list($room_sid) {
-        $this->load->model('dao/vote_model');
-        //room_sid를 이용해서 방 제목, 방 id, 기간 가져오기 -> $room
-        $room = $this->room_model->get_room($room_sid);
-        $list = $this->vote_model->get_list($room_sid);
-        return array('room'=>$room, 'list'=>$list);
+    function addAudience2Room($room_id, $user_id){
+        $this->room_model->insertUser2Room($room_id, $user_id, 2);
+        $this->room_model->addPartNum($room_id);
     }
 
     /*
-        get_room_by_sid
+        getRoomById
         param: sid (방 시퀀스 아이디)
         return: 방(array)
     */
-    function get_room_by_sid($sid) {
-        return $this->room_model->get_room($sid);
+    function getRoomById($sid) {
+        return $this->room_model->selectOneById($sid);
     }
 
     /*
-        speacker_room_list
+        getMasterRoomList
         자신이 강연자로 있는 방 목록 반환
         param: 유저 시퀀스 아이디
         return: 방(array) array
     */
-    function speacker_room_list($user_id) {
-        return $this->room_model->speacker_room_list($user_id);
+    function getMasterRoomList($user_id) {
+        return $this->room_model->selectListByMaster($user_id);
     }
 
     /*
-        audience_room_list
+        getAudienceRoomList
         자신이 참여하고 있는 방 목록 반환
         param: 유저 시퀀스 아이디
         return: 방(array) array
     */
-    function audience_room_list($user_id) {
-        return $this->room_model->audience_room_list($user_id);
-        //return array('room'=>$room, 'master'=>$master);
+    function getAudienceRoomList($user_id) {
+        return $this->room_model->selectListByUserId($user_id);
     }
 
     /*
-        searchRoomByUrl
+        getRoomByUrl
         입력받은 URL에 매칭되는 방을 찾는다
         param: 방 url
         return: 성공시 방(array) 실패시 NULL
     */
-    function searchRoomByUrl($url){
-        return $this->room_model->selectRoomByUrl($url);
+    function getRoomByUrl($url){
+        return $this->room_model->selectOneByUrl($url);
+    }
+
+    function updateRoom($room){
+        return $this->room_model->updateOne($room);
+    }
+
+    function deleteRoom($sid){
+        return $this->room_model->deleteOne($sid);
     }
 }
 ?>

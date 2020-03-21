@@ -22,7 +22,7 @@ class Choice_model extends CI_Model {
     function selectOneByVoteIdAndUserId($vote_id, $user_id){
         $sql = "SELECT * FROM sp_choice WHERE vote_id=? AND user_id=? AND is_deleted=0";
         
-        return $this->db->query($sql, array($vote_id, $user_id))->result_array();
+        return $this->db->query($sql, array($vote_id, $user_id))->row_array();
     }
 
     function selectListByVoteId($vote_id){

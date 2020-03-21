@@ -12,7 +12,7 @@ class User_service extends CI_Model {
         param: 배열(사용자)
     */
     function signup($user){
-        return $this->user_model->insert($user);
+        return $this->user_model->insertOne($user);
     }
 
     /*
@@ -21,7 +21,16 @@ class User_service extends CI_Model {
         return: 유저 object
     */
     function login($email, $pw){
-        return $this->user_model->login($email, $pw);
+        return $this->user_model->selectOneByEmailAndPW($email, $pw);
+    }
+
+    /* 
+        findAudiencesInRoom
+        param: room id
+        return 유저 리스트
+    */
+    function findAudiencesInRoom($room_id){
+        return $this->user_model->selectListByRoomId($room_id);
     }
 }
 ?>

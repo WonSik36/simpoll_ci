@@ -18,9 +18,9 @@ class Debug extends CI_Controller {
 
     private $groupList = array(
         array('room_id'=>'1','title'=>'group1','url_name'=>'url1','user_id'=>'1','user_nickname'=>'nickname1','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'0','sid'=>'1'),
-        array('room_id'=>'1','title'=>'group2','url_name'=>'url2','user_id'=>'2','user_nickname'=>'nickname2','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'0','sid'=>'2'),
-        array('room_id'=>'3','title'=>'group3','url_name'=>'url3','user_id'=>'3','user_nickname'=>'nickname3','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'0','sid'=>'3'),
-        array('room_id'=>'4','title'=>'group4','url_name'=>'url4','user_id'=>'4','user_nickname'=>'nickname4','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'0','sid'=>'4'),
+        array('room_id'=>'1','title'=>'group2','url_name'=>'url2','user_id'=>'2','user_nickname'=>'nickname2','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'1','part_auth'=>'0','sid'=>'2'),
+        array('room_id'=>'3','title'=>'group3','url_name'=>'url3','user_id'=>'3','user_nickname'=>'nickname3','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'1','part_auth'=>'1','sid'=>'3'),
+        array('room_id'=>'4','title'=>'group4','url_name'=>'url4','user_id'=>'4','user_nickname'=>'nickname4','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'1','sid'=>'4'),
         array('room_id'=>'5','title'=>'group5','url_name'=>'url5','user_id'=>'5','user_nickname'=>'nickname5','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'0','sid'=>'5')
     );
 
@@ -38,8 +38,8 @@ class Debug extends CI_Controller {
     );
 
     private $choiceList = array(
-        array('user_id'=>'1','user_nickname'=>'nickname1','vote_id'=>'1','choice_no'=>'1','sid'=>'1'),
-        array('user_id'=>'2','user_nickname'=>'nickname2','vote_id'=>'1','choice_no'=>'2','sid'=>'2'),
+        array('user_id'=>'1','user_nickname'=>'nickname1','vote_id'=>'1','choice_no'=>'1|3','sid'=>'1'),
+        array('user_id'=>'2','user_nickname'=>'nickname2','vote_id'=>'1','choice_no'=>'2|4','sid'=>'2'),
         array('user_id'=>'3','user_nickname'=>'nickname3','vote_id'=>'1','choice_no'=>'3','sid'=>'3'),
         array('user_id'=>'4','user_nickname'=>'nickname4','vote_id'=>'1','choice_no'=>'4','sid'=>'4'),
         array('user_id'=>'5','user_nickname'=>'nickname5','vote_id'=>'1','choice_no'=>'1','sid'=>'5'),
@@ -398,12 +398,98 @@ class Debug extends CI_Controller {
         $this->db->trans_start(TRUE);
         $this->_init();
 
+        // register
+        $vote = array('group_id'=>'1','title'=>'vote2','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0');
+        $this->vote_service->register($vote);
+        $list = $this->vote_service->getVoteListByGroupId(1);
+        echo $this->unit->run(count($list), 6, "register Test");
+
+        // getVoteById
+        $vote_id = $list[count($list)-1]['sid'];
+        echo $this->unit->run($this->compareVote($this->vote_service->getVoteById($vote_id),$vote), true, "getVoteById Test");
+        
+        // updateVote
+        $vote['sid'] = $vote_id;
+        $vote['title'] = "update title";
+        $this->vote_service->updateVote($vote);
+        echo $this->unit->run($this->vote_service->getVoteById($vote_id)['title'], "update title", "updateVote Test");
+        
+        // deleteVote
+        $this->vote_service->deleteVote($vote_id);
+        echo $this->unit->run($this->vote_service->getVoteById($vote_id), null, "deleteVote Test");
+
         $this->db->trans_complete();
     }
 
     function choiceservice(){
         $this->db->trans_start(TRUE);
         $this->_init();
+
+        $user = array('email'=>'email500@email.com','name'=>'name500','nickname'=>'nickname500','password'=>'pw500');
+        $this->user_model->insertOne($user);
+        $user = $this->user_model->selectOneByEmailAndPW("email500@email.com","pw500");
+
+        $vote1 = array('group_id'=>'1','title'=>'vote2','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'101');
+        $vote2 = array('group_id'=>'2','title'=>'vote3','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'102');
+        $vote3 = array('group_id'=>'3','title'=>'vote4','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'103');
+        $vote4 = array('group_id'=>'4','title'=>'vote5','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'104');
+        $this->vote_model->insertOneForTest($vote1);
+        $this->vote_model->insertOneForTest($vote2);
+        $this->vote_model->insertOneForTest($vote3);
+        $this->vote_model->insertOneForTest($vote4);
+
+        // voting - is_anonymous:0, part_auth:0
+        $choice = array('user_id'=>$user['sid'],'vote_id'=>'101','choice_no'=>'1');
+        $this->choice_service->voting($choice);
+        echo $this->unit->run($this->choice_model->count(),count($this->choiceList)+1, "voting Test");
+        $choice = $this->choice_service->getChoiceByVoteIdAndUserId('101',$user['sid']);
+        echo $this->unit->run($this->compareChoice($choice, array('user_id'=>$user['sid'],'user_nickname'=>'name500','vote_id'=>'101','choice_no'=>'1')), true, "voting Test");
+        echo $this->unit->run(empty($this->room_model->selectOneByRoomIdAndUserId('1', $user['sid'])),false,"voting Test");
+        
+        // voting - is_anonymous:1, part_auth:0
+        $choice = array('user_id'=>$user['sid'],'vote_id'=>'102','choice_no'=>'1','user');
+        $this->choice_service->voting($choice);
+        echo $this->unit->run($this->choice_model->count(),count($this->choiceList)+2, "voting Test");
+        $choice = $this->choice_service->getChoiceByVoteIdAndUserId('102',$user['sid']);
+        echo $this->unit->run($this->compareChoice($choice, array('user_id'=>$user['sid'],'user_nickname'=>'nickname500','vote_id'=>'102','choice_no'=>'1')), true, "voting Test");
+        echo $this->unit->run(empty($this->room_model->selectOneByRoomIdAndUserId('1', $user['sid'])),false,"voting Test");
+        
+        // voting - is_anonymous:1, part_auth:1
+        $choice = array('user_id'=>$user['sid'],'vote_id'=>'103','choice_no'=>'1');
+        $this->choice_service->voting($choice);
+        echo $this->unit->run($this->choice_model->count(),count($this->choiceList)+3, "voting Test");
+        $choice = $this->choice_service->getChoiceByVoteIdAndUserId('103',$user['sid']);
+        echo $this->unit->run($this->compareChoice($choice, array('user_id'=>$user['sid'],'user_nickname'=>'nickname500','vote_id'=>'103','choice_no'=>'1')), true, "voting Test");
+        echo $this->unit->run(empty($this->room_model->selectOneByRoomIdAndUserId('3', $user['sid'])),false,"voting Test");
+
+        // voting - is_anonymous:1, part_auth:1 with unlogin user
+        $choice = array('vote_id'=>'103','choice_no'=>'1');
+        $this->choice_service->voting($choice);
+        echo $this->unit->run($this->choice_model->count(),count($this->choiceList)+4, "voting Test");
+        
+        // voting - is_anonymous:0, part_auth:1 unable situation
+        $choice = array('user_id'=>$user['sid'],'vote_id'=>'104','choice_no'=>'1');
+        $this->choice_service->voting($choice);
+        echo $this->unit->run($this->choice_model->count(),count($this->choiceList)+4, "voting Test");
+        $choice = $this->choice_service->getChoiceByVoteIdAndUserId('104',$user['sid']);
+        echo $this->unit->run(empty($choice), true, "voting Test");
+        echo $this->unit->run(empty($this->room_model->selectOneByRoomIdAndUserId('4', $user['sid'])),true,"voting Test");
+
+        // getVoteResult
+        $vote = array('group_id'=>'1','title'=>'vote1','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'1');
+        echo $this->unit->run($this->compareVoteResult($this->choice_service->getVoteResult($vote),
+                array('label'=>["choice1","choice2","choice3","choice4"],'data'=>[2,1,2,2],'part_num'=>'5')),true,"getVoteResult Test");
+
+        // updateChoice
+        $choice = $this->choice_service->getChoiceByVoteIdAndUserId('101',$user['sid']);
+        $choice['choice_no'] = '3';
+        $this->choice_service->updateChoice($choice);
+        $choice = $this->choice_service->getChoiceByVoteIdAndUserId('101',$user['sid']);
+        $this->unit->run($choice['choice_no'],3,"updateChoice Test");
+        
+        // deleteChoice
+        $choice = $this->choice_service->deleteChoice($choice['sid']);
+        $this->unit->run(empty($this->choice_service->getChoiceByVoteIdAndUserId('101',$user['sid'])),true,"deleteChoice Test");
 
         $this->db->trans_complete();
     }
@@ -474,6 +560,23 @@ class Debug extends CI_Controller {
             return true;
         else
             return false;
+    }
+
+    function compareVoteResult($result1, $result2){
+        if(count($result1['label'])!=count($result1['label']) || count($result1['data'])!=count($result1['data']) || $result1['part_num']!=$result1['part_num'])
+            return false;
+
+        for($i=0;$i<count($result1['label']);$i++){
+            if($result1['label'] != $result2['label'])
+                return false;
+        }
+
+        for($i=0;$i<count($result1['data']);$i++){
+            if($result1['data'] != $result2['data'])
+                return false;
+        }
+
+        return true;
     }
 }
 ?>
