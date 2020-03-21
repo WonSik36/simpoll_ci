@@ -1,100 +1,72 @@
 <?php
-/*
--- sp_choice Table Create SQL
-CREATE TABLE sp_choice
-(
-    `id`        INT            NOT NULL    AUTO_INCREMENT COMMENT '선택지 아이디', 
-    `vote_id`   VARCHAR(6)     NOT NULL    COMMENT '투표 아이디 (여섯글자)', 
-    `contents`  VARCHAR(45)    NOT NULL    COMMENT '내용', 
-    `deleted`   TINYINT(1)     NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
-    PRIMARY KEY (id)
-);
-
-ALTER TABLE sp_choice COMMENT '선택지';
-
-ALTER TABLE sp_choice
-    ADD CONSTRAINT FK_sp_choice_vote_id_sp_vote_id FOREIGN KEY (vote_id)
-        REFERENCES sp_vote (id) ON DELETE RESTRICT ON UPDATE RESTRICT;
-*/
 class Choice_model extends CI_Model {
     function __construct()
     {       
         parent::__construct();
+        $this->load->database();
     }
 
-    /* 
-        insertList
-        등록된 선택지 목록(array) 삽입
-        param: 선택지 array
-        $choice_list = array(
-            array(
-                'vote_id' => '#ABCDEF' ,
-                'contents' => 'choice 1'
-            ),
-            array(
-                'vote_id' => '#ABCDEF' ,
-                'contents' => 'choice 2'
-            )
-        );
-    */
-    function insertList($choice_list){
-        $this->db->insert_batch('sp_choice',$choice_list);
+    function insertOne($choice){
+        $sql = "INSERT INTO sp_choice (user_id, user_nickname, vote_id, choice_no) VALUES (?,?,?,?)";
+        $query = $this->db->query($sql, array($choice['user_id'],$choice['user_nickname'],$choice['vote_id'],$choice['choice_no']));
+
+        return $query;
     }
 
-    /*  
-        selectList
-        특정 투표(vote_id)에 포함된 선택지 목록중 삭제되지 않은 것을 반환한다
-        param: 투표 아이디
-        return: 선택지 array
-        $choice_list = array(
-            array(
-                'id' => '1' ,
-                'vote_id' => '#ABCDEF' ,
-                'contents' => 'choice 1',
-                'deleted' => '0'
-            ),
-            array(
-                'id' => '2' ,
-                'vote_id' => '#ABCDEF' ,
-                'contents' => 'choice 2',
-                'deleted' => '0'
-            )
-        );
-    */
-    function selectList($vote_id){
-        $sql = "SELECT * FROM sp_choice WHERE vote_id=? AND deleted=0 ORDER BY ASC";
+    function selectOneById($sid){
+        $sql = "SELECT * FROM sp_choice WHERE sid=? AND is_deleted=0";
+
+        return $this->db->query($sql, array($sid))->row_array();
+    }
+
+    function selectOneByVoteIdAndUserId($vote_id, $user_id){
+        $sql = "SELECT * FROM sp_choice WHERE vote_id=? AND user_id=? AND is_deleted=0";
+        
+        return $this->db->query($sql, array($vote_id, $user_id))->result_array();
+    }
+
+    function selectListByVoteId($vote_id){
+        $sql = "SELECT * FROM sp_choice WHERE vote_id=? AND is_deleted=0 ORDER BY sid DESC";
+
         return $this->db->query($sql, array($vote_id))->result_array();
     }
 
-    /*
-        update
-        특정 선택지의 내용(contents)을 업데이트 한다
-        param: 선택지 array
-        $choice_list = array(
-            array(
-                'id' => '1' ,
-                'vote_id' => '#ABCDEF' ,
-                'contents' => 'choice 1'
-            ),
-            array(
-                'id' => '2' ,
-                'vote_id' => '#ABCDEF' ,
-                'contents' => 'choice 2'
-            )
-        );
-    */
-    function updateList($choice_list){
-        $this->db->update_batch('sp_choice',$choice_list, 'id');
+    function selectListByUserId($user_id){
+        $sql = "SELECT * FROM sp_choice WHERE user_id=? AND is_deleted=0 ORDER BY sid DESC";
+
+        return $this->db->query($sql, array($user_id))->result_array();
     }
 
-    /* 
-        delete
-        특정 선택지를 삭제한다.(update)
-        param: 선택지 아이디
-    */
-    function delete($id){
-        $sql = "UPDATE sp_choice SET deleted=1 WHERE id=?";
-        $this->db->query($sql, array($id));
+    function updateOne($choice){
+        $sql = "UPDATE sp_choice SET user_id=?, user_nickname=?, vote_id=?, choice_no=? WHERE sid=?";
+        $query = $this->db->query($sql, array($choice['user_id'],$choice['user_nickname'],$choice['vote_id'],$choice['choice_no'],$choice['sid']));
+
+        return $query;
+    }
+
+    function deleteOne($sid){
+        $sql = "UPDATE sp_choice SET is_deleted=? WHERE sid=?";
+        $query = $this->db->query($sql, array($sid));
+
+        return $query;
+    }
+
+    function count(){
+        $sql = "SELECT COUNT(*) as num FROM sp_choice";
+        $result = $this->db->query($sql)->row_array();
+        return $result['num'];
+    }
+
+    function deleteAll(){
+        $sql = "DELETE FROM sp_choice";
+        return $this->db->query($sql);
+    }
+
+    function insertOneForTest($choice){
+        $sql = "INSERT INTO sp_choice (user_id, user_nickname, vote_id, choice_no, sid) VALUES (?,?,?,?,?)";
+        $query = $this->db->query($sql, array($choice['user_id'],$choice['user_nickname'],$choice['vote_id'],$choice['choice_no'],$choice['sid']));
+
+        return $query;
     }
 }
 ?>

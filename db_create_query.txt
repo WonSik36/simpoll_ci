@@ -56,7 +56,7 @@ CREATE TABLE sp_group
 (
     `sid`                INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
     `room_id`            INT             NOT NULL    COMMENT '방 아이디', 
-    `titile`             VARCHAR(255)    NULL        COMMENT '그룹 제목', 
+    `title`             VARCHAR(255)    NULL        COMMENT '그룹 제목', 
     `url_name`           VARCHAR(255)    NULL        COMMENT 'url 이름', 
     `user_id`            INT             NOT NULL    COMMENT '사용자 아이디', 
     `user_nickname`      VARCHAR(255)    NOT NULL    COMMENT '사용자 닉네임', 
