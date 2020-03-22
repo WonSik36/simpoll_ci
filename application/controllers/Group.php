@@ -1,20 +1,18 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Room extends CI_Controller {
+class Group extends CI_Controller {
     function __construct(){
         parent::__construct();
-        $this->load->model('service/room_service');
-        $this->load->library('session');
+        $this->load->model('service/group_service');
     }
 
-    function getRoomList($user_id){
-        if($this->input->get('persontype')=="audience"){
-            $roomList = $this->room_service->getAudienceRoomList($user_id);
-            $this->response_json($roomList,true,null);
-        }else if($this->input->get('persontype')=="speacker"){
-            /* need to create */
-        }else{
-            $this->response_json(null,false,"Wrong Peron Type");
+    function getVoteList($room_id){
+        $user_id = $this->input->get('userId');
+        if(empty($user_id)){
+            $this->response_json(null,false,"Need userID");
         }
+
+        $list = $this->group_service->getGroupListWithVotedList($room_id, $user_id);
+        $this->response_json($list,true,null);
     }
 
     function response_json($data, $isSucceed, $message){

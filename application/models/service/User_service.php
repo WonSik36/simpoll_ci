@@ -24,6 +24,10 @@ class User_service extends CI_Model {
         return $this->user_model->selectOneByEmailAndPW($email, $pw);
     }
 
+    function getUserById($user_id){
+        return $this->user_model->selectOneById($user_id);
+    }
+
     /* 
         findAudiencesInRoom
         param: room id

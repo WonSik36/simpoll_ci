@@ -6,6 +6,37 @@ class User extends CI_Controller {
         $this->load->library('session');
     }
 
+    function mockIndex(){
+        $user = $this->user_service->getUserById(1);
+        $user = array(
+            'sid' => $user['sid'],
+            'email' => $user['email'],
+            'name' => $user['name'],
+            'nickname' => $user['nickname']
+        );
+
+        $this->response_json($user,true,null);
+    }
+
+    function index(){
+        if(empty($this->session->userdata('sid')))
+            $this->response_json(null,false,"Login Please");
+
+        $sid = $this->session->userdata('sid');
+        $email = $this->session->userdata('email');
+        $name = $this->session->userdata('name');
+        $nickname = $this->session->userdata('nickname');
+
+        $user = array(
+            'sid' => $sid,
+            'email' => $email,
+            'name' => $name,
+            'nickname' => $nickname
+        );
+
+        $this->response_json($user,true,null);
+    }
+
     function login(){
         // login 요청 -> login 검증 실행
         if(!empty($this->input->post('email'))){
@@ -16,7 +47,7 @@ class User extends CI_Controller {
             //$this->load->view('debug',array('debug'=>var_dump($user)));
             // 성공
             if(!empty($user)){
-                $this->session->set_userdata(array('email'=>$user->email, 'sid'=>$user->sid, 'name'=>$user->name, 'nickname'=>$user->nickname));
+                $this->session->set_userdata(array('email'=>$user['email'], 'sid'=>$user['sid'], 'name'=>$user['name'], 'nickname'=>$user['nickname']));
                 $this->load->view('result',array('message'=>"로그인 성공",'location'=>"/index.php/home/dashboard"));
             // 실패
             }else{
@@ -57,6 +88,25 @@ class User extends CI_Controller {
     function logout(){
         $this->session->sess_destroy();
         $this->load->view('result',array('message'=>"로그아웃 되었습니다.", 'location'=>"/index.php/home"));
+    }
+
+    function response_json($data, $isSucceed, $message){
+        $res = array();
+
+        // success
+        if($isSucceed){
+            $res['result'] = 'success';
+            $res['data'] = $data;
+            $res['message'] = $message;
+
+        // fail
+        }else{
+            $res['result'] = 'fail';
+            $res['message'] = $message;
+        }
+
+        echo json_encode($res); 
+        exit;
     }
 }
 ?>
