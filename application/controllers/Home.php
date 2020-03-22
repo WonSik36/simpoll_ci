@@ -31,9 +31,9 @@ class Home extends CI_Controller {
             $message = "해당하는 Simpoll로 이동합니다.";
 
             if(is_numeric($code))
-                $location = "/index.php/vote/page/".$code;
+                $location = "/index.php/group/page/".$code;
             else
-                $location = "/index.php/vote/url/".$code;
+                $location = "/index.php/group/url/".$code;
         }
 
         $this->load->view("result", array('message'=>$message, 'location'=>$location));

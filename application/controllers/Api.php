@@ -8,6 +8,44 @@ class Api extends CI_Controller {
         $this->load->library('session');
     }
 
+    function test($param){
+        $method = $this->input->method(true);
+        
+        switch($method){
+            case 'GET':
+                $this->_get($param);
+                break;
+            case 'POST':
+                $this->_post($param);
+                break;
+            case 'PUT':
+                $this->_put($param);
+                break;
+            case 'DELETE':
+                $this->_delete($param);
+                break;
+        }
+    }
+
+    function _get($param){
+        echo "get";
+        echo $param;
+    }
+
+    function _post($param){
+        echo "post";
+        echo $param;
+    }
+
+    function _put($param){
+        echo "put";
+        echo $param;
+    }
+
+    function _delete($param){
+        echo "delete";
+        echo $param;
+    }
 
     function vote_url($url){
         //url을 기준으로 sid를 찾아준다
