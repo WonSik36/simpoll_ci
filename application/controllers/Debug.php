@@ -120,7 +120,7 @@ class Debug extends CI_Controller {
         // selectListByMaster
         echo $this->unit->run(count($this->room_model->selectListByMaster(1)),1,"selectListByMaster Test");
         echo $this->unit->run($this->compareRoom($this->room_model->selectListByMaster(1)[0],$this->roomList[0]),true,"selectListByMaster Test");
-        
+
         // selectListByUserId
         echo $this->unit->run(count($this->room_model->selectListByUserId(5)), 5, "selectListByUserId Test");
         echo $this->unit->run($this->compareRoom($this->room_model->selectListByUserId(1)[0],$this->roomList[4]),true,"selectListByUserId Test");
@@ -294,7 +294,7 @@ class Debug extends CI_Controller {
 
         // login
         echo $this->unit->run($this->compareUser($this->user_service->login('email50@email.com','pw50'),$user), true, "login Test");
-        
+
         // findAudiencesInRoom
         echo $this->unit->run(count($this->user_service->findAudiencesInRoom('1')), 5, "findAudiencesInRoom Test");
         echo $this->unit->run(count($this->user_service->findAudiencesInRoom('1')), 5, "findAudiencesInRoom Test");
@@ -349,7 +349,7 @@ class Debug extends CI_Controller {
 
         // getGroupById
         echo $this->unit->run($this->compareGroup($this->group_service->getGroupById($group_id),$group),true,"getGroupById Test");
-        
+
         // getGroupByUrl
         echo $this->unit->run($this->compareGroup($this->group_service->getGroupByUrl('url500'),$group),true,"getGroupByUrl Test");
 
@@ -407,13 +407,13 @@ class Debug extends CI_Controller {
         // getVoteById
         $vote_id = $list[count($list)-1]['sid'];
         echo $this->unit->run($this->compareVote($this->vote_service->getVoteById($vote_id),$vote), true, "getVoteById Test");
-        
+
         // updateVote
         $vote['sid'] = $vote_id;
         $vote['title'] = "update title";
         $this->vote_service->updateVote($vote);
         echo $this->unit->run($this->vote_service->getVoteById($vote_id)['title'], "update title", "updateVote Test");
-        
+
         // deleteVote
         $this->vote_service->deleteVote($vote_id);
         echo $this->unit->run($this->vote_service->getVoteById($vote_id), null, "deleteVote Test");
@@ -445,7 +445,7 @@ class Debug extends CI_Controller {
         $choice = $this->choice_service->getChoiceByVoteIdAndUserId('101',$user['sid']);
         echo $this->unit->run($this->compareChoice($choice, array('user_id'=>$user['sid'],'user_nickname'=>'name500','vote_id'=>'101','choice_no'=>'1')), true, "voting Test");
         echo $this->unit->run(empty($this->room_model->selectOneByRoomIdAndUserId('1', $user['sid'])),false,"voting Test");
-        
+
         // voting - is_anonymous:1, part_auth:0
         $choice = array('user_id'=>$user['sid'],'vote_id'=>'102','choice_no'=>'1','user');
         $this->choice_service->voting($choice);
@@ -453,7 +453,7 @@ class Debug extends CI_Controller {
         $choice = $this->choice_service->getChoiceByVoteIdAndUserId('102',$user['sid']);
         echo $this->unit->run($this->compareChoice($choice, array('user_id'=>$user['sid'],'user_nickname'=>'nickname500','vote_id'=>'102','choice_no'=>'1')), true, "voting Test");
         echo $this->unit->run(empty($this->room_model->selectOneByRoomIdAndUserId('1', $user['sid'])),false,"voting Test");
-        
+
         // voting - is_anonymous:1, part_auth:1
         $choice = array('user_id'=>$user['sid'],'vote_id'=>'103','choice_no'=>'1');
         $this->choice_service->voting($choice);
@@ -466,7 +466,7 @@ class Debug extends CI_Controller {
         $choice = array('vote_id'=>'103','choice_no'=>'1');
         $this->choice_service->voting($choice);
         echo $this->unit->run($this->choice_model->count(),count($this->choiceList)+4, "voting Test");
-        
+
         // voting - is_anonymous:0, part_auth:1 unable situation
         $choice = array('user_id'=>$user['sid'],'vote_id'=>'104','choice_no'=>'1');
         $this->choice_service->voting($choice);
@@ -486,7 +486,7 @@ class Debug extends CI_Controller {
         $this->choice_service->updateChoice($choice);
         $choice = $this->choice_service->getChoiceByVoteIdAndUserId('101',$user['sid']);
         $this->unit->run($choice['choice_no'],3,"updateChoice Test");
-        
+
         // deleteChoice
         $choice = $this->choice_service->deleteChoice($choice['sid']);
         $this->unit->run(empty($this->choice_service->getChoiceByVoteIdAndUserId('101',$user['sid'])),true,"deleteChoice Test");
@@ -504,7 +504,7 @@ class Debug extends CI_Controller {
         foreach($this->userList as $user)
             $this->user_model->insertOneForTest($user);
         foreach($this->roomList as $room)
-            $this->room_model->insertOneForTest($room);        
+            $this->room_model->insertOneForTest($room);
         foreach($this->groupList as $group)
             $this->group_model->insertOneForTest($group);
         foreach($this->voteList as $vote)
@@ -529,8 +529,8 @@ class Debug extends CI_Controller {
     }
 
     function compareRoom($room1, $room2){
-        if($room1['title']==$room2['title'] && $room1['url_name']==$room2['url_name'] && $room1['master']==$room2['master'] 
-                && $room1['master_nickname']==$room2['master_nickname'] && $room1['vote_create_auth']==$room2['vote_create_auth'] 
+        if($room1['title']==$room2['title'] && $room1['url_name']==$room2['url_name'] && $room1['master']==$room2['master']
+                && $room1['master_nickname']==$room2['master_nickname'] && $room1['vote_create_auth']==$room2['vote_create_auth']
                 && $room1['user_name_type']==$room2['user_name_type'])
             return true;
         else
@@ -539,7 +539,7 @@ class Debug extends CI_Controller {
 
     function compareGroup($group1, $group2){
         if($group1['room_id']==$group2['room_id'] && $group1['title']==$group2['title'] && $group1['url_name']==$group2['url_name']
-                && $group1['user_id']==$group2['user_id'] && $group1['user_nickname']==$group2['user_nickname'] && $group1['deadline']==$group2['deadline'] 
+                && $group1['user_id']==$group2['user_id'] && $group1['user_nickname']==$group2['user_nickname'] && $group1['deadline']==$group2['deadline']
                 && $group1['is_comment_enable']==$group2['is_comment_enable'] && $group1['is_anonymous']==$group2['is_anonymous'] && $group1['part_auth']==$group2['part_auth'] && $group1['room_id']==$group2['room_id'])
             return true;
         else
@@ -547,7 +547,7 @@ class Debug extends CI_Controller {
     }
 
     function compareVote($vote1, $vote2){
-        if($vote1['group_id']==$vote2['group_id'] && $vote1['title']==$vote2['title'] 
+        if($vote1['group_id']==$vote2['group_id'] && $vote1['title']==$vote2['title']
                 && $vote1['choices']==$vote2['choices'] && $vote1['vote_type']==$vote2['vote_type'])
             return true;
         else
@@ -555,7 +555,7 @@ class Debug extends CI_Controller {
     }
 
     function compareChoice($choice1, $choice2){
-        if($choice1['user_id']==$choice2['user_id'] && $choice1['user_nickname']==$choice2['user_nickname'] 
+        if($choice1['user_id']==$choice2['user_id'] && $choice1['user_nickname']==$choice2['user_nickname']
                 && $choice1['vote_id']==$choice2['vote_id'] && $choice1['choice_no']==$choice2['choice_no'])
             return true;
         else
@@ -577,6 +577,10 @@ class Debug extends CI_Controller {
         }
 
         return true;
+    }
+
+    function test($param){
+        echo $param;
     }
 }
 ?>
