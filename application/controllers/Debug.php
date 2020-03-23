@@ -357,9 +357,9 @@ class Debug extends CI_Controller {
         $this->group_service->deleteGroup($group_id);
         echo $this->unit->run($this->group_service->getGroupById($group_id),null,"deleteGroup Test");
 
-        // getGroupListWithVotedList
-        $groupWithVotedList = $this->group_service->getGroupListWithVotedList('1','1');
-        echo "<h3>getGroupListWithVotedList Test</h3>";
+        // getGroupListWithVotedListByRoomIdAndUserId
+        $groupWithVotedList = $this->group_service->getGroupListWithVotedListByRoomIdAndUserId('1','1');
+        echo "<h3>getGroupListWithVotedListByRoomIdAndUserId Test</h3>";
         echo "<table>";
         echo "<tr>";
         echo "<th>group_id</th><th>room_id</th><th>group_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
@@ -386,6 +386,36 @@ class Debug extends CI_Controller {
                 echo "<td>true</td>";
             else
                 echo "<td>false</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+
+
+        // getGroupListWithVoteListByRoomId
+        $groupWithVoteList = $this->group_service->getGroupListWithVoteListByRoomId('1');
+        echo "<h3>getGroupListWithVoteListByRoomId Test</h3>";
+        echo "<table>";
+        echo "<tr>";
+        echo "<th>group_id</th><th>room_id</th><th>group_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
+        echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>vote_id</th><th>vote_title</th>";
+        echo "<th>choices</th><th>vote_type</th>";
+        echo "</tr>";
+        for($i=0;$i<count($groupWithVotedList);$i++){
+            echo "<tr>";
+            echo "<td>".$groupWithVoteList[$i]['group_id']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['room_id']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['group_title']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['url_name']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['user_id']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['user_nickname']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['deadline']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['is_comment_enable']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['is_anonymous']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['part_auth']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['vote_id']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['vote_title']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['choices']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['vote_type']."</td>";
             echo "</tr>";
         }
         echo "</table>";
