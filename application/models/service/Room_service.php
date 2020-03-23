@@ -39,8 +39,12 @@ class Room_service extends CI_Model {
         param: 방아이디, 유저아이디, 권한(1:방장, 2:일반)
     */
     function addAudience2Room($room_id, $user_id){
+        $this->db->trans_start();
         $this->room_model->insertUser2Room($room_id, $user_id, 2);
         $this->room_model->addPartNum($room_id);
+        $this->db->trans_complete();
+
+        return true;
     }
 
     /*
@@ -80,6 +84,10 @@ class Room_service extends CI_Model {
     */
     function getRoomByUrl($url){
         return $this->room_model->selectOneByUrl($url);
+    }
+
+    function getRoomUserByRoomIdAndUserId($room_id, $user_id){
+        return $this->room_model->selectOneByRoomIdAndUserId($room_id, $user_id);
     }
 
     function updateRoom($room){

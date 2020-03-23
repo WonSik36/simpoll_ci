@@ -315,11 +315,17 @@ class Debug extends CI_Controller {
         echo $this->unit->run($roomList[0]['part_num'], "1", "register Test");
         $room_id = $roomList[0]['sid'];
 
+        // getRoomUserByRoomIdAndUserId
+        echo $this->unit->run(empty($this->room_service->getRoomUserByRoomIdAndUserId($room_id,5)),true, "getRoomUserByRoomIdAndUserId Test");
+        
         // addAudience2Room
         for($i=1;$i<=5;$i++){
             $this->room_service->addAudience2Room($room_id,$i);
         }
 
+        // getRoomUserByRoomIdAndUserId
+        echo $this->unit->run(empty($this->room_service->getRoomUserByRoomIdAndUserId($room_id,5)),false, "getRoomUserByRoomIdAndUserId Test");
+        
         $roomList = $this->room_service->getAudienceRoomList(1);
         echo count($roomList);
         echo $this->unit->run(count($roomList), 6, "addAudience2Room Test");
