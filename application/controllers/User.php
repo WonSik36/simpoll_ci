@@ -6,6 +6,8 @@ class User extends CI_Controller {
         $this->load->library('session');
     }
 
+    // URL:
+    // GET /api/user
     function mockIndex(){
         $user = $this->user_service->getUserById(1);
         $user = array(
@@ -18,6 +20,8 @@ class User extends CI_Controller {
         $this->response_json($user,true,null);
     }
 
+    // URL:
+    // GET /api/user
     function index(){
         if(empty($this->session->userdata('sid')))
             $this->response_json(null,false,"Login Please");
