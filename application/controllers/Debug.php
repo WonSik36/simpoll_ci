@@ -491,6 +491,29 @@ class Debug extends CI_Controller {
         $choice = $this->choice_service->deleteChoice($choice['sid']);
         $this->unit->run(empty($this->choice_service->getChoiceByVoteIdAndUserId('101',$user['sid'])),true,"deleteChoice Test");
 
+        // getParticipant
+        $participant = $this->choice_service->getParticipant($vote);
+        echo "<h3>getParticipant Test</h3>";
+        echo "<table>";
+        echo "<tr>";
+        echo "<th>#</th>";
+        echo "<th>participant</th>";
+        echo "</tr>";
+        for($i=0;$i<count($participant);$i++){
+            echo "<tr>";
+            echo "<td>";
+            echo ($i+1);
+            echo "</td>";
+            echo "<td>";
+            for($j=0;$j<count($participant[$i]);$j++){
+                echo $participant[$i][$j];
+                echo " ";
+            }
+            echo "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+
         $this->db->trans_complete();
     }
 

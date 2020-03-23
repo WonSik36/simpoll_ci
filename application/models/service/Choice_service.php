@@ -96,6 +96,25 @@ class Choice_service extends CI_Model {
         return $result;
     }
 
+    function getParticipant($vote){
+        $choiceList = $this->choice_model->selectListByVoteId($vote['sid']);
+        $choice_no = count(explode('|',$vote['choices']));
+        $participant = array();
+    
+        for($i=0;$i<$choice_no;$i++){
+            array_push($participant,array());
+        }
+
+        for($i=0;$i<count($choiceList);$i++){
+            $userChoice = explode('|',$choiceList[$i]['choice_no']);
+            for($j=0;$j<count($userChoice);$j++){
+                array_push($participant[(int)$userChoice[$j]-1], $choiceList[$i]['user_nickname']);
+            }
+        }
+
+        return $participant;
+    }
+
     /*
         getChoiceByVoteIdAndUserId
         parameter: 투표 아이디(sid)와 유저 아이디(sid)
