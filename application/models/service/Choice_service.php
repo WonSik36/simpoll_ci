@@ -128,6 +128,10 @@ class Choice_service extends CI_Model {
         return $this->choice_model->selectOneByVoteIdAndUserId($vote_id, $user_id);
     }
 
+    function getChoiceById($choice_id){
+        return $this->choice_model->selectOneById($choice_id);
+    }
+
     function updateChoice($choice){
         return $this->choice_model->updateOne($choice);
     }

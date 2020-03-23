@@ -468,6 +468,10 @@ class Debug extends CI_Controller {
         $this->vote_model->insertOneForTest($vote3);
         $this->vote_model->insertOneForTest($vote4);
 
+        // getChoiceById
+        $choice = $this->choice_service->getChoiceById(1);
+        echo $this->unit->run($this->compareChoice($choice,$this->choiceList[0]),true,"getChoiceById Test");
+
         // voting - is_anonymous:0, part_auth:0
         $choice = array('user_id'=>$user['sid'],'vote_id'=>'101','choice_no'=>'1');
         $this->choice_service->voting($choice);
