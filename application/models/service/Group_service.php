@@ -26,7 +26,7 @@ class Group_service extends CI_Model {
         
         if(empty($votedList)){
             for($i=0;$i<count($list);$i++){
-                $list[$i]['voted'] = true;
+                $list[$i]['voted'] = false;
             }
         }else{
             for($i=0,$j=0;$i<count($list);$i++){
