@@ -77,7 +77,7 @@ class Choice extends CI_Controller {
     // PUT /api/choice/{choiceId}
     function updateChoice($choice_id){
         $jsonArray = json_decode(file_get_contents('php://input'),true);
-        if(empty($jsonArray['user_id']) || empty($jsonArray['vote_id']) || empty($jsonArray['choice_no']))
+        if(empty($jsonArray['user_id']) || empty($jsonArray['choice_no']))
             $this->response_json(null, false, "Not right format");
 
         $choice = $this->choice_service->getChoiceById($choice_id);
