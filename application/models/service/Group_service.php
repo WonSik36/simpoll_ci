@@ -24,12 +24,18 @@ class Group_service extends CI_Model {
         $list = $this->group_model->selectListWithVoteByRoomId($room_id);
         $votedList = $this->group_model->selectListWithVoteAndChoiceByRoomIdAndUserId($room_id,$user_id);
         
-        for($i=0,$j=0;$i<count($list);$i++){
-            if($list[$i]['vote_id'] == $votedList[$j]['vote_id']){
+        if(empty($votedList)){
+            for($i=0;$i<count($list);$i++){
                 $list[$i]['voted'] = true;
-                $j++;
-            }else{
-                $list[$i]['voted'] = false;
+            }
+        }else{
+            for($i=0,$j=0;$i<count($list);$i++){
+                if($list[$i]['vote_id'] == $votedList[$j]['vote_id']){
+                    $list[$i]['voted'] = true;
+                    $j++;
+                }else{
+                    $list[$i]['voted'] = false;
+                }
             }
         }
 
