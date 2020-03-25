@@ -52,12 +52,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
-<<<<<<< HEAD
 $route['api/room/(:num)/user'] = 'debug/test/$1';
-=======
 // $route['api/user'] = 'user/index';
 $route['api/user'] = 'user/mockIndex';
 $route['api/user/(:num)/room'] = 'room/getRoomList/$1';
 $route['api/room/(:num)/vote'] = 'group/getVoteList/$1';
 $route['api/vote/(:num)'] = 'choice/getVoteResult/$1';
->>>>>>> 2901d4e4f2acea6c93661191ca5ff233c42cae77
