@@ -16,7 +16,7 @@ class Debug extends CI_Controller {
         array('url_name'=>'url5','title'=>'title5','master'=>'5','master_nickname'=>'nickname5','user_name_type'=>'0','vote_create_auth'=>'0','sid'=>'5','part_num'=>'0','status'=>'0')
     );
 
-    private $groupList = array(
+    private $simpollList = array(
         array('room_id'=>'1','title'=>'group1','url_name'=>'url1','user_id'=>'1','user_nickname'=>'nickname1','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'0','sid'=>'1'),
         array('room_id'=>'1','title'=>'group2','url_name'=>'url2','user_id'=>'2','user_nickname'=>'nickname2','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'1','part_auth'=>'0','sid'=>'2'),
         array('room_id'=>'3','title'=>'group3','url_name'=>'url3','user_id'=>'3','user_nickname'=>'nickname3','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'1','part_auth'=>'1','sid'=>'3'),
@@ -24,7 +24,7 @@ class Debug extends CI_Controller {
         array('room_id'=>'5','title'=>'group5','url_name'=>'url5','user_id'=>'5','user_nickname'=>'nickname5','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'0','sid'=>'5')
     );
 
-    private $voteList = array(
+    private $questionList = array(
         array('group_id'=>'1','title'=>'vote1','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'1'),
         array('group_id'=>'1','title'=>'vote2','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'2'),
         array('group_id'=>'1','title'=>'vote3','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'3'),
@@ -37,7 +37,7 @@ class Debug extends CI_Controller {
         array('group_id'=>'2','title'=>'vote5','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'10')
     );
 
-    private $choiceList = array(
+    private $optionList = array(
         array('user_id'=>'1','user_nickname'=>'nickname1','vote_id'=>'1','choice_no'=>'1|3','sid'=>'1'),
         array('user_id'=>'2','user_nickname'=>'nickname2','vote_id'=>'1','choice_no'=>'2|4','sid'=>'2'),
         array('user_id'=>'3','user_nickname'=>'nickname3','vote_id'=>'1','choice_no'=>'3','sid'=>'3'),
@@ -50,16 +50,16 @@ class Debug extends CI_Controller {
 
     function __construct(){
         parent::__construct();
-        $this->load->model('dao/choice_model');
+        $this->load->model('dao/option_model');
         $this->load->model('dao/user_model');
         $this->load->model('dao/room_model');
-        $this->load->model('dao/group_model');
-        $this->load->model('dao/vote_model');
-        $this->load->model('service/user_service');
-        $this->load->model('service/room_service');
-        $this->load->model('service/group_service');
-        $this->load->model('service/vote_service');
-        $this->load->model('service/choice_service');
+        // $this->load->model('dao/simpoll_model');
+        // $this->load->model('dao/question_model');
+        // $this->load->model('service/user_service');
+        // $this->load->model('service/room_service');
+        // $this->load->model('service/simpoll_service');
+        // $this->load->model('service/question_service');
+        // $this->load->model('service/option_service');
         $this->load->library('unit_test');
         $this->load->database();
     }
@@ -251,34 +251,18 @@ class Debug extends CI_Controller {
         $this->db->trans_complete();
     }
 
-    function choicemodel(){
+    function optionmodel(){
         $this->db->trans_start(TRUE);
-        $this->_init();
+        
+        $this->option_model->deleteAll();
+        echo $this->unit->run($this->option_model->count(),0,"deleteAll Test");
 
-        // selectOneById
-        echo $this->unit->run($this->compareChoice($this->choice_model->selectOneById(1), $this->choiceList[0]), true, "selectOneById Test");
-        echo $this->unit->run($this->choice_model->selectOneById(100), null, "selectOneById Test");   // no result
-
-        // selectOneByVoteIdAndUserId
-        echo $this->unit->run(empty($this->choice_model->selectOneByVoteIdAndUserId(1,3)), false, "selectOneByVoteIdAndUserId Test");
-        echo $this->unit->run(empty($this->choice_model->selectOneByVoteIdAndUserId(10,1)), true, "selectOneByVoteIdAndUserId Test");
-
-        // selectListByVoteId
-        echo $this->unit->run(count($this->choice_model->selectListByVoteId(1)), 5, "selectListByVoteId Test");
-        echo $this->unit->run(count($this->choice_model->selectListByVoteId(100)), 0, "selectListByVoteId Test");
-        echo $this->unit->run($this->compareChoice($this->choice_model->selectListByVoteId(1)[0],$this->choiceList[4]), true, "selectListByVoteId Test");
-
-        // selectListByUserId
-        echo $this->unit->run(count($this->choice_model->selectListByUserId(1)), 3, "selectListByUserId Test");
-        echo $this->unit->run($this->compareChoice($this->choice_model->selectListByUserId(1)[0],$this->choiceList[6]), true, "selectListByUserId Test");
-
-        // updateOne
-        $choice = array('user_id'=>'2','user_nickname'=>'nickname2','vote_id'=>'1','choice_no'=>'2','sid'=>'2');
-        echo $this->unit->run($this->choice_model->updateOne($choice),true, "updateOne Test");
-        echo $this->unit->run($this->compareChoice($this->choice_model->selectOneById(2), $choice), true, "updateOne Test");
-        $choice['sid'] = '1000';
-        echo $this->unit->run($this->choice_model->updateOne($choice), true, "updateOne Test"); // no affected rows return also true
-        echo $this->unit->run($this->db->affected_rows(), 0, "updateOne Test");
+        $option = array('user_id'=>"",'user_nickname'=>"",'question_id'=>"1",'name'=>"option1",'sid'=>'12');
+        $this->option_model->insertOneForTest($option);
+        echo $this->unit->run($this->option_model->count(),1,"insertOne Test");
+        
+        $newOption = $this->option_model->selectOneById(12);
+        echo $this->unit->run($this->compareOption($option,$newOption),true,"selectOneById Test");
 
         $this->db->trans_complete();
     }
@@ -617,9 +601,9 @@ class Debug extends CI_Controller {
             return false;
     }
 
-    function compareChoice($choice1, $choice2){
-        if($choice1['user_id']==$choice2['user_id'] && $choice1['user_nickname']==$choice2['user_nickname'] 
-                && $choice1['vote_id']==$choice2['vote_id'] && $choice1['choice_no']==$choice2['choice_no'])
+    function compareOption($option1, $option2){
+        if($option1['user_id']==$option2['user_id'] && $option1['user_nickname']==$option2['user_nickname'] 
+                && $option1['question_id']==$option2['question_id'] && $option1['name']==$option2['name'])
             return true;
         else
             return false;
