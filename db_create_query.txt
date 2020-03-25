@@ -56,7 +56,7 @@ CREATE TABLE sp_group
 (
     `sid`                INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
     `room_id`            INT             NOT NULL    COMMENT '방 아이디', 
-    `title`             VARCHAR(255)    NULL        COMMENT '그룹 제목', 
+    `title`              VARCHAR(255)    NULL        COMMENT '그룹 제목', 
     `url_name`           VARCHAR(255)    NULL        COMMENT 'url 이름', 
     `user_id`            INT             NOT NULL    COMMENT '사용자 아이디', 
     `user_nickname`      VARCHAR(255)    NOT NULL    COMMENT '사용자 닉네임', 
@@ -70,27 +70,26 @@ CREATE TABLE sp_group
     PRIMARY KEY (sid)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-ALTER TABLE sp_group COMMENT '투표 그룹';
+ALTER TABLE sp_simpoll COMMENT '심폴';
 
-ALTER TABLE sp_group
-    ADD CONSTRAINT FK_sp_group_room_id_sp_room_sid FOREIGN KEY (room_id)
+ALTER TABLE sp_simpoll
+    ADD CONSTRAINT FK_sp_simpoll_room_id_sp_room_sid FOREIGN KEY (room_id)
         REFERENCES sp_room (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-ALTER TABLE sp_group
-    ADD CONSTRAINT FK_sp_group_user_id_sp_user_sid FOREIGN KEY (user_id)
+ALTER TABLE sp_simpoll
+    ADD CONSTRAINT FK_sp_simpoll_user_id_sp_user_sid FOREIGN KEY (user_id)
         REFERENCES sp_user (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-ALTER TABLE sp_group 
-    ADD UNIQUE UK_sp_vote_url_name (url_name);
+ALTER TABLE sp_simpoll 
+    ADD UNIQUE UK_sp_simpoll_url_name (url_name);
 
-
--- sp_vote Table Create SQL
-CREATE TABLE sp_vote
+-- sp_question Table Create SQL
+CREATE TABLE sp_question
 (
     `sid`          INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
     `group_id`     INT             NOT NULL    COMMENT '그룹 아이디', 
     `title`        VARCHAR(255)    NOT NULL    COMMENT '투표 제목', 
-    `choices`      TEXT            NOT NULL    COMMENT '선택지', 
+    `choice_no`    INT             NOT NULL    COMMENT '선택지 개수', 
     `vote_type`    INT             NOT NULL    COMMENT '투표 타입', 
     `create_date`  TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '생성날짜', 
     `edit_date`    TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정날짜', 
@@ -98,11 +97,11 @@ CREATE TABLE sp_vote
     PRIMARY KEY (sid)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-ALTER TABLE sp_vote COMMENT '투표';
+ALTER TABLE sp_question COMMENT '심폴 문항';
 
-ALTER TABLE sp_vote
-    ADD CONSTRAINT FK_sp_vote_group_id_sp_group_sid FOREIGN KEY (group_id)
-        REFERENCES sp_group (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE sp_question
+    ADD CONSTRAINT FK_sp_question_group_id_sp_simpoll_sid FOREIGN KEY (group_id)
+        REFERENCES sp_simpoll (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 
 -- sp_room_user Table Create SQL
@@ -155,32 +154,28 @@ ALTER TABLE sp_comment
         REFERENCES sp_user (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE sp_comment
-    ADD CONSTRAINT FK_sp_comment_group_id_sp_group_sid FOREIGN KEY (group_id)
-        REFERENCES sp_group (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
+    ADD CONSTRAINT FK_sp_comment_group_id_sp_simpoll_sid FOREIGN KEY (group_id)
+        REFERENCES sp_simpoll (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 
--- sp_choice Table Create SQL
-CREATE TABLE sp_choice
+-- sp_option Table Create SQL
+CREATE TABLE sp_option
 (
     `sid`            INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
-    `user_id`        INT             NULL        COMMENT '사용자 아이디', 
-    `user_nickname`  VARCHAR(255)    NOT NULL    COMMENT '사용자 닉네임', 
+    `name`           VARCHAR(255)    NOT NULL    COMMENT '선택지 이름', 
+    `user_id`        TEXT            NOT NULL    COMMENT '사용자 아이디 리스트', 
+    `user_nickname`  TEXT            NOT NULL    COMMENT '사용자 닉네임 리스트', 
     `vote_id`        INT             NOT NULL    COMMENT '투표 아이디', 
-    `choice_no`      VARCHAR(255)    NOT NULL    COMMENT '선택지 번호', 
-    `create_date`    TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP COMMENT '생성날짜', 
-    `edit_date`      TIMESTAMP       NOT NULL    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '수정날짜', 
-    `is_deleted`     TINYINT(1)      NOT NULL    DEFAULT 0 COMMENT '삭제 여부', 
+    `count`          INT             NOT NULL    DEFAULT 0 COMMENT '선택 인원', 
     PRIMARY KEY (sid)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 ALTER TABLE sp_choice COMMENT '사용자:선택지 매칭 테이블';
 
-ALTER TABLE sp_choice
-    ADD CONSTRAINT FK_sp_choice_user_id_sp_user_sid FOREIGN KEY (user_id)
-        REFERENCES sp_user (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE sp_option COMMENT '문항 선택지';
 
-ALTER TABLE sp_choice
-    ADD CONSTRAINT FK_sp_choice_vote_id_sp_vote_sid FOREIGN KEY (vote_id)
-        REFERENCES sp_vote (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
+ALTER TABLE sp_option
+    ADD CONSTRAINT FK_sp_option_vote_id_sp_question_sid FOREIGN KEY (vote_id)
+        REFERENCES sp_question (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 
