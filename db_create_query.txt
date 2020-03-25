@@ -52,7 +52,7 @@ ALTER TABLE sp_room
 
 
 -- sp_group Table Create SQL
-CREATE TABLE sp_group
+CREATE TABLE sp_simpoll
 (
     `sid`                INT             NOT NULL    AUTO_INCREMENT COMMENT '시퀀스 아이디', 
     `room_id`            INT             NOT NULL    COMMENT '방 아이디', 
