@@ -43,9 +43,7 @@ CREATE TABLE sp_room
 
 ALTER TABLE sp_room COMMENT '방';
 
-ALTER TABLE sp_room
-    ADD CONSTRAINT FK_sp_room_master_sp_user_sid FOREIGN KEY (master)
-        REFERENCES sp_user (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
 
 ALTER TABLE sp_room 
     ADD UNIQUE UK_sp_room_url_name (url_name);
@@ -71,13 +69,6 @@ CREATE TABLE sp_simpoll
 
 ALTER TABLE sp_simpoll COMMENT '심폴';
 
-ALTER TABLE sp_simpoll
-    ADD CONSTRAINT FK_sp_simpoll_room_id_sp_room_sid FOREIGN KEY (room_id)
-        REFERENCES sp_room (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
-ALTER TABLE sp_simpoll
-    ADD CONSTRAINT FK_sp_simpoll_user_id_sp_user_sid FOREIGN KEY (user_id)
-        REFERENCES sp_user (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 ALTER TABLE sp_simpoll 
     ADD UNIQUE UK_sp_simpoll_url_name (url_name);
@@ -97,10 +88,6 @@ CREATE TABLE sp_question
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 ALTER TABLE sp_question COMMENT '심폴 문항';
-
-ALTER TABLE sp_question
-    ADD CONSTRAINT FK_sp_question_simpoll_id_sp_simpoll_sid FOREIGN KEY (simpoll_id)
-        REFERENCES sp_simpoll (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 
 -- sp_room_user Table Create SQL
@@ -123,14 +110,6 @@ CREATE INDEX sp_room_user_Index_1 ON sp_room_user
     auth
 );
 
-ALTER TABLE sp_room_user
-    ADD CONSTRAINT FK_sp_room_user_user_id_sp_user_sid FOREIGN KEY (user_id)
-        REFERENCES sp_user (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
-ALTER TABLE sp_room_user
-    ADD CONSTRAINT FK_sp_room_user_room_id_sp_room_sid FOREIGN KEY (room_id)
-        REFERENCES sp_room (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
 
 -- sp_comment Table Create SQL
 CREATE TABLE sp_comment
@@ -148,14 +127,6 @@ CREATE TABLE sp_comment
 
 ALTER TABLE sp_comment COMMENT '댓글';
 
-ALTER TABLE sp_comment
-    ADD CONSTRAINT FK_sp_comment_user_id_sp_user_sid FOREIGN KEY (user_id)
-        REFERENCES sp_user (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
-ALTER TABLE sp_comment
-    ADD CONSTRAINT FK_sp_comment_simpoll_id_sp_simpoll_sid FOREIGN KEY (simpoll_id)
-        REFERENCES sp_simpoll (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
 
 -- sp_option Table Create SQL
 CREATE TABLE sp_option
@@ -170,9 +141,3 @@ CREATE TABLE sp_option
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 ALTER TABLE sp_option COMMENT '문항 선택지';
-
-ALTER TABLE sp_option
-    ADD CONSTRAINT FK_sp_option_question_id_sp_question_sid FOREIGN KEY (question_id)
-        REFERENCES sp_question (sid) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
-
