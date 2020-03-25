@@ -20,20 +20,30 @@ class Group_service extends CI_Model {
 
     // 유저가 투표한 vote는 voted: true,
     // 투표하지 않은 voted는 voted: false
-    function getGroupListWithVotedList($room_id,$user_id){
+    function getGroupListWithVotedListByRoomIdAndUserId($room_id,$user_id){
         $list = $this->group_model->selectListWithVoteByRoomId($room_id);
         $votedList = $this->group_model->selectListWithVoteAndChoiceByRoomIdAndUserId($room_id,$user_id);
         
-        for($i=0,$j=0;$i<count($list);$i++){
-            if($list[$i]['vote_id'] == $votedList[$j]['vote_id']){
-                $list[$i]['voted'] = true;
-                $j++;
-            }else{
+        if(empty($votedList)){
+            for($i=0;$i<count($list);$i++){
                 $list[$i]['voted'] = false;
+            }
+        }else{
+            for($i=0,$j=0;$i<count($list);$i++){
+                if($list[$i]['vote_id'] == $votedList[$j]['vote_id']){
+                    $list[$i]['voted'] = true;
+                    $j++;
+                }else{
+                    $list[$i]['voted'] = false;
+                }
             }
         }
 
         return $list;
+    }
+
+    function getGroupListWithVoteListByRoomId($room_id){
+        return $this->group_model->selectListWithVoteByRoomId($room_id);
     }
 
     /*

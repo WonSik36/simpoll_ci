@@ -315,11 +315,17 @@ class Debug extends CI_Controller {
         echo $this->unit->run($roomList[0]['part_num'], "1", "register Test");
         $room_id = $roomList[0]['sid'];
 
+        // getRoomUserByRoomIdAndUserId
+        echo $this->unit->run(empty($this->room_service->getRoomUserByRoomIdAndUserId($room_id,5)),true, "getRoomUserByRoomIdAndUserId Test");
+        
         // addAudience2Room
         for($i=1;$i<=5;$i++){
             $this->room_service->addAudience2Room($room_id,$i);
         }
 
+        // getRoomUserByRoomIdAndUserId
+        echo $this->unit->run(empty($this->room_service->getRoomUserByRoomIdAndUserId($room_id,5)),false, "getRoomUserByRoomIdAndUserId Test");
+        
         $roomList = $this->room_service->getAudienceRoomList(1);
         echo count($roomList);
         echo $this->unit->run(count($roomList), 6, "addAudience2Room Test");
@@ -357,9 +363,9 @@ class Debug extends CI_Controller {
         $this->group_service->deleteGroup($group_id);
         echo $this->unit->run($this->group_service->getGroupById($group_id),null,"deleteGroup Test");
 
-        // getGroupListWithVotedList
-        $groupWithVotedList = $this->group_service->getGroupListWithVotedList('1','1');
-        echo "<h3>getGroupListWithVotedList Test</h3>";
+        // getGroupListWithVotedListByRoomIdAndUserId
+        $groupWithVotedList = $this->group_service->getGroupListWithVotedListByRoomIdAndUserId('1','1');
+        echo "<h3>getGroupListWithVotedListByRoomIdAndUserId Test</h3>";
         echo "<table>";
         echo "<tr>";
         echo "<th>group_id</th><th>room_id</th><th>group_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
@@ -386,6 +392,36 @@ class Debug extends CI_Controller {
                 echo "<td>true</td>";
             else
                 echo "<td>false</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+
+
+        // getGroupListWithVoteListByRoomId
+        $groupWithVoteList = $this->group_service->getGroupListWithVoteListByRoomId('1');
+        echo "<h3>getGroupListWithVoteListByRoomId Test</h3>";
+        echo "<table>";
+        echo "<tr>";
+        echo "<th>group_id</th><th>room_id</th><th>group_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
+        echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>vote_id</th><th>vote_title</th>";
+        echo "<th>choices</th><th>vote_type</th>";
+        echo "</tr>";
+        for($i=0;$i<count($groupWithVotedList);$i++){
+            echo "<tr>";
+            echo "<td>".$groupWithVoteList[$i]['group_id']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['room_id']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['group_title']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['url_name']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['user_id']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['user_nickname']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['deadline']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['is_comment_enable']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['is_anonymous']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['part_auth']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['vote_id']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['vote_title']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['choices']."</td>";
+            echo "<td>".$groupWithVoteList[$i]['vote_type']."</td>";
             echo "</tr>";
         }
         echo "</table>";
@@ -437,6 +473,10 @@ class Debug extends CI_Controller {
         $this->vote_model->insertOneForTest($vote2);
         $this->vote_model->insertOneForTest($vote3);
         $this->vote_model->insertOneForTest($vote4);
+
+        // getChoiceById
+        $choice = $this->choice_service->getChoiceById(1);
+        echo $this->unit->run($this->compareChoice($choice,$this->choiceList[0]),true,"getChoiceById Test");
 
         // voting - is_anonymous:0, part_auth:0
         $choice = array('user_id'=>$user['sid'],'vote_id'=>'101','choice_no'=>'1');
@@ -490,6 +530,29 @@ class Debug extends CI_Controller {
         // deleteChoice
         $choice = $this->choice_service->deleteChoice($choice['sid']);
         $this->unit->run(empty($this->choice_service->getChoiceByVoteIdAndUserId('101',$user['sid'])),true,"deleteChoice Test");
+
+        // getParticipant
+        $participant = $this->choice_service->getParticipant($vote);
+        echo "<h3>getParticipant Test</h3>";
+        echo "<table>";
+        echo "<tr>";
+        echo "<th>#</th>";
+        echo "<th>participant</th>";
+        echo "</tr>";
+        for($i=0;$i<count($participant);$i++){
+            echo "<tr>";
+            echo "<td>";
+            echo ($i+1);
+            echo "</td>";
+            echo "<td>";
+            for($j=0;$j<count($participant[$i]);$j++){
+                echo $participant[$i][$j];
+                echo " ";
+            }
+            echo "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
 
         $this->db->trans_complete();
     }
