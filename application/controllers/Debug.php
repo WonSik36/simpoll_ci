@@ -9,57 +9,57 @@ class Debug extends CI_Controller {
     );
 
     private $roomList = array(
-        array('url_name'=>'url1','title'=>'title1','master'=>'1','master_nickname'=>'nickname1','user_name_type'=>'0','vote_create_auth'=>'0','sid'=>'1','part_num'=>'0','status'=>'0'),
-        array('url_name'=>'url2','title'=>'title2','master'=>'2','master_nickname'=>'nickname2','user_name_type'=>'0','vote_create_auth'=>'0','sid'=>'2','part_num'=>'0','status'=>'0'),
-        array('url_name'=>'url3','title'=>'title3','master'=>'3','master_nickname'=>'nickname3','user_name_type'=>'0','vote_create_auth'=>'0','sid'=>'3','part_num'=>'0','status'=>'0'),
-        array('url_name'=>'url4','title'=>'title4','master'=>'4','master_nickname'=>'nickname4','user_name_type'=>'0','vote_create_auth'=>'0','sid'=>'4','part_num'=>'0','status'=>'0'),
-        array('url_name'=>'url5','title'=>'title5','master'=>'5','master_nickname'=>'nickname5','user_name_type'=>'0','vote_create_auth'=>'0','sid'=>'5','part_num'=>'0','status'=>'0')
+        array('url_name'=>'url1','title'=>'title1','master'=>'1','master_nickname'=>'nickname1','user_name_type'=>'0','poll_create_auth'=>'0','sid'=>'1','part_num'=>'0','status'=>'0'),
+        array('url_name'=>'url2','title'=>'title2','master'=>'2','master_nickname'=>'nickname2','user_name_type'=>'0','poll_create_auth'=>'0','sid'=>'2','part_num'=>'0','status'=>'0'),
+        array('url_name'=>'url3','title'=>'title3','master'=>'3','master_nickname'=>'nickname3','user_name_type'=>'0','poll_create_auth'=>'0','sid'=>'3','part_num'=>'0','status'=>'0'),
+        array('url_name'=>'url4','title'=>'title4','master'=>'4','master_nickname'=>'nickname4','user_name_type'=>'0','poll_create_auth'=>'0','sid'=>'4','part_num'=>'0','status'=>'0'),
+        array('url_name'=>'url5','title'=>'title5','master'=>'5','master_nickname'=>'nickname5','user_name_type'=>'0','poll_create_auth'=>'0','sid'=>'5','part_num'=>'0','status'=>'0')
     );
 
-    private $groupList = array(
-        array('room_id'=>'1','title'=>'group1','url_name'=>'url1','user_id'=>'1','user_nickname'=>'nickname1','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'0','sid'=>'1'),
-        array('room_id'=>'1','title'=>'group2','url_name'=>'url2','user_id'=>'2','user_nickname'=>'nickname2','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'1','part_auth'=>'0','sid'=>'2'),
-        array('room_id'=>'3','title'=>'group3','url_name'=>'url3','user_id'=>'3','user_nickname'=>'nickname3','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'1','part_auth'=>'1','sid'=>'3'),
-        array('room_id'=>'4','title'=>'group4','url_name'=>'url4','user_id'=>'4','user_nickname'=>'nickname4','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'1','sid'=>'4'),
-        array('room_id'=>'5','title'=>'group5','url_name'=>'url5','user_id'=>'5','user_nickname'=>'nickname5','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'0','sid'=>'5')
+    private $simpollList = array(
+        array('room_id'=>'1','title'=>'simpoll1','url_name'=>'url1','user_id'=>'1','user_nickname'=>'nickname1','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'0','sid'=>'1'),
+        array('room_id'=>'1','title'=>'simpoll2','url_name'=>'url2','user_id'=>'2','user_nickname'=>'nickname2','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'1','part_auth'=>'0','sid'=>'2'),
+        array('room_id'=>'3','title'=>'simpoll3','url_name'=>'url3','user_id'=>'3','user_nickname'=>'nickname3','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'1','part_auth'=>'1','sid'=>'3'),
+        array('room_id'=>'4','title'=>'simpoll4','url_name'=>'url4','user_id'=>'4','user_nickname'=>'nickname4','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'1','sid'=>'4'),
+        array('room_id'=>'5','title'=>'simpoll5','url_name'=>'url5','user_id'=>'5','user_nickname'=>'nickname5','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'0','sid'=>'5')
     );
 
-    private $voteList = array(
-        array('group_id'=>'1','title'=>'vote1','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'1'),
-        array('group_id'=>'1','title'=>'vote2','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'2'),
-        array('group_id'=>'1','title'=>'vote3','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'3'),
-        array('group_id'=>'1','title'=>'vote4','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'4'),
-        array('group_id'=>'1','title'=>'vote5','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'5'),
-        array('group_id'=>'2','title'=>'vote1','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'6'),
-        array('group_id'=>'2','title'=>'vote2','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'7'),
-        array('group_id'=>'2','title'=>'vote3','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'8'),
-        array('group_id'=>'2','title'=>'vote4','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'9'),
-        array('group_id'=>'2','title'=>'vote5','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'10')
+    private $questionList = array(
+        array('simpoll_id'=>'1','title'=>'simpoll1','choice_no'=>'4','question_type'=>'0','sid'=>'1'),
+        array('simpoll_id'=>'1','title'=>'simpoll2','choice_no'=>'3','question_type'=>'0','sid'=>'2'),
+        array('simpoll_id'=>'1','title'=>'simpoll3','choice_no'=>'4','question_type'=>'0','sid'=>'3'),
+        array('simpoll_id'=>'1','title'=>'simpoll4','choice_no'=>'4','question_type'=>'0','sid'=>'4'),
+        array('simpoll_id'=>'1','title'=>'simpoll5','choice_no'=>'3','question_type'=>'0','sid'=>'5'),
+        array('simpoll_id'=>'2','title'=>'simpoll1','choice_no'=>'3','question_type'=>'0','sid'=>'6'),
+        array('simpoll_id'=>'2','title'=>'simpoll2','choice_no'=>'3','question_type'=>'0','sid'=>'7'),
+        array('simpoll_id'=>'2','title'=>'simpoll3','choice_no'=>'3','question_type'=>'0','sid'=>'8'),
+        array('simpoll_id'=>'2','title'=>'simpoll4','choice_no'=>'2','question_type'=>'0','sid'=>'9'),
+        array('simpoll_id'=>'2','title'=>'simpoll5','choice_no'=>'2','question_type'=>'0','sid'=>'10')
     );
 
-    private $choiceList = array(
-        array('user_id'=>'1','user_nickname'=>'nickname1','vote_id'=>'1','choice_no'=>'1|3','sid'=>'1'),
-        array('user_id'=>'2','user_nickname'=>'nickname2','vote_id'=>'1','choice_no'=>'2|4','sid'=>'2'),
-        array('user_id'=>'3','user_nickname'=>'nickname3','vote_id'=>'1','choice_no'=>'3','sid'=>'3'),
-        array('user_id'=>'4','user_nickname'=>'nickname4','vote_id'=>'1','choice_no'=>'4','sid'=>'4'),
-        array('user_id'=>'5','user_nickname'=>'nickname5','vote_id'=>'1','choice_no'=>'1','sid'=>'5'),
-        array('user_id'=>'1','user_nickname'=>'nickname1','vote_id'=>'2','choice_no'=>'1','sid'=>'6'),
-        array('user_id'=>'1','user_nickname'=>'nickname1','vote_id'=>'6','choice_no'=>'1','sid'=>'7')
+    private $optionList = array(
+        array('user_id'=>'1|2','user_nickname'=>'nickname1|nickname2','question_id'=>'1','name'=>'A','sid'=>'1'),
+        array('user_id'=>'2|3','user_nickname'=>'nickname2|nickname3','question_id'=>'1','name'=>'B','sid'=>'2'),
+        array('user_id'=>'3|2','user_nickname'=>'nickname3|nickname2','question_id'=>'1','name'=>'C','sid'=>'3'),
+        array('user_id'=>'4|2','user_nickname'=>'nickname4|nickname2','question_id'=>'1','name'=>'D','sid'=>'4'),
+        array('user_id'=>'5|2','user_nickname'=>'nickname5|nickname2','question_id'=>'2','name'=>'A','sid'=>'5'),
+        array('user_id'=>'1|2','user_nickname'=>'nickname1|nickname2','question_id'=>'2','name'=>'B','sid'=>'6'),
+        array('user_id'=>'1|2','user_nickname'=>'nickname1|nickname2','question_id'=>'2','name'=>'C','sid'=>'7')
     );
 
 
     function __construct(){
         parent::__construct();
-        $this->load->model('dao/choice_model');
+        $this->load->model('dao/option_model');
         $this->load->model('dao/user_model');
         $this->load->model('dao/room_model');
-        $this->load->model('dao/group_model');
-        $this->load->model('dao/vote_model');
+        $this->load->model('dao/simpoll_model');
+        $this->load->model('dao/question_model');
         $this->load->model('service/user_service');
         $this->load->model('service/room_service');
-        $this->load->model('service/group_service');
-        $this->load->model('service/vote_service');
-        $this->load->model('service/choice_service');
+        $this->load->model('service/simpoll_service');
+        $this->load->model('service/question_service');
+        $this->load->model('service/option_service');
         $this->load->library('unit_test');
         $this->load->database();
     }
@@ -69,9 +69,9 @@ class Debug extends CI_Controller {
         $this->_init();
         echo $this->unit->run($this->user_model->count(),count($this->userList),"user insert test");
         echo $this->unit->run($this->room_model->count(),count($this->roomList),"room insert test");
-        echo $this->unit->run($this->group_model->count(),count($this->groupList),"group insert test");
-        echo $this->unit->run($this->vote_model->count(),count($this->voteList),"vote insert test");
-        echo $this->unit->run($this->choice_model->count(),count($this->choiceList),"choice insert test");
+        echo $this->unit->run($this->simpoll_model->count(),count($this->simpollList),"simpoll insert test");
+        echo $this->unit->run($this->question_model->count(),count($this->questionList),"question insert test");
+        echo $this->unit->run($this->option_model->count(),count($this->optionList),"option insert test");
         $this->db->trans_complete();
     }
 
@@ -127,7 +127,7 @@ class Debug extends CI_Controller {
         echo $this->unit->run(empty($this->room_model->selectListByUserId(6)), true, "selectListByUserId Test");   // no result
 
         // updateOne
-        $room = array('url_name'=>'update1','title'=>'update1','master'=>'1','master_nickname'=>'nickname1','user_name_type'=>'0','vote_create_auth'=>'0','sid'=>'1','part_num'=>'0','status'=>'0');
+        $room = array('url_name'=>'update1','title'=>'update1','master'=>'1','master_nickname'=>'nickname1','user_name_type'=>'0','poll_create_auth'=>'0','sid'=>'1','part_num'=>'0','status'=>'0');
         echo $this->unit->run($this->room_model->updateOne($room),true, "updateOne Test");
         echo $this->unit->run($this->compareRoom($this->room_model->selectOneById(1), $room), true, "updateOne Test");
         $room['sid'] = '1000';
@@ -138,88 +138,91 @@ class Debug extends CI_Controller {
         $this->db->trans_complete();
     }
 
-    function groupmodel(){
+    function simpollmodel(){
         $this->db->trans_start(TRUE);
         $this->_init();
 
         // selectOneById
-        echo $this->unit->run($this->compareGroup($this->group_model->selectOneById(1), $this->groupList[0]), true, "selectOneById Test");
-        echo $this->unit->run($this->group_model->selectOneById(100), null, "selectOneById Test");   // no result
+        echo $this->unit->run($this->comparesimpoll($this->simpoll_model->selectOneById(1), $this->simpollList[0]), true, "selectOneById Test");
+        echo $this->unit->run($this->simpoll_model->selectOneById(100), null, "selectOneById Test");   // no result
 
         // selectOneByUrl
-        echo $this->unit->run($this->compareGroup($this->group_model->selectOneByUrl("url4"), $this->groupList[3]), true, "selectOneByUrl Test");
-        echo $this->unit->run($this->group_model->selectOneByUrl("wrong url"), null, "selectOneByUrl Test");   // no result
+        echo $this->unit->run($this->comparesimpoll($this->simpoll_model->selectOneByUrl("url4"), $this->simpollList[3]), true, "selectOneByUrl Test");
+        echo $this->unit->run($this->simpoll_model->selectOneByUrl("wrong url"), null, "selectOneByUrl Test");   // no result
 
         // selectListByRoomId
-        echo $this->unit->run(count($this->group_model->selectListByRoomId(5)), 1, "selectListByRoomId Test");
-        echo $this->unit->run($this->compareGroup($this->group_model->selectListByRoomId(3)[0],$this->groupList[2]), true, "selectListByRoomId Test");
+        echo $this->unit->run(count($this->simpoll_model->selectListByRoomId(5)), 1, "selectListByRoomId Test");
+        echo $this->unit->run($this->comparesimpoll($this->simpoll_model->selectListByRoomId(3)[0],$this->simpollList[2]), true, "selectListByRoomId Test");
 
         // updateOne
-        $group = array('room_id'=>'4','title'=>'group4','url_name'=>'url4','user_id'=>'4','user_nickname'=>'nickname4','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'0','sid'=>'4');
-        echo $this->unit->run($this->group_model->updateOne($group),true, "updateOne Test");
-        echo $this->unit->run($this->compareGroup($this->group_model->selectOneById(4), $group), true, "updateOne Test");
-        $group['sid'] = '1000';
-        echo $this->unit->run($this->group_model->updateOne($group), true, "updateOne Test"); // no affected rows return also true
+        $simpoll = array('room_id'=>'4','title'=>'simpoll4','url_name'=>'url4','user_id'=>'4','user_nickname'=>'nickname4','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'0','sid'=>'4');
+        echo $this->unit->run($this->simpoll_model->updateOne($simpoll),true, "updateOne Test");
+        echo $this->unit->run($this->comparesimpoll($this->simpoll_model->selectOneById(4), $simpoll), true, "updateOne Test");
+        $simpoll['sid'] = '1000';
+        echo $this->unit->run($this->simpoll_model->updateOne($simpoll), true, "updateOne Test"); // no affected rows return also true
         echo $this->unit->run($this->db->affected_rows(), 0, "updateOne Test");
 
         // deleteOne
-        $this->vote_model->deleteOne('3');
-        echo $this->unit->run($this->vote_model->selectOneById('3'),null,"deleteOne test");
+        $this->simpoll_model->deleteOne('3');
+        echo $this->unit->run($this->simpoll_model->selectOneById('3'),null,"deleteOne test");
 
         // selectListWithVoteByRoomId
-        $groupWithVote = $this->group_model->selectListWithVoteByRoomId('1');
-        echo "<h3>selectListWithVoteByRoomId Test</h3>";
+        $simpollWithQuestion = $this->simpoll_model->selectListWithQuestionByRoomId('1');
+        echo "<h3>selectListWithSimpollByRoomId Test</h3>";
         echo "<table>";
         echo "<tr>";
-        echo "<th>group_id</th><th>room_id</th><th>group_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
-        echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>vote_id</th><th>vote_title</th>";
-        echo "<th>choices</th><th>vote_type</th>";
+        echo "<th>simpoll_id</th><th>room_id</th><th>simpoll_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
+        echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>question_id</th><th>question_title</th>";
+        echo "<th>question_choice_no</th><th>question_type</th>";
         echo "</tr>";
-        for($i=0;$i<count($groupWithVote);$i++){
+        for($i=0;$i<count($simpollWithQuestion);$i++){
             echo "<tr>";
-            echo "<td>".$groupWithVote[$i]['group_id']."</td>";
-            echo "<td>".$groupWithVote[$i]['room_id']."</td>";
-            echo "<td>".$groupWithVote[$i]['group_title']."</td>";
-            echo "<td>".$groupWithVote[$i]['url_name']."</td>";
-            echo "<td>".$groupWithVote[$i]['user_id']."</td>";
-            echo "<td>".$groupWithVote[$i]['user_nickname']."</td>";
-            echo "<td>".$groupWithVote[$i]['deadline']."</td>";
-            echo "<td>".$groupWithVote[$i]['is_comment_enable']."</td>";
-            echo "<td>".$groupWithVote[$i]['is_anonymous']."</td>";
-            echo "<td>".$groupWithVote[$i]['part_auth']."</td>";
-            echo "<td>".$groupWithVote[$i]['vote_id']."</td>";
-            echo "<td>".$groupWithVote[$i]['vote_title']."</td>";
-            echo "<td>".$groupWithVote[$i]['choices']."</td>";
-            echo "<td>".$groupWithVote[$i]['vote_type']."</td>";
+            echo "<td>".$simpollWithQuestion[$i]['simpoll_id']."</td>";
+            echo "<td>".$simpollWithQuestion[$i]['room_id']."</td>";
+            echo "<td>".$simpollWithQuestion[$i]['simpoll_title']."</td>";
+            echo "<td>".$simpollWithQuestion[$i]['url_name']."</td>";
+            echo "<td>".$simpollWithQuestion[$i]['user_id']."</td>";
+            echo "<td>".$simpollWithQuestion[$i]['user_nickname']."</td>";
+            echo "<td>".$simpollWithQuestion[$i]['deadline']."</td>";
+            echo "<td>".$simpollWithQuestion[$i]['is_comment_enable']."</td>";
+            echo "<td>".$simpollWithQuestion[$i]['is_anonymous']."</td>";
+            echo "<td>".$simpollWithQuestion[$i]['part_auth']."</td>";
+            echo "<td>".$simpollWithQuestion[$i]['question_id']."</td>";
+            echo "<td>".$simpollWithQuestion[$i]['question_title']."</td>";
+            echo "<td>".$simpollWithQuestion[$i]['question_choice_no']."</td>";
+            echo "<td>".$simpollWithQuestion[$i]['question_type']."</td>";
             echo "</tr>";
         }
         echo "</table>";
 
         // selectListWithVoteAndChoiceByRoomIdAndUserId
-        $groupWithVoteAndChoice = $this->group_model->selectListWithVoteAndChoiceByRoomIdAndUserId('1','1');
-        echo "<h3>selectListWithVoteAndChoiceByRoomIdAndUserId Test</h3>";
+        $simpollWithQuestionAndOption = $this->simpoll_model->selectListWithQuestionAndOptionByRoomIdAndQuestionId('1','1');
+        echo "<h3>selectListWithVoteAndChoiceByRoomIdAndQuestionId Test</h3>";
         echo "<table>";
         echo "<tr>";
-        echo "<th>group_id</th><th>room_id</th><th>group_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
-        echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>vote_id</th><th>vote_title</th>";
-        echo "<th>choices</th><th>vote_type</th>";
+        echo "<th>room_id</th><th>simpoll_id</th><th>simpoll_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
+        echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>question_id</th><th>question_title</th>";
+        echo "<th>question_type</th><th>option_id</th><th>option_name</th><th>option_user_id</th><th>option_user_nickname</th>";
         echo "</tr>";
-        for($i=0;$i<count($groupWithVoteAndChoice);$i++){
+        for($i=0;$i<count($simpollWithQuestionAndOption);$i++){
             echo "<tr>";
-            echo "<td>".$groupWithVoteAndChoice[$i]['group_id']."</td>";
-            echo "<td>".$groupWithVoteAndChoice[$i]['room_id']."</td>";
-            echo "<td>".$groupWithVoteAndChoice[$i]['group_title']."</td>";
-            echo "<td>".$groupWithVoteAndChoice[$i]['url_name']."</td>";
-            echo "<td>".$groupWithVoteAndChoice[$i]['user_id']."</td>";
-            echo "<td>".$groupWithVoteAndChoice[$i]['user_nickname']."</td>";
-            echo "<td>".$groupWithVoteAndChoice[$i]['deadline']."</td>";
-            echo "<td>".$groupWithVoteAndChoice[$i]['is_comment_enable']."</td>";
-            echo "<td>".$groupWithVoteAndChoice[$i]['is_anonymous']."</td>";
-            echo "<td>".$groupWithVoteAndChoice[$i]['part_auth']."</td>";
-            echo "<td>".$groupWithVoteAndChoice[$i]['vote_id']."</td>";
-            echo "<td>".$groupWithVoteAndChoice[$i]['vote_title']."</td>";
-            echo "<td>".$groupWithVoteAndChoice[$i]['choices']."</td>";
-            echo "<td>".$groupWithVoteAndChoice[$i]['vote_type']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['room_id']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['simpoll_id']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['simpoll_title']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['url_name']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['user_id']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['user_nickname']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['deadline']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['is_comment_enable']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['is_anonymous']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['part_auth']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['question_id']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['question_title']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['question_type']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['option_id']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['option_name']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['option_user_id']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['option_user_nickname']."</td>";
             echo "</tr>";
         }
         echo "</table>";
@@ -227,58 +230,39 @@ class Debug extends CI_Controller {
         $this->db->trans_complete();
     }
 
-    function votemodel(){
+    function questionmodel(){
         $this->db->trans_start(TRUE);
         $this->_init();
 
         // selectOneById
-        echo $this->unit->run($this->compareVote($this->vote_model->selectOneById(1), $this->voteList[0]), true, "selectOneById Test");
-        echo $this->unit->run($this->vote_model->selectOneById(100), null, "selectOneById Test");   // no result
+        echo $this->unit->run($this->compareQuestion($this->question_model->selectOneById(1), $this->questionList[0]), true, "selectOneById Test");
+        echo $this->unit->run($this->question_model->selectOneById(100), null, "selectOneById Test");   // no result
 
-        // selectListByGroupId
-        echo $this->unit->run(count($this->vote_model->selectListByGroupId(1)), 5, "selectListByGroupId Test");
-        echo $this->unit->run(count($this->vote_model->selectListByGroupId(3)), 0, "selectListByGroupId Test");
-        echo $this->unit->run($this->compareVote($this->vote_model->selectListByGroupId(1)[1],$this->voteList[1]), true, "selectListByGroupId Test");
+        // selectListBysimpollId
+        echo $this->unit->run(count($this->question_model->selectListBySimpollId(1)), 5, "selectListBySimpollId Test");
+        echo $this->unit->run(count($this->question_model->selectListBySimpollId(3)), 0, "selectListBySimpollId Test");
+        echo $this->unit->run($this->compareQuestion($this->question_model->selectListBySimpollId(1)[1],$this->questionList[1]), true, "selectListBySimpollId Test");
 
         // updateOne
-        $vote = array('group_id'=>'1','title'=>'vote50','choices'=>'choice1|choice2|choice3','vote_type'=>'0','sid'=>'5');
-        echo $this->unit->run($this->vote_model->updateOne($vote),true, "updateOne Test");
-        echo $this->unit->run($this->compareVote($this->vote_model->selectOneById(5), $vote), true, "updateOne Test");
-        $vote['sid'] = '1000';
-        echo $this->unit->run($this->vote_model->updateOne($vote), true, "updateOne Test"); // no affected rows return also true
+        $question = array('simpoll_id'=>'1','title'=>'question50','choice_no'=>'3','question_type'=>'0','sid'=>'5');
+        echo $this->unit->run($this->question_model->updateOne($question),true, "updateOne Test");
+        echo $this->unit->run($this->compareQuestion($this->question_model->selectOneById(5), $question), true, "updateOne Test");
+        $question['sid'] = '1000';
+        echo $this->unit->run($this->question_model->updateOne($question), true, "updateOne Test"); // no affected rows return also true
         echo $this->unit->run($this->db->affected_rows(), 0, "updateOne Test");
 
         $this->db->trans_complete();
     }
 
-    function choicemodel(){
+    function optionmodel(){
         $this->db->trans_start(TRUE);
-        $this->_init();
 
-        // selectOneById
-        echo $this->unit->run($this->compareChoice($this->choice_model->selectOneById(1), $this->choiceList[0]), true, "selectOneById Test");
-        echo $this->unit->run($this->choice_model->selectOneById(100), null, "selectOneById Test");   // no result
+        $this->option_model->deleteAll();
+        echo $this->unit->run($this->option_model->count(),0,"deleteAll Test");
 
-        // selectOneByVoteIdAndUserId
-        echo $this->unit->run(empty($this->choice_model->selectOneByVoteIdAndUserId(1,3)), false, "selectOneByVoteIdAndUserId Test");
-        echo $this->unit->run(empty($this->choice_model->selectOneByVoteIdAndUserId(10,1)), true, "selectOneByVoteIdAndUserId Test");
-
-        // selectListByVoteId
-        echo $this->unit->run(count($this->choice_model->selectListByVoteId(1)), 5, "selectListByVoteId Test");
-        echo $this->unit->run(count($this->choice_model->selectListByVoteId(100)), 0, "selectListByVoteId Test");
-        echo $this->unit->run($this->compareChoice($this->choice_model->selectListByVoteId(1)[0],$this->choiceList[4]), true, "selectListByVoteId Test");
-
-        // selectListByUserId
-        echo $this->unit->run(count($this->choice_model->selectListByUserId(1)), 3, "selectListByUserId Test");
-        echo $this->unit->run($this->compareChoice($this->choice_model->selectListByUserId(1)[0],$this->choiceList[6]), true, "selectListByUserId Test");
-
-        // updateOne
-        $choice = array('user_id'=>'2','user_nickname'=>'nickname2','vote_id'=>'1','choice_no'=>'2','sid'=>'2');
-        echo $this->unit->run($this->choice_model->updateOne($choice),true, "updateOne Test");
-        echo $this->unit->run($this->compareChoice($this->choice_model->selectOneById(2), $choice), true, "updateOne Test");
-        $choice['sid'] = '1000';
-        echo $this->unit->run($this->choice_model->updateOne($choice), true, "updateOne Test"); // no affected rows return also true
-        echo $this->unit->run($this->db->affected_rows(), 0, "updateOne Test");
+        $option = array('user_id'=>"",'user_nickname'=>"",'question_id'=>"1",'name'=>"option1",'sid'=>'12');
+        $this->option_model->insertOneForTest($option);
+        echo $this->unit->run($this->option_model->count(),1,"insertOne Test");
 
         $this->db->trans_complete();
     }
@@ -308,7 +292,7 @@ class Debug extends CI_Controller {
         // register
         $user = array('email'=>'email6@email.com','name'=>'name6','nickname'=>'nickname6','password'=>'pw6','sid'=>6);
         $this->user_model->insertOneForTest($user);
-        $room = array('url_name'=>'url100','title'=>'title100','master'=>'6','master_nickname'=>'nickname6','user_name_type'=>'0','vote_create_auth'=>'0');
+        $room = array('url_name'=>'url100','title'=>'title100','master'=>'6','master_nickname'=>'nickname6','user_name_type'=>'0','poll_create_auth'=>'0');
         $this->room_service->register($room);
         $roomList = $this->room_service->getMasterRoomList(6);
         echo $this->unit->run(count($roomList), 1, "register Test");
@@ -317,7 +301,7 @@ class Debug extends CI_Controller {
 
         // getRoomUserByRoomIdAndUserId
         echo $this->unit->run(empty($this->room_service->getRoomUserByRoomIdAndUserId($room_id,5)),true, "getRoomUserByRoomIdAndUserId Test");
-        
+
         // addAudience2Room
         for($i=1;$i<=5;$i++){
             $this->room_service->addAudience2Room($room_id,$i);
@@ -325,7 +309,7 @@ class Debug extends CI_Controller {
 
         // getRoomUserByRoomIdAndUserId
         echo $this->unit->run(empty($this->room_service->getRoomUserByRoomIdAndUserId($room_id,5)),false, "getRoomUserByRoomIdAndUserId Test");
-        
+
         $roomList = $this->room_service->getAudienceRoomList(1);
         echo count($roomList);
         echo $this->unit->run(count($roomList), 6, "addAudience2Room Test");
@@ -344,84 +328,82 @@ class Debug extends CI_Controller {
         $this->db->trans_complete();
     }
 
-    function groupservice(){
+    function simpollservice(){
         $this->db->trans_start(TRUE);
         $this->_init();
 
         // register
-        $group = array('room_id'=>'1','title'=>'group13','url_name'=>'url500','user_id'=>'5','user_nickname'=>'nickname5','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'0','sid'=>'5');
-        $group_id = $this->group_service->register($group);
-        echo $this->unit->run($this->group_model->count(),count($this->groupList)+1,"register Test");
+        $simpoll = array('room_id'=>'1','title'=>'simpoll13','url_name'=>'url500','user_id'=>'5','user_nickname'=>'nickname5','deadline'=>'2020-03-20 23:00:00','is_comment_enable'=>'0','is_anonymous'=>'0','part_auth'=>'0','sid'=>'5');
+        $simpoll_id = $this->simpoll_service->register($simpoll);
+        echo $this->unit->run($this->simpoll_model->count(),count($this->simpollList)+1,"register Test");
 
-        // getGroupById
-        echo $this->unit->run($this->compareGroup($this->group_service->getGroupById($group_id),$group),true,"getGroupById Test");
+        // getsimpollById
+        echo $this->unit->run($this->compareSimpoll($this->simpoll_service->getSimpollById($simpoll_id),$simpoll),true,"getSimpollById Test");
 
-        // getGroupByUrl
-        echo $this->unit->run($this->compareGroup($this->group_service->getGroupByUrl('url500'),$group),true,"getGroupByUrl Test");
+        // getSimpollByUrl
+        echo $this->unit->run($this->compareSimpoll($this->simpoll_service->getSimpollByUrl('url500'),$simpoll),true,"getSimpollByUrl Test");
 
-        // deleteGroup
-        $this->group_service->deleteGroup($group_id);
-        echo $this->unit->run($this->group_service->getGroupById($group_id),null,"deleteGroup Test");
+        // deleteSimpoll
+        $this->simpoll_service->deleteSimpoll($simpoll_id);
+        echo $this->unit->run($this->simpoll_service->getSimpollById($simpoll_id),null,"deleteSimpoll Test");
 
-        // getGroupListWithVotedListByRoomIdAndUserId
-        $groupWithVotedList = $this->group_service->getGroupListWithVotedListByRoomIdAndUserId('1','1');
-        echo "<h3>getGroupListWithVotedListByRoomIdAndUserId Test</h3>";
+        // getSimpollByUrlListWithVotedListByRoomIdAndUserId
+        $simpollWithQuestionList = $this->simpoll_service->getSimpollListWithQuestionListByRoomIdAndQuestionId('1','1');
+        echo "<h3>selectListWithQuestionAndOptionByRoomIdAndQuestionId Test</h3>";
         echo "<table>";
         echo "<tr>";
-        echo "<th>group_id</th><th>room_id</th><th>group_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
-        echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>vote_id</th><th>vote_title</th>";
-        echo "<th>choices</th><th>vote_type</th><th>voted</th>";
+        echo "<th>room_id</th><th>simpoll_id</th><th>simpoll_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
+        echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>question_id</th><th>question_title</th>";
+        echo "<th>question_type</th><th>option_id</th><th>option_name</th><th>option_user_id</th><th>option_user_nickname</th>";
         echo "</tr>";
-        for($i=0;$i<count($groupWithVotedList);$i++){
+        for($i=0;$i<count($simpollWithQuestionList);$i++){
             echo "<tr>";
-            echo "<td>".$groupWithVotedList[$i]['group_id']."</td>";
-            echo "<td>".$groupWithVotedList[$i]['room_id']."</td>";
-            echo "<td>".$groupWithVotedList[$i]['group_title']."</td>";
-            echo "<td>".$groupWithVotedList[$i]['url_name']."</td>";
-            echo "<td>".$groupWithVotedList[$i]['user_id']."</td>";
-            echo "<td>".$groupWithVotedList[$i]['user_nickname']."</td>";
-            echo "<td>".$groupWithVotedList[$i]['deadline']."</td>";
-            echo "<td>".$groupWithVotedList[$i]['is_comment_enable']."</td>";
-            echo "<td>".$groupWithVotedList[$i]['is_anonymous']."</td>";
-            echo "<td>".$groupWithVotedList[$i]['part_auth']."</td>";
-            echo "<td>".$groupWithVotedList[$i]['vote_id']."</td>";
-            echo "<td>".$groupWithVotedList[$i]['vote_title']."</td>";
-            echo "<td>".$groupWithVotedList[$i]['choices']."</td>";
-            echo "<td>".$groupWithVotedList[$i]['vote_type']."</td>";
-            if($groupWithVotedList[$i]['voted'])
-                echo "<td>true</td>";
-            else
-                echo "<td>false</td>";
-            echo "</tr>";
+            echo "<td>".$simpollWithQuestionList[$i]['room_id']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['simpoll_id']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['simpoll_title']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['url_name']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['user_id']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['user_nickname']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['deadline']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['is_comment_enable']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['is_anonymous']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['part_auth']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['question_id']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['question_title']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['question_type']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['option_id']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['option_name']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['option_user_id']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['option_user_nickname']."</td>";
         }
         echo "</table>";
 
 
-        // getGroupListWithVoteListByRoomId
-        $groupWithVoteList = $this->group_service->getGroupListWithVoteListByRoomId('1');
-        echo "<h3>getGroupListWithVoteListByRoomId Test</h3>";
+        // getsimpollListWithVoteListByRoomId
+        $simpollWithQuestionList = $this->simpoll_service->getsimpollListWithQuestionListByRoomId('1');
+        echo "<h3>selectListWithSimpollByRoomId Test</h3>";
         echo "<table>";
         echo "<tr>";
-        echo "<th>group_id</th><th>room_id</th><th>group_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
-        echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>vote_id</th><th>vote_title</th>";
-        echo "<th>choices</th><th>vote_type</th>";
+        echo "<th>simpoll_id</th><th>room_id</th><th>simpoll_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
+        echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>question_id</th><th>question_title</th>";
+        echo "<th>question_choice_no</th><th>question_type</th>";
         echo "</tr>";
-        for($i=0;$i<count($groupWithVotedList);$i++){
+        for($i=0;$i<count($simpollWithQuestionList);$i++){
             echo "<tr>";
-            echo "<td>".$groupWithVoteList[$i]['group_id']."</td>";
-            echo "<td>".$groupWithVoteList[$i]['room_id']."</td>";
-            echo "<td>".$groupWithVoteList[$i]['group_title']."</td>";
-            echo "<td>".$groupWithVoteList[$i]['url_name']."</td>";
-            echo "<td>".$groupWithVoteList[$i]['user_id']."</td>";
-            echo "<td>".$groupWithVoteList[$i]['user_nickname']."</td>";
-            echo "<td>".$groupWithVoteList[$i]['deadline']."</td>";
-            echo "<td>".$groupWithVoteList[$i]['is_comment_enable']."</td>";
-            echo "<td>".$groupWithVoteList[$i]['is_anonymous']."</td>";
-            echo "<td>".$groupWithVoteList[$i]['part_auth']."</td>";
-            echo "<td>".$groupWithVoteList[$i]['vote_id']."</td>";
-            echo "<td>".$groupWithVoteList[$i]['vote_title']."</td>";
-            echo "<td>".$groupWithVoteList[$i]['choices']."</td>";
-            echo "<td>".$groupWithVoteList[$i]['vote_type']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['simpoll_id']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['room_id']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['simpoll_title']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['url_name']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['user_id']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['user_nickname']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['deadline']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['is_comment_enable']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['is_anonymous']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['part_auth']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['question_id']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['question_title']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['question_choice_no']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['question_type']."</td>";
             echo "</tr>";
         }
         echo "</table>";
@@ -430,34 +412,34 @@ class Debug extends CI_Controller {
         $this->db->trans_complete();
     }
 
-    function voteservice(){
+    function questionservice(){
         $this->db->trans_start(TRUE);
         $this->_init();
 
         // register
-        $vote = array('group_id'=>'1','title'=>'vote2','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0');
-        $this->vote_service->register($vote);
-        $list = $this->vote_service->getVoteListByGroupId(1);
+        $question = array('simpoll_id'=>'1','title'=>'vote2','choice_no'=>'4','question_type'=>'0');
+        $this->question_service->register($question);
+        $list = $this->question_service->getQuestionListBySimpollId(1);
         echo $this->unit->run(count($list), 6, "register Test");
 
-        // getVoteById
-        $vote_id = $list[count($list)-1]['sid'];
-        echo $this->unit->run($this->compareVote($this->vote_service->getVoteById($vote_id),$vote), true, "getVoteById Test");
+        // getQuestionById
+        $question_id = $list[count($list)-1]['sid'];
+        echo $this->unit->run($this->compareQuestion($this->question_service->getQuestionById($question_id),$question), true, "getQuestionById Test");
 
-        // updateVote
-        $vote['sid'] = $vote_id;
-        $vote['title'] = "update title";
-        $this->vote_service->updateVote($vote);
-        echo $this->unit->run($this->vote_service->getVoteById($vote_id)['title'], "update title", "updateVote Test");
+        // updateQuestion
+        $question['sid'] = $question_id;
+        $question['title'] = "update title";
+        $this->question_service->updateQuestion($question);
+        echo $this->unit->run($this->question_service->getQuestionById($question_id)['title'], "update title", "updateQuestion Test");
 
-        // deleteVote
-        $this->vote_service->deleteVote($vote_id);
-        echo $this->unit->run($this->vote_service->getVoteById($vote_id), null, "deleteVote Test");
+        // deleteQuestion
+        $this->question_service->deleteQuestion($question_id);
+        echo $this->unit->run($this->question_service->getQuestionById($question_id), null, "deleteQuestion Test");
 
         $this->db->trans_complete();
     }
 
-    function choiceservice(){
+    function optionservice(){
         $this->db->trans_start(TRUE);
         $this->_init();
 
@@ -465,10 +447,10 @@ class Debug extends CI_Controller {
         $this->user_model->insertOne($user);
         $user = $this->user_model->selectOneByEmailAndPW("email500@email.com","pw500");
 
-        $vote1 = array('group_id'=>'1','title'=>'vote2','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'101');
-        $vote2 = array('group_id'=>'2','title'=>'vote3','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'102');
-        $vote3 = array('group_id'=>'3','title'=>'vote4','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'103');
-        $vote4 = array('group_id'=>'4','title'=>'vote5','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'104');
+        $vote1 = array('simpoll_id'=>'1','title'=>'vote2','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'101');
+        $vote2 = array('simpoll_id'=>'2','title'=>'vote3','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'102');
+        $vote3 = array('simpoll_id'=>'3','title'=>'vote4','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'103');
+        $vote4 = array('simpoll_id'=>'4','title'=>'vote5','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'104');
         $this->vote_model->insertOneForTest($vote1);
         $this->vote_model->insertOneForTest($vote2);
         $this->vote_model->insertOneForTest($vote3);
@@ -516,7 +498,7 @@ class Debug extends CI_Controller {
         echo $this->unit->run(empty($this->room_model->selectOneByRoomIdAndUserId('4', $user['sid'])),true,"voting Test");
 
         // getVoteResult
-        $vote = array('group_id'=>'1','title'=>'vote1','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'1');
+        $vote = array('simpoll_id'=>'1','title'=>'vote1','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'1');
         echo $this->unit->run($this->compareVoteResult($this->choice_service->getVoteResult($vote),
                 array('label'=>["choice1","choice2","choice3","choice4"],'data'=>[2,1,2,2],'part_num'=>'5')),true,"getVoteResult Test");
 
@@ -558,9 +540,9 @@ class Debug extends CI_Controller {
     }
 
     function _init(){
-        $this->choice_model->deleteAll();
-        $this->vote_model->deleteAll();
-        $this->group_model->deleteAll();
+        $this->option_model->deleteAll();
+        $this->question_model->deleteAll();
+        $this->simpoll_model->deleteAll();
         $this->room_model->deleteAll();
         $this->user_model->deleteAll();
 
@@ -568,12 +550,12 @@ class Debug extends CI_Controller {
             $this->user_model->insertOneForTest($user);
         foreach($this->roomList as $room)
             $this->room_model->insertOneForTest($room);
-        foreach($this->groupList as $group)
-            $this->group_model->insertOneForTest($group);
-        foreach($this->voteList as $vote)
-            $this->vote_model->insertOneForTest($vote);
-        foreach($this->choiceList as $choice)
-            $this->choice_model->insertOneForTest($choice);
+        foreach($this->simpollList as $simpoll)
+            $this->simpoll_model->insertOneForTest($simpoll);
+        foreach($this->questionList as $question)
+            $this->question_model->insertOneForTest($question);
+        foreach($this->optionList as $option)
+            $this->option_model->insertOneForTest($option);
         for($i=1;$i<=5;$i++){
             for($j=1;$j<=5;$j++){
                 if($i == $j)
@@ -593,37 +575,30 @@ class Debug extends CI_Controller {
 
     function compareRoom($room1, $room2){
         if($room1['title']==$room2['title'] && $room1['url_name']==$room2['url_name'] && $room1['master']==$room2['master']
-                && $room1['master_nickname']==$room2['master_nickname'] && $room1['vote_create_auth']==$room2['vote_create_auth']
+                && $room1['master_nickname']==$room2['master_nickname'] && $room1['poll_create_auth']==$room2['poll_create_auth']
                 && $room1['user_name_type']==$room2['user_name_type'])
             return true;
         else
             return false;
     }
 
-    function compareGroup($group1, $group2){
-        if($group1['room_id']==$group2['room_id'] && $group1['title']==$group2['title'] && $group1['url_name']==$group2['url_name']
-                && $group1['user_id']==$group2['user_id'] && $group1['user_nickname']==$group2['user_nickname'] && $group1['deadline']==$group2['deadline']
-                && $group1['is_comment_enable']==$group2['is_comment_enable'] && $group1['is_anonymous']==$group2['is_anonymous'] && $group1['part_auth']==$group2['part_auth'] && $group1['room_id']==$group2['room_id'])
+    function compareSimpoll($simpoll1, $simpoll2){
+        if($simpoll1['room_id']==$simpoll2['room_id'] && $simpoll1['title']==$simpoll2['title'] && $simpoll1['url_name']==$simpoll2['url_name']
+                && $simpoll1['user_id']==$simpoll2['user_id'] && $simpoll1['user_nickname']==$simpoll2['user_nickname'] && $simpoll1['deadline']==$simpoll2['deadline']
+                && $simpoll1['is_comment_enable']==$simpoll2['is_comment_enable'] && $simpoll1['is_anonymous']==$simpoll2['is_anonymous'] && $simpoll1['part_auth']==$simpoll2['part_auth'] && $simpoll1['room_id']==$simpoll2['room_id'])
             return true;
         else
             return false;
     }
 
-    function compareVote($vote1, $vote2){
-        if($vote1['group_id']==$vote2['group_id'] && $vote1['title']==$vote2['title']
-                && $vote1['choices']==$vote2['choices'] && $vote1['vote_type']==$vote2['vote_type'])
+    function compareQuestion($question1, $question2){
+        if($question1['simpoll_id']==$question2['simpoll_id'] && $question1['title']==$question2['title']
+                 && $question1['question_type']==$question2['question_type'])
             return true;
         else
             return false;
     }
 
-    function compareChoice($choice1, $choice2){
-        if($choice1['user_id']==$choice2['user_id'] && $choice1['user_nickname']==$choice2['user_nickname']
-                && $choice1['vote_id']==$choice2['vote_id'] && $choice1['choice_no']==$choice2['choice_no'])
-            return true;
-        else
-            return false;
-    }
 
     function compareVoteResult($result1, $result2){
         if(count($result1['label'])!=count($result1['label']) || count($result1['data'])!=count($result1['data']) || $result1['part_num']!=$result1['part_num'])

@@ -7,8 +7,8 @@ class Room_model extends CI_Model {
     }
 
     function insertOne($room){
-        $sql = "INSERT INTO sp_room (`url_name`,`master`,`master_nickname`,`title`,`user_name_type`,`vote_create_auth`) VALUES (?,?,?,?,?,?)";
-        $query = $this->db->query($sql, array($room['url_name'],$room['master'],$room['master_nickname'],$room['title'], $room['user_name_type'], $room['vote_create_auth']));
+        $sql = "INSERT INTO sp_room (`url_name`,`master`,`master_nickname`,`title`,`user_name_type`,`poll_create_auth`) VALUES (?,?,?,?,?,?)";
+        $query = $this->db->query($sql, array($room['url_name'],$room['master'],$room['master_nickname'],$room['title'], $room['user_name_type'], $room['poll_create_auth']));
 
         return $query;
     }
@@ -48,7 +48,7 @@ class Room_model extends CI_Model {
         $sql = "SELECT sp_room.sid as sid, sp_room.url_name as url_name, sp_room.title as title, ";
         $sql .= "sp_room.master as master, sp_room.master_nickname as master_nickname, ";
         $sql .= "sp_room.part_num as part_num, sp_room.status as status, ";
-        $sql .= "sp_room.vote_create_auth as vote_create_auth, sp_room.user_name_type as user_name_type, ";
+        $sql .= "sp_room.poll_create_auth as poll_create_auth, sp_room.user_name_type as user_name_type, ";
         $sql .= "sp_room.create_date as create_date, sp_room.edit_date as edit_date ";
         $sql .= "FROM sp_room INNER JOIN sp_room_user ON sp_room.sid = sp_room_user.room_id ";
         $sql .= "WHERE sp_room_user.user_id=? AND sp_room.is_deleted=0 ORDER BY sp_room.sid DESC";
@@ -57,9 +57,9 @@ class Room_model extends CI_Model {
     }
 
     function updateOne($room){
-        $sql = "UPDATE sp_room SET url_name=?,master=?,master_nickname=?,title=?,user_name_type=?,vote_create_auth=? ";
+        $sql = "UPDATE sp_room SET url_name=?,master=?,master_nickname=?,title=?,user_name_type=?,poll_create_auth=? ";
         $sql .= "WHERE sid=?";
-        $query = $this->db->query($sql, array($room['url_name'],$room['master'],$room['master_nickname'],$room['title'],$room['user_name_type'],$room['vote_create_auth'],$room['sid']));
+        $query = $this->db->query($sql, array($room['url_name'],$room['master'],$room['master_nickname'],$room['title'],$room['user_name_type'],$room['poll_create_auth'],$room['sid']));
 
         return $query;
     }
@@ -76,7 +76,7 @@ class Room_model extends CI_Model {
         $query = $this->db->query($sql, array($sid));
 
         return $query;
-    }    
+    }
 
     /*
         insert_sp_room_user
@@ -103,8 +103,8 @@ class Room_model extends CI_Model {
     }
 
     function insertOneForTest($room){
-        $sql = "INSERT INTO sp_room (`sid`,`url_name`,`master`,`master_nickname`,`title`,`user_name_type`,`vote_create_auth`) VALUES (?,?,?,?,?,?,?)";
-        $query = $this->db->query($sql, array($room['sid'],$room['url_name'],$room['master'],$room['master_nickname'],$room['title'], $room['user_name_type'], $room['vote_create_auth']));
+        $sql = "INSERT INTO sp_room (`sid`,`url_name`,`master`,`master_nickname`,`title`,`user_name_type`,`poll_create_auth`) VALUES (?,?,?,?,?,?,?)";
+        $query = $this->db->query($sql, array($room['sid'],$room['url_name'],$room['master'],$room['master_nickname'],$room['title'], $room['user_name_type'], $room['poll_create_auth']));
 
         return $query;
     }

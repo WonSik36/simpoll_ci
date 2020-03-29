@@ -4,13 +4,13 @@ class Api extends CI_Controller {
         parent::__construct();
         $this->load->model('service/user_service');
         $this->load->model('service/room_service');
-        $this->load->model('service/vote_service');
+        $this->load->model('service/option_service');
         $this->load->library('session');
     }
 
     function test($param){
         $method = $this->input->method(true);
-        
+
         switch($method){
             case 'GET':
                 $this->_get($param);
@@ -171,7 +171,7 @@ class Api extends CI_Controller {
 
         // 투표 실행
         // $userdata = $this->session->userdata();
-        $result = $this->vote_service->voting($vote, $contents_number, $userdata);
+        $result = $this->option_service->voting($vote, $contents_number, $userdata);
 
         // 투표 성공
         if($result){
@@ -197,7 +197,7 @@ class Api extends CI_Controller {
             $res['message'] = $message;
         }
 
-        echo json_encode($res); 
+        echo json_encode($res);
         exit;
     }
 

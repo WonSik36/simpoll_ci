@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Group extends CI_Controller {
+class Simpoll extends CI_Controller {
     function __construct(){
         parent::__construct();
-        $this->load->model('service/group_service');
+        $this->load->model('service/simpoll_service');
     }
 
     function restWithParam($param){
@@ -20,14 +20,14 @@ class Group extends CI_Controller {
     // GET /api/room/{roomId}/vote              -> speacker
     function getVoteList($room_id){
         $user_id = $this->input->get('userId');
-        
+
         $list = null;
 
         // speacker
         if(empty($user_id)){
             $list = $this->group_service->getGroupListWithVoteListByRoomId($room_id);
 
-        // audience 
+        // audience
         }else{
             $list = $this->group_service->getGroupListWithVotedListByRoomIdAndUserId($room_id, $user_id);
         }
@@ -40,7 +40,7 @@ class Group extends CI_Controller {
     // GET /api/group/{groupUrl}?type=url
     function _getGroup($idOrUrl){
         $type = $this->input->get('type');
-        
+
         $group = null;
         if($type == "id"){
             $group = $this->group_service->getGroupById($idOrUrl);
@@ -86,17 +86,17 @@ class Group extends CI_Controller {
         );
         $this->load->model('service/vote_service');
         $bool = $this->vote_service->register($vote);
-        
+
         if($bool){
             $this->response_json(null,true,"Make Simpoll Success!");
         }else{
             $this->response_json(null,true,"Make Simpoll Failed...");
         }
     }
-    
+
     /* need to fix: input format */
     function _makeGroup($jsonArray){
-        if(empty($jsonArray['room_id']) || empty($jsonArray['vote_title']) || empty($jsonArray['user_id']) || empty($jsonArray['user_nickname']) 
+        if(empty($jsonArray['room_id']) || empty($jsonArray['vote_title']) || empty($jsonArray['user_id']) || empty($jsonArray['user_nickname'])
                 || empty($jsonArray['deadline']) || empty($jsonArray['choices']))
             $this->response_json(null, false, "Not right format");
 
@@ -112,7 +112,7 @@ class Group extends CI_Controller {
         $is_anonymous = 1;
         if(empty($jsonArray['is_anonymous']))
             $is_anonymous = 0;
-        
+
         $group = array(
             'room_id'=>$jsonArray['room_id'],
             'title'=>$group_title,
@@ -143,7 +143,7 @@ class Group extends CI_Controller {
             $res['message'] = $message;
         }
 
-        echo json_encode($res); 
+        echo json_encode($res);
         exit;
     }
 }

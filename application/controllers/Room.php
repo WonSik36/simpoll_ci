@@ -36,7 +36,7 @@ class Room extends CI_Controller {
     // GET /api/room/{roomUrl}?type=url
     function _getRoom($idOrUrl){
         $type = $this->input->get('type');
-        
+
         $room = null;
         if($type == "id"){
             $room = $this->room_service->getRoomById($idOrUrl);
@@ -70,7 +70,7 @@ class Room extends CI_Controller {
         $jsonArray = json_decode(file_get_contents('php://input'),true);
         if(empty($jsonArray['title']) || empty($jsonArray['master']) || empty($jsonArray['master_nickname']))
             $this->response_json(null, false, "Not right format");
-        
+
         $url_name = null;
         if(!empty($jsonArray['url_name']))
             $url_name = $jsonArray['url_name'];
@@ -81,7 +81,7 @@ class Room extends CI_Controller {
             'master'=>$jsonArray['master'],
             'master_nickname'=>$jsonArray['master_nickname'],
             'user_name_type'=>$jsonArray['user_name_type'],
-            'vote_create_auth'=>$jsonArray['vote_create_auth']
+            'vote_create_auth'=>$jsonArray['poll_create_auth']
         );
 
         $room_id = $this->room_service->register($room);
@@ -95,7 +95,7 @@ class Room extends CI_Controller {
     // POST /api/room/{roomId}/user
     function addAudience2Room($room_id){
         $jsonArray = json_decode(file_get_contents('php://input'),true);
-        
+
         if(empty($jsonArray['user_id']))
             $this->response_json(null, false, "Not right format");
 
@@ -121,7 +121,7 @@ class Room extends CI_Controller {
             $res['message'] = $message;
         }
 
-        echo json_encode($res); 
+        echo json_encode($res);
         exit;
     }
 }

@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Choice extends CI_Controller {
+class Option extends CI_Controller {
     function __construct(){
         parent::__construct();
-        $this->load->model('service/choice_service');
+        $this->load->model('service/option_service');
     }
 
     function rest(){
@@ -15,7 +15,7 @@ class Choice extends CI_Controller {
         }
     }
 
-    // URL: 
+    // URL:
     // GET /api/choice?voteId=?&userId=?&persontype=audience
     // GET /api/choice?voteId=?&userId=?&persontype=speacker
     function _getVoteResult(){
@@ -65,7 +65,7 @@ class Choice extends CI_Controller {
         );
 
         $bool = $this->choice_service->voting($choice);
-        
+
         if($bool){
             $this->response_json(null, true, "Simpolling Success!");
         }else{
@@ -84,13 +84,34 @@ class Choice extends CI_Controller {
 
         if($choice['user_id'] != $jsonArray['user_id'])
             $this->response_json(null, true, "No authorization Error");
-            
+
         $choice['choice_no'] = $jsonArray['choice_no'];
         $bool = $this->choice_service->updateChoice($choice);
         if($bool){
             $this->response_json(null, true, "Simpoll Update Success!");
         }else{
             $this->response_json(null, true, "Simpoll Update Failed...");
+        }
+    }
+    // simpoll 생성시, 만들어지는 선택지 한 개 한 개를 저장.
+    function registerOption($question_id){
+        $jsonArray = json_decode(file_get_contents('php://input'),true);
+        if(empty($jsonArray['user_id']) || empty($jsonArray['name']))
+            $this->response_json(null, false, "Not right format");
+        $user_id = null;
+        $user_nickname = null;
+        $option = array(
+            'name'=>$jsonArray['name'],
+            'user_id'=>$user_id,
+            'user_nickname'=>$user_nickname,
+            'question_id'=>$jsonArray['question_id']
+        );
+        $result = $this->option_service->registerOption($option);
+
+        if($result){
+            $this->response_json(null, true, "Simpoll Create Success!");
+        }else{
+            $this->response_json(null, true, "Simpoll Create Failed...");
         }
     }
 
@@ -109,7 +130,7 @@ class Choice extends CI_Controller {
             $res['message'] = $message;
         }
 
-        echo json_encode($res); 
+        echo json_encode($res);
         exit;
     }
 }

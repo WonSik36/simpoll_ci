@@ -1,8 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class Vote extends CI_Controller {
+class Question extends CI_Controller {
     function __construct(){
         parent::__construct();
-        $this->load->model('service/vote_service');
+        $this->load->model('service/question_service');
     }
 
     // URL:
@@ -31,7 +31,7 @@ class Vote extends CI_Controller {
             $res['message'] = $message;
         }
 
-        echo json_encode($res); 
+        echo json_encode($res);
         exit;
     }
 }
