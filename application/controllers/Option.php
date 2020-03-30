@@ -3,13 +3,12 @@ class Option extends CI_Controller {
     function __construct(){
         parent::__construct();
         $this->load->model('service/option_service');
+        $this->load->library('session');
     }
 
     function rest(){
         $method = $this->input->method(TRUE);
 
-        if($method == "GET")
-            $this->_getQuestionResult();
         else if($method == "POST"){
             $this->_submitQuestion();
         }
@@ -18,6 +17,7 @@ class Option extends CI_Controller {
     // URL:
     // GET /api/option?questionId=?&userId=?&persontype=audience
     // GET /api/option?questionId=?&userId=?&persontype=speacker
+    //없애기.
     function _getQuestionResult(){
         $question_id = $this->input->get('questionId');
         if(empty($question_id)){
@@ -59,11 +59,11 @@ class Option extends CI_Controller {
         if(empty($jsonArray['user_id']) || empty($jsonArray['question_id']) || empty($jsonArray['choice_no']))
             $this->response_json(null, false, "Not right format");
 
-        $user_id = $jsonArray['user_id'];
+        $user_id = $this->session->userdata('sid');
         $option_id = $jsonArray['option_id'];
 
 
-        $bool = $this->choice_service->voting($option_id,$user_id);
+        $bool = $this->option_service->voting($option_id,$user_id);
 
         if($bool){
             $this->response_json(null, true, "Simpolling Success!");
@@ -74,6 +74,7 @@ class Option extends CI_Controller {
 
     // URL:
     // PUT /api/option/{optionId}
+    //사용 X
     function updateOption($option_id){
         $jsonArray = json_decode(file_get_contents('php://input'),true);
         if(empty($jsonArray['user_id']) || empty($jsonArray['option_id']))

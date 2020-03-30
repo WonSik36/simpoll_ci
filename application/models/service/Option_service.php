@@ -18,30 +18,31 @@ class Option_service extends CI_Model {
         $this->load->model('dao/simpoll_model');
 
         $user = $this->user_model->selectOneById($user_id);
-        $option = $this->option_model->selectOneById($option_id);
-        $question = $this->question_model->selectOneById($option['question_id']);
+        $option1 = $this->option_model->selectOneById($option_id[0]);
+        $question = $this->question_model->selectOneById($option1['question_id']);
         $simpoll = $this->simpoll_model->selectOneById($question['simpoll_id']);
 
         $is_anonymous = $simpoll['is_anonymous'];
         $part_auth = $simpoll['part_auth'];
         for($i=0;$i<count($option_id);$i++){
+            $option = $this->option_model->selectOneById($option_id[$i]);
             // case1: 실명이면서 로그인 한 사람만 참여 가능 -> user_id = 사용자 id, cur_name = name
             if($is_anonymous==0 && $part_auth==0){
-                $inputs = $this->makeOption($option_id[$i], $option['name'], $question['sid'], $option['user_id'], $user_id, $option['user_nickname'], $user['name']);
+                $inputs = $this->makeOption($option_id[$i], $option['name'], $option['question_id'], $option['user_id'], $user_id, $option['user_nickname'], $user['name'], $option['count']);
                 $result = $this->option_model->updateOne($inputs);
 
             // case2: 익명이면서 로그인 한 사람만 참여 가능 -> user_id = 사용자 id, cur_name = nickname
             }else if($is_anonymous==1 && $part_auth==0){
-                $inputs = $this->makeOption($option_id[$i], $option['name'], $question['sid'], $user['sid'], $user_id, $option['user_nickname'], $user['nickname']);
+                $inputs = $this->makeOption($option_id[$i], $option['name'], $option['question_id'], $user['sid'], $user_id, $option['user_nickname'], $user['nickname'], $option['count']);
                 $result = $this->option_model->updateOne($inputs);
 
             // case3: 익명이면서 링크를 가진 누구나 투표 가능 -> user_id = NULL, cur_name = 'anonymous'
             }else if($is_anonymous==1 && $part_auth==1){
                 $inputs;
                 if(empty($user))
-                    $inputs = $this->makeOption($option_id[$i], $option['name'], $question['sid'], null, null, $option['user_nickname'], null);
+                    $inputs = $this->makeOption($option_id[$i], $option['name'], $option['question_id'], null, null, $option['user_nickname'], null, $option['count']);
                 else
-                    $inputs = $this->makeOption($option_id[$i], $option['name'], $question['sid'], $user['sid'], $user_id, $option['user_nickname'], $user['nickname']);
+                    $inputs = $this->makeOption($option_id[$i], $option['name'], $option['question_id'], $user['sid'], $user_id, $option['user_nickname'], $user['nickname'], $option['count']);
                     $result = $this->option_model->updateOne($inputs);
 
             // case4: 실명이면서 링크를 가진 누구나 투표 가능 -> 불가능한 경우
@@ -63,7 +64,7 @@ class Option_service extends CI_Model {
         return $result;
     }
 
-    function makeOption($option_id, $option_name, $question_id, $user_id, $new_user_id, $user_nickname, $new_user_nickname){
+    function makeOption($option_id, $option_name, $question_id, $user_id, $new_user_id, $user_nickname, $new_user_nickname, $count){
         if(!empty($user_id)){
             $array = array($user_id,$new_user_id);
             $user_id = implode('|', $array);
@@ -76,6 +77,7 @@ class Option_service extends CI_Model {
             'user_id' => $user_id,
             'user_nickname' => $user_nickname,
             'question_id' => $question_id,
+            'count' => $count++
         );
 
         return $inputs;

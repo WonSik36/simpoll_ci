@@ -59,7 +59,6 @@ $route['api/room'] = 'room/makeRoom';
 $route['api/room/(:num)/user'] = 'room/addAudience2Room/$1';
 $route['api/user/(:num)/room'] = 'room/getRoomList/$1';
 $route['api/simpoll'] = 'simpoll/makeSimpoll';
-$route['api/simpoll/(:num)'] = 'simpoll/deleteSimpoll/$1';
 $route['api/room/(:num)/sipoll'] = 'simpoll/getSimpollList/$1';
 $route['api/room/(:any)'] = 'room/restWithParam/$1';
 $route['api/simpoll/(:any)'] = 'simpoll/restWithParam/$1';

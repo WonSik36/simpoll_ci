@@ -8,8 +8,10 @@ class Simpoll extends CI_Controller {
     function restWithParam($param){
         $method = $this->input->method(TRUE);
 
-        if($method == "GET")
-            $this->_getSimpoll($param);
+        if($method == "GET"){
+            if(!empty($this->input->get('type'))) $this->_getSimpoll($param);
+            else _getSimpollById($param);
+        }
         else if($method == "DELETE"){
             $this->_deleteSimpoll($param);
         }
@@ -45,6 +47,19 @@ class Simpoll extends CI_Controller {
         }else{
             $this->response_json(null,false,"Wrong Type");
         }
+
+        if(empty($simpoll)){
+            $this->response_json(null,false,"No Simpoll for ".$idOrUrl);
+        }else{
+            $this->response_json($simpoll,true,null);
+        }
+    }
+
+    function _getSimpollById($id){
+        $type = $this->input->get('type');
+
+        $simpoll = null;
+        $simpoll = $this->simpoll_service->getSimpollById($idOrUrl);
 
         if(empty($simpoll)){
             $this->response_json(null,false,"No Simpoll for ".$idOrUrl);

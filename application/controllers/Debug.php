@@ -457,13 +457,13 @@ class Debug extends CI_Controller {
         $question2 = array('simpoll_id'=>'2','title'=>'question3','choice_no'=>'3','question_type'=>'0','sid'=>'102');
         $question3 = array('simpoll_id'=>'3','title'=>'question4','choice_no'=>'2','question_type'=>'0','sid'=>'103');
         $question4 = array('simpoll_id'=>'4','title'=>'question5','choice_no'=>'1','question_type'=>'0','sid'=>'104');
-        $option1 = array('user_id'=>'1|2','user_nickname'=>'nickname1|nickname2','question_id'=>'1','name'=>'A','sid'=>'1');
-        $option2 = array('user_id'=>'1|2|3','user_nickname'=>'nickname1|nickname2|nickname3','question_id'=>'1','name'=>'A','sid'=>'1');
+        $option1 = array('user_id'=>'1|2','user_nickname'=>'nickname1|nickname2','question_id'=>'1','name'=>'A','sid'=>'1','count'=>'2');
+        $option2 = array('user_id'=>'1|2|3','user_nickname'=>'nickname1|nickname2|nickname3','question_id'=>'1','name'=>'A','sid'=>'1','count'=>'3');
         $this->question_model->insertOneForTest($question1);
         $this->question_model->insertOneForTest($question2);
         $this->question_model->insertOneForTest($question3);
         $this->question_model->insertOneForTest($question4);
-        $input = $this->option_service->makeOption('1',$option1['name'],$option1['question_id'],$option1['user_id'],'3',$option1['user_nickname'],'nickname3');
+        $input = $this->option_service->makeOption('1',$option1['name'],$option1['question_id'],$option1['user_id'],'3',$option1['user_nickname'],'nickname3','2');
 
         // getChoiceById
         $option = $this->option_service->getOptionById(1);
