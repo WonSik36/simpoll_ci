@@ -171,32 +171,35 @@ class Debug extends CI_Controller {
         echo "<h3>selectListWithSimpollByRoomId Test</h3>";
         echo "<table>";
         echo "<tr>";
-        echo "<th>simpoll_id</th><th>room_id</th><th>simpoll_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
+        echo "<th>room_id</th><th>simpoll_id</th><th>simpoll_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
         echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>question_id</th><th>question_title</th>";
-        echo "<th>question_choice_no</th><th>question_type</th>";
+        echo "<th>question_type</th><th>option_id</th><th>option_name</th><th>option_user_id</th><th>option_user_nickname</th>";
         echo "</tr>";
         for($i=0;$i<count($simpollWithQuestion);$i++){
             echo "<tr>";
-            echo "<td>".$simpollWithQuestion[$i]['simpoll_id']."</td>";
-            echo "<td>".$simpollWithQuestion[$i]['room_id']."</td>";
-            echo "<td>".$simpollWithQuestion[$i]['simpoll_title']."</td>";
-            echo "<td>".$simpollWithQuestion[$i]['url_name']."</td>";
-            echo "<td>".$simpollWithQuestion[$i]['user_id']."</td>";
-            echo "<td>".$simpollWithQuestion[$i]['user_nickname']."</td>";
-            echo "<td>".$simpollWithQuestion[$i]['deadline']."</td>";
-            echo "<td>".$simpollWithQuestion[$i]['is_comment_enable']."</td>";
-            echo "<td>".$simpollWithQuestion[$i]['is_anonymous']."</td>";
-            echo "<td>".$simpollWithQuestion[$i]['part_auth']."</td>";
-            echo "<td>".$simpollWithQuestion[$i]['question_id']."</td>";
-            echo "<td>".$simpollWithQuestion[$i]['question_title']."</td>";
-            echo "<td>".$simpollWithQuestion[$i]['question_choice_no']."</td>";
-            echo "<td>".$simpollWithQuestion[$i]['question_type']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['room_id']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['simpoll_id']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['simpoll_title']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['url_name']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['user_id']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['user_nickname']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['deadline']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['is_comment_enable']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['is_anonymous']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['part_auth']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['question_id']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['question_title']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['question_type']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['option_id']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['option_name']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['option_user_id']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['option_user_nickname']."</td>";
             echo "</tr>";
         }
         echo "</table>";
 
         // selectListWithVoteAndChoiceByRoomIdAndUserId
-        $simpollWithQuestionAndOption = $this->simpoll_model->selectListWithQuestionAndOptionByRoomIdAndQuestionId('1','1');
+        $simpollWithQuestionAndOption = $this->simpoll_model->selectListWithQuestionAndOptionBySimpollId('1');
         echo "<h3>selectListWithVoteAndChoiceByRoomIdAndQuestionId Test</h3>";
         echo "<table>";
         echo "<tr>";
@@ -348,8 +351,8 @@ class Debug extends CI_Controller {
         echo $this->unit->run($this->simpoll_service->getSimpollById($simpoll_id),null,"deleteSimpoll Test");
 
         // getSimpollByUrlListWithVotedListByRoomIdAndUserId
-        $simpollWithQuestionList = $this->simpoll_service->getSimpollListWithQuestionListByRoomIdAndQuestionId('1','1');
-        echo "<h3>selectListWithQuestionAndOptionByRoomIdAndQuestionId Test</h3>";
+        $simpollWithQuestionList = $this->simpoll_service->getSimpollListWithQuestionListBySimpollId('1');
+        echo "<h3>selectListWithQuestionAndOptionBySimpollId Test</h3>";
         echo "<table>";
         echo "<tr>";
         echo "<th>room_id</th><th>simpoll_id</th><th>simpoll_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
@@ -381,17 +384,17 @@ class Debug extends CI_Controller {
 
         // getsimpollListWithVoteListByRoomId
         $simpollWithQuestionList = $this->simpoll_service->getsimpollListWithQuestionListByRoomId('1');
-        echo "<h3>selectListWithSimpollByRoomId Test</h3>";
+        echo "<h3>selectListWithQuestionAndOptionByRoomId Test</h3>";
         echo "<table>";
         echo "<tr>";
-        echo "<th>simpoll_id</th><th>room_id</th><th>simpoll_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
+        echo "<th>room_id</th><th>simpoll_id</th><th>simpoll_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
         echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>question_id</th><th>question_title</th>";
-        echo "<th>question_choice_no</th><th>question_type</th>";
+        echo "<th>question_type</th><th>option_id</th><th>option_name</th><th>option_user_id</th><th>option_user_nickname</th>";
         echo "</tr>";
         for($i=0;$i<count($simpollWithQuestionList);$i++){
             echo "<tr>";
-            echo "<td>".$simpollWithQuestionList[$i]['simpoll_id']."</td>";
             echo "<td>".$simpollWithQuestionList[$i]['room_id']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['simpoll_id']."</td>";
             echo "<td>".$simpollWithQuestionList[$i]['simpoll_title']."</td>";
             echo "<td>".$simpollWithQuestionList[$i]['url_name']."</td>";
             echo "<td>".$simpollWithQuestionList[$i]['user_id']."</td>";
@@ -402,8 +405,11 @@ class Debug extends CI_Controller {
             echo "<td>".$simpollWithQuestionList[$i]['part_auth']."</td>";
             echo "<td>".$simpollWithQuestionList[$i]['question_id']."</td>";
             echo "<td>".$simpollWithQuestionList[$i]['question_title']."</td>";
-            echo "<td>".$simpollWithQuestionList[$i]['question_choice_no']."</td>";
             echo "<td>".$simpollWithQuestionList[$i]['question_type']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['option_id']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['option_name']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['option_user_id']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['option_user_nickname']."</td>";
             echo "</tr>";
         }
         echo "</table>";
@@ -447,29 +453,33 @@ class Debug extends CI_Controller {
         $this->user_model->insertOne($user);
         $user = $this->user_model->selectOneByEmailAndPW("email500@email.com","pw500");
 
-        $vote1 = array('simpoll_id'=>'1','title'=>'vote2','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'101');
-        $vote2 = array('simpoll_id'=>'2','title'=>'vote3','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'102');
-        $vote3 = array('simpoll_id'=>'3','title'=>'vote4','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'103');
-        $vote4 = array('simpoll_id'=>'4','title'=>'vote5','choices'=>'choice1|choice2|choice3|choice4','vote_type'=>'0','sid'=>'104');
-        $this->vote_model->insertOneForTest($vote1);
-        $this->vote_model->insertOneForTest($vote2);
-        $this->vote_model->insertOneForTest($vote3);
-        $this->vote_model->insertOneForTest($vote4);
+        $question1 = array('simpoll_id'=>'1','title'=>'question2','choice_no'=>'4','question_type'=>'0','sid'=>'101');
+        $question2 = array('simpoll_id'=>'2','title'=>'question3','choice_no'=>'3','question_type'=>'0','sid'=>'102');
+        $question3 = array('simpoll_id'=>'3','title'=>'question4','choice_no'=>'2','question_type'=>'0','sid'=>'103');
+        $question4 = array('simpoll_id'=>'4','title'=>'question5','choice_no'=>'1','question_type'=>'0','sid'=>'104');
+        $option1 = array('user_id'=>'1|2','user_nickname'=>'nickname1|nickname2','question_id'=>'1','name'=>'A','sid'=>'1');
+        $option2 = array('user_id'=>'1|2|3','user_nickname'=>'nickname1|nickname2|nickname3','question_id'=>'1','name'=>'A','sid'=>'1');
+        $this->question_model->insertOneForTest($question1);
+        $this->question_model->insertOneForTest($question2);
+        $this->question_model->insertOneForTest($question3);
+        $this->question_model->insertOneForTest($question4);
+        $input = $this->option_service->makeOption('1',$option1['name'],$option1['question_id'],$option1['user_id'],'3',$option1['user_nickname'],'nickname3');
 
         // getChoiceById
-        $choice = $this->choice_service->getChoiceById(1);
-        echo $this->unit->run($this->compareChoice($choice,$this->choiceList[0]),true,"getChoiceById Test");
+        $option = $this->option_service->getOptionById(1);
+        echo $this->unit->run($this->compareOption($option,$this->optionList[0]),true,"getChoiceById Test");
+        echo $this->unit->run($this->compareOption($option2,$input),true,"getChoiceById Test");
 
         // voting - is_anonymous:0, part_auth:0
-        $choice = array('user_id'=>$user['sid'],'vote_id'=>'101','choice_no'=>'1');
-        $this->choice_service->voting($choice);
-        echo $this->unit->run($this->choice_model->count(),count($this->choiceList)+1, "voting Test");
-        $choice = $this->choice_service->getChoiceByVoteIdAndUserId('101',$user['sid']);
-        echo $this->unit->run($this->compareChoice($choice, array('user_id'=>$user['sid'],'user_nickname'=>'name500','vote_id'=>'101','choice_no'=>'1')), true, "voting Test");
-        echo $this->unit->run(empty($this->room_model->selectOneByRoomIdAndUserId('1', $user['sid'])),false,"voting Test");
-
+        $choice = $this->option_service->voting(['1'],'4');
+        //$update_option = array('user_id'=>'1|2|3|4','user_nickname'=>'nickname1|nickname2|nickname3|nickname4','question_id'=>'1','name'=>'A','sid'=>'1');
+        //echo $this->unit->run($this->choice_model->count(),count($this->choiceList)+1, "voting Test");
+        //$choice1 = $this->option_model->selectOneById('1');
+        //echo $this->unit->run($this->compareChoice($choice, array('user_id'=>$user['sid'],'user_nickname'=>'name500','vote_id'=>'101','choice_no'=>'1')), true, "voting Test");
+        //echo $this->unit->run(empty($this->room_model->selectOneByRoomIdAndUserId('1', $user['sid'])),false,"voting Test");
+        echo $this->unit->run($choice,true,"Voting Test");;
         // voting - is_anonymous:1, part_auth:0
-        $choice = array('user_id'=>$user['sid'],'vote_id'=>'102','choice_no'=>'1','user');
+/*         $choice = array('user_id'=>$user['sid'],'vote_id'=>'102','choice_no'=>'1','user');
         $this->choice_service->voting($choice);
         echo $this->unit->run($this->choice_model->count(),count($this->choiceList)+2, "voting Test");
         $choice = $this->choice_service->getChoiceByVoteIdAndUserId('102',$user['sid']);
@@ -535,7 +545,7 @@ class Debug extends CI_Controller {
             echo "</tr>";
         }
         echo "</table>";
-
+*/
         $this->db->trans_complete();
     }
 
@@ -615,6 +625,15 @@ class Debug extends CI_Controller {
         }
 
         return true;
+    }
+
+    function compareOption($option1, $option2){
+        if($option1['user_id']==$option2['user_id'] && $option1['name']==$option2['name']
+                 && $option1['user_nickname']==$option2['user_nickname']
+                 && $option1['question_id']==$option2['question_id'])
+            return true;
+        else
+            return false;
     }
 
     function test($param){

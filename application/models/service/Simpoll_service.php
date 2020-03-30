@@ -18,17 +18,32 @@ class Simpoll_service extends CI_Model {
         return $this->simpoll_model->selectOneById($sid);
     }
 
-    // 유저가 투표한 vote는 voted: true,
-    // 투표하지 않은 vote는 voted: false
-    // 결과 중심이니 일단 사용 X
-   function getSimpollListWithQuestionListByRoomIdAndQuestionId($room_id,$question_id){
-        //$list = $this->simpoll_model->selectListWithQuestionByRoomId($room_id);
-        return $this->simpoll_model->selectListWithQuestionAndOptionByRoomIdAndQuestionId($room_id,$question_id);
+    // 투표 결과 (청중, 강연자)
+   function getSimpollListWithQuestionListBySimpollId($simpoll_id){
+        return $this->simpoll_model->selectListWithQuestionAndOptionBySimpollId($simpoll_id);
 
     }
-
+    // simpll list 요구시 (청중, 강연자)
     function getSimpollListWithQuestionListByRoomId($room_id){
         return $this->simpoll_model->selectListWithQuestionByRoomId($room_id);
+    }
+
+    function createSimpoll($input){
+        $this->load->model('service/question_service');
+        $this->load->model('service/option_service');
+        $this->db->trans_start();
+            // 심폴 생성
+            // 문항 생성
+            for($i=0; $i<count($input['question']); $i++){
+                $question = $input['questions'][$i];
+                $question_service->register($question);
+                for($j=0; $i<count($input['question'][$i]['options']); $j++){
+                    $option = $input['question'][$i]['options'][$j];
+                    $option_service->registerOption($option);
+                }
+            }
+
+        $this->db->trans_complete();
     }
 
     /*

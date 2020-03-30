@@ -9,83 +9,79 @@ class Simpoll extends CI_Controller {
         $method = $this->input->method(TRUE);
 
         if($method == "GET")
-            $this->_getGroup($param);
+            $this->_getSimpoll($param);
         else if($method == "DELETE"){
-            $this->_deleteGroup($param);
+            $this->_deleteSimpoll($param);
         }
     }
 
     // URL:
-    // GET /api/room/{roomId}/vote?userId=?     -> audience
-    // GET /api/room/{roomId}/vote              -> speacker
-    function getVoteList($room_id){
+    // GET /api/room/{roomId}/question?userId=?     -> audience
+    // GET /api/room/{roomId}/question              -> speacker
+    function getSimpollList($room_id){
         $user_id = $this->input->get('userId');
 
         $list = null;
 
-        // speacker
+        // speacker, audience
         if(empty($user_id)){
-            $list = $this->group_service->getGroupListWithVoteListByRoomId($room_id);
-
-        // audience
-        }else{
-            $list = $this->group_service->getGroupListWithVotedListByRoomIdAndUserId($room_id, $user_id);
+            $list = $this->simpoll_service->getSimpollListWithQuestionListByRoomId($room_id);
         }
 
         $this->response_json($list,true,null);
     }
 
     // URL:
-    // GET /api/group/{groupId}?type=id
-    // GET /api/group/{groupUrl}?type=url
-    function _getGroup($idOrUrl){
+    // GET /api/simpoll/{simpollId}?type=id
+    // GET /api/simpoll/{simpollUrl}?type=url
+    function _getSimpoll($idOrUrl){
         $type = $this->input->get('type');
 
-        $group = null;
+        $simpoll = null;
         if($type == "id"){
-            $group = $this->group_service->getGroupById($idOrUrl);
+            $simpoll = $this->simpoll_service->getSimpollById($idOrUrl);
         }else if($type == "url"){
-            $group = $this->group_service->getGroupByUrl($idOrUrl);
+            $simpoll = $this->simpoll_service->getSimpollByUrl($idOrUrl);
         }else{
             $this->response_json(null,false,"Wrong Type");
         }
 
-        if(empty($group)){
-            $this->response_json(null,false,"No Group for ".$idOrUrl);
+        if(empty($simpoll)){
+            $this->response_json(null,false,"No Simpoll for ".$idOrUrl);
         }else{
-            $this->response_json($group,true,null);
+            $this->response_json($simpoll,true,null);
         }
     }
 
     // URL:
-    // DELETE /api/group/{groupId}
-    function _deleteGroup($group_id){
-        $bool = $this->group_service->deleteGroup($group_id);
+    // DELETE /api/simpoll/{simpollId}
+    function _deleteSimpoll($simpoll_id){
+        $bool = $this->simpoll_service->deleteSimpoll($simpoll_id);
 
         if($bool)
-            $this->response_json(null, true, "Delete Group Success!");
+            $this->response_json(null, true, "Delete Simpoll Success!");
         else
-            $this->response_json(null, false, "Delete Group Failed...");
+            $this->response_json(null, false, "Delete Simpoll Failed...");
     }
 
     /* need to fix: Transaction */
-    /* need to fix: Deal with multiple votes */
+    /* need to fix: Deal with multiple questions */
     // URL:
-    // POST /api/group
-    function makeGroup(){
+    // POST /api/simpoll
+    function makeSimpoll(){
         $jsonArray = json_decode(file_get_contents('php://input'),true);
-        $group = $this->_makeGroup($jsonArray);
+        $simpoll = $this->_makeSimpoll($jsonArray);
 
-        $group_id = $this->group_service->register($group);
+        $simpoll_id = $this->simpoll_service->register($simpoll);
 
-        $vote = array(
-            'group_id'=>$group_id,
-            'title'=>$jsonArray['vote_title'],
-            'choices'=>$jsonArray['choices'],
-            'vote_type'=>$jsonArray['vote_type']
+        $question = array(
+            'simpoll_id'=>$simpoll_id,
+            'title'=>$jsonArray['question_title'],
+            'choice_no'=>$jsonArray['choice_no'],
+            'question_type'=>$jsonArray['question_type']
         );
-        $this->load->model('service/vote_service');
-        $bool = $this->vote_service->register($vote);
+        $this->load->model('service/question_service');
+        $bool = $this->question_service->register($question);
 
         if($bool){
             $this->response_json(null,true,"Make Simpoll Success!");
@@ -95,17 +91,17 @@ class Simpoll extends CI_Controller {
     }
 
     /* need to fix: input format */
-    function _makeGroup($jsonArray){
-        if(empty($jsonArray['room_id']) || empty($jsonArray['vote_title']) || empty($jsonArray['user_id']) || empty($jsonArray['user_nickname'])
-                || empty($jsonArray['deadline']) || empty($jsonArray['choices']))
+    function _makeSimpoll($jsonArray){
+        if(empty($jsonArray['room_id']) || empty($jsonArray['simpoll_title']) || empty($jsonArray['user_id']) || empty($jsonArray['user_nickname'])
+                || empty($jsonArray['deadline']))
             $this->response_json(null, false, "Not right format");
 
         $url_name = null;
         if(!empty($jsonArray['url_name']))
             $url_name = $jsonArray['url_name'];
-        $group_title = null;
-        if(!empty($jsonArray['group_title']))
-            $group_title = $jsonArray['group_title'];
+        $simpoll_title = null;
+        if(!empty($jsonArray['title']))
+            $simpoll_title = $jsonArray['simpoll_title'];
         $is_comment_enable = 1;
         if(empty($jsonArray['is_comment_enable']))
             $is_comment_enable = 0;
@@ -113,9 +109,9 @@ class Simpoll extends CI_Controller {
         if(empty($jsonArray['is_anonymous']))
             $is_anonymous = 0;
 
-        $group = array(
+        $simpoll = array(
             'room_id'=>$jsonArray['room_id'],
-            'title'=>$group_title,
+            'title'=>$simpoll_title,
             'url_name'=>$url_name,
             'user_id'=>$jsonArray['user_id'],
             'user_nickname'=>$jsonArray['user_nickname'],
@@ -125,7 +121,7 @@ class Simpoll extends CI_Controller {
             'part_auth'=>$jsonArray['part_auth']
         );
 
-        return $group;
+        return $simpoll;
     }
 
     function response_json($data, $isSucceed, $message){

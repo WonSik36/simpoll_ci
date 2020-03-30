@@ -9,8 +9,9 @@ class Room extends CI_Controller {
     function restWithParam($param){
         $method = $this->input->method(TRUE);
 
-        if($method == "GET")
-            $this->_getRoom($param);
+        if($method == "GET"){
+            else $this->_getRoom($param);
+        }
         else if($method == "DELETE"){
             $this->_deleteRoom($param);
         }
@@ -81,7 +82,7 @@ class Room extends CI_Controller {
             'master'=>$jsonArray['master'],
             'master_nickname'=>$jsonArray['master_nickname'],
             'user_name_type'=>$jsonArray['user_name_type'],
-            'vote_create_auth'=>$jsonArray['poll_create_auth']
+            'poll_create_auth'=>$jsonArray['poll_create_auth']
         );
 
         $room_id = $this->room_service->register($room);

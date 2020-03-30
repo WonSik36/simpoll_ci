@@ -9,19 +9,19 @@ class Option extends CI_Controller {
         $method = $this->input->method(TRUE);
 
         if($method == "GET")
-            $this->_getVoteResult();
+            $this->_getQuestionResult();
         else if($method == "POST"){
-            $this->_submitVote();
+            $this->_submitQuestion();
         }
     }
 
     // URL:
-    // GET /api/choice?voteId=?&userId=?&persontype=audience
-    // GET /api/choice?voteId=?&userId=?&persontype=speacker
-    function _getVoteResult(){
-        $vote_id = $this->input->get('voteId');
-        if(empty($vote_id)){
-            $this->response_json(null,false,"Need voteID");
+    // GET /api/option?questionId=?&userId=?&persontype=audience
+    // GET /api/option?questionId=?&userId=?&persontype=speacker
+    function _getQuestionResult(){
+        $question_id = $this->input->get('questionId');
+        if(empty($question_id)){
+            $this->response_json(null,false,"Need questionID");
         }
 
         $user_id = $this->input->get('userId');
@@ -34,37 +34,36 @@ class Option extends CI_Controller {
             $this->response_json(null,false,"Need person type");
         }
 
-        $this->load->model('service/vote_service');
-        $vote = $this->vote_service->getVoteById($vote_id);
-        $voteResult = $this->choice_service->getVoteResult($vote);
+        $this->load->model('service/question_service');
+        $this->load->model('service/simpoll_service');
+        $question = $this->question_service->getQuestionById($question_id);
+        $questionResult = $this->question_service->getQusetionResult($question);
         if($personType == "audience"){
-            $userChoice = $this->choice_service->getChoiceByVoteIdAndUserId($vote_id, $user_id);
-            $voteResult['sid'] = $userChoice['sid'];
-            $voteResult['choice_no'] = $userChoice['choice_no'];
-            $this->response_json($voteResult, true, null);
+            $userOption = $this->simpoll_service->getSimpollListWithQuestionListBySimpollId($simpoll_id);
+            $questionResult['sid'] = $userOPtion['sid'];
+            $questionResult['option_no'] = $userChoice['option_no'];
+            $this->response_json($questionResult, true, null);
         }else if($personType == "speacker"){
-            $participant = $this->choice_service->getParticipant($vote);
-            $voteResult['participant'] = $participant;
-            $this->response_json($voteResult, true, null);
+            $participant = $this->choice_service->getParticipant($question);
+            $questionResult['participant'] = $participant;
+            $this->response_json($questionResult, true, null);
         }
 
         $this->response_json(null,false,"Not matching person type");
     }
 
     // URL:
-    // POST /api/choice
-    function _submitVote(){
+    // POST /api/option
+    function _submitQuestion(){
         $jsonArray = json_decode(file_get_contents('php://input'),true);
-        if(empty($jsonArray['user_id']) || empty($jsonArray['vote_id']) || empty($jsonArray['choice_no']))
+        if(empty($jsonArray['user_id']) || empty($jsonArray['question_id']) || empty($jsonArray['choice_no']))
             $this->response_json(null, false, "Not right format");
 
-        $choice = array(
-            'user_id'=> $jsonArray['user_id'],
-            'vote_id'=> $jsonArray['vote_id'],
-            'choice_no'=> $jsonArray['choice_no']
-        );
+        $user_id = $jsonArray['user_id'];
+        $option_id = $jsonArray['option_id'];
 
-        $bool = $this->choice_service->voting($choice);
+
+        $bool = $this->choice_service->voting($option_id,$user_id);
 
         if($bool){
             $this->response_json(null, true, "Simpolling Success!");
@@ -74,19 +73,18 @@ class Option extends CI_Controller {
     }
 
     // URL:
-    // PUT /api/choice/{choiceId}
-    function updateChoice($choice_id){
+    // PUT /api/option/{optionId}
+    function updateOption($option_id){
         $jsonArray = json_decode(file_get_contents('php://input'),true);
-        if(empty($jsonArray['user_id']) || empty($jsonArray['choice_no']))
+        if(empty($jsonArray['user_id']) || empty($jsonArray['option_id']))
             $this->response_json(null, false, "Not right format");
 
-        $choice = $this->choice_service->getChoiceById($choice_id);
+        $option = $this->option_service->getOptionById($option_id);
 
-        if($choice['user_id'] != $jsonArray['user_id'])
+        if($option['option_id'] != $jsonArray['option_id'])
             $this->response_json(null, true, "No authorization Error");
 
-        $choice['choice_no'] = $jsonArray['choice_no'];
-        $bool = $this->choice_service->updateChoice($choice);
+        $bool = $this->option_service->updateOption($option);
         if($bool){
             $this->response_json(null, true, "Simpoll Update Success!");
         }else{
