@@ -38,13 +38,13 @@ class Debug extends CI_Controller {
     );
 
     private $optionList = array(
-        array('user_id'=>'1|2','user_nickname'=>'nickname1|nickname2','question_id'=>'1','name'=>'A','sid'=>'1'),
-        array('user_id'=>'2|3','user_nickname'=>'nickname2|nickname3','question_id'=>'1','name'=>'B','sid'=>'2'),
-        array('user_id'=>'3|2','user_nickname'=>'nickname3|nickname2','question_id'=>'1','name'=>'C','sid'=>'3'),
-        array('user_id'=>'4|2','user_nickname'=>'nickname4|nickname2','question_id'=>'1','name'=>'D','sid'=>'4'),
-        array('user_id'=>'5|2','user_nickname'=>'nickname5|nickname2','question_id'=>'2','name'=>'A','sid'=>'5'),
-        array('user_id'=>'1|2','user_nickname'=>'nickname1|nickname2','question_id'=>'2','name'=>'B','sid'=>'6'),
-        array('user_id'=>'1|2','user_nickname'=>'nickname1|nickname2','question_id'=>'2','name'=>'C','sid'=>'7')
+        array('user_id'=>'1|2','user_nickname'=>'nickname1|nickname2','question_id'=>'1','name'=>'A','sid'=>'1','count'=>'2'),
+        array('user_id'=>'2|3','user_nickname'=>'nickname2|nickname3','question_id'=>'1','name'=>'B','sid'=>'2','count'=>'2'),
+        array('user_id'=>'3|2','user_nickname'=>'nickname3|nickname2','question_id'=>'1','name'=>'C','sid'=>'3','count'=>'2'),
+        array('user_id'=>'4|2','user_nickname'=>'nickname4|nickname2','question_id'=>'1','name'=>'D','sid'=>'4','count'=>'2'),
+        array('user_id'=>'5|2','user_nickname'=>'nickname5|nickname2','question_id'=>'2','name'=>'A','sid'=>'5','count'=>'2'),
+        array('user_id'=>'1|2','user_nickname'=>'nickname1|nickname2','question_id'=>'2','name'=>'B','sid'=>'6','count'=>'2'),
+        array('user_id'=>'1|2','user_nickname'=>'nickname1|nickname2','question_id'=>'2','name'=>'C','sid'=>'7','count'=>'2')
     );
 
 
@@ -173,7 +173,7 @@ class Debug extends CI_Controller {
         echo "<tr>";
         echo "<th>room_id</th><th>simpoll_id</th><th>simpoll_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
         echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>question_id</th><th>question_title</th>";
-        echo "<th>question_type</th><th>option_id</th><th>option_name</th><th>option_user_id</th><th>option_user_nickname</th>";
+        echo "<th>question_type</th><th>option_id</th><th>option_name</th><th>option_user_id</th><th>option_user_nickname</th><th>option_count</th>";
         echo "</tr>";
         for($i=0;$i<count($simpollWithQuestion);$i++){
             echo "<tr>";
@@ -194,6 +194,7 @@ class Debug extends CI_Controller {
             echo "<td>".$simpollWithQuestionAndOption[$i]['option_name']."</td>";
             echo "<td>".$simpollWithQuestionAndOption[$i]['option_user_id']."</td>";
             echo "<td>".$simpollWithQuestionAndOption[$i]['option_user_nickname']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['option_count']."</td>";
             echo "</tr>";
         }
         echo "</table>";
@@ -205,7 +206,7 @@ class Debug extends CI_Controller {
         echo "<tr>";
         echo "<th>room_id</th><th>simpoll_id</th><th>simpoll_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
         echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>question_id</th><th>question_title</th>";
-        echo "<th>question_type</th><th>option_id</th><th>option_name</th><th>option_user_id</th><th>option_user_nickname</th>";
+        echo "<th>question_type</th><th>option_id</th><th>option_name</th><th>option_user_id</th><th>option_user_nickname</th><th>option_count</th>";
         echo "</tr>";
         for($i=0;$i<count($simpollWithQuestionAndOption);$i++){
             echo "<tr>";
@@ -226,6 +227,7 @@ class Debug extends CI_Controller {
             echo "<td>".$simpollWithQuestionAndOption[$i]['option_name']."</td>";
             echo "<td>".$simpollWithQuestionAndOption[$i]['option_user_id']."</td>";
             echo "<td>".$simpollWithQuestionAndOption[$i]['option_user_nickname']."</td>";
+            echo "<td>".$simpollWithQuestionAndOption[$i]['option_count']."</td>";
             echo "</tr>";
         }
         echo "</table>";
@@ -357,7 +359,7 @@ class Debug extends CI_Controller {
         echo "<tr>";
         echo "<th>room_id</th><th>simpoll_id</th><th>simpoll_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
         echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>question_id</th><th>question_title</th>";
-        echo "<th>question_type</th><th>option_id</th><th>option_name</th><th>option_user_id</th><th>option_user_nickname</th>";
+        echo "<th>question_type</th><th>option_id</th><th>option_name</th><th>option_user_id</th><th>option_user_nickname</th><th>option_count</th>";
         echo "</tr>";
         for($i=0;$i<count($simpollWithQuestionList);$i++){
             echo "<tr>";
@@ -378,6 +380,7 @@ class Debug extends CI_Controller {
             echo "<td>".$simpollWithQuestionList[$i]['option_name']."</td>";
             echo "<td>".$simpollWithQuestionList[$i]['option_user_id']."</td>";
             echo "<td>".$simpollWithQuestionList[$i]['option_user_nickname']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['option_count']."</td>";
         }
         echo "</table>";
 
@@ -389,7 +392,7 @@ class Debug extends CI_Controller {
         echo "<tr>";
         echo "<th>room_id</th><th>simpoll_id</th><th>simpoll_title</th><th>url_name</th><th>user_id</th><th>user_nickname</th>";
         echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>question_id</th><th>question_title</th>";
-        echo "<th>question_type</th><th>option_id</th><th>option_name</th><th>option_user_id</th><th>option_user_nickname</th>";
+        echo "<th>question_type</th><th>option_id</th><th>option_name</th><th>option_user_id</th><th>option_user_nickname</th><th>option_count</th>";
         echo "</tr>";
         for($i=0;$i<count($simpollWithQuestionList);$i++){
             echo "<tr>";
@@ -410,6 +413,7 @@ class Debug extends CI_Controller {
             echo "<td>".$simpollWithQuestionList[$i]['option_name']."</td>";
             echo "<td>".$simpollWithQuestionList[$i]['option_user_id']."</td>";
             echo "<td>".$simpollWithQuestionList[$i]['option_user_nickname']."</td>";
+            echo "<td>".$simpollWithQuestionList[$i]['option_count']."</td>";
             echo "</tr>";
         }
         echo "</table>";
@@ -546,6 +550,20 @@ class Debug extends CI_Controller {
         }
         echo "</table>";
 */
+        $this->db->trans_complete();
+    }
+
+
+    function simpollcontroller(){
+        $this->db->trans_start(TRUE);
+        $this->_init();
+
+        // restWithParam
+        $question = array('simpoll_id'=>'1','title'=>'vote2','choice_no'=>'4','question_type'=>'0');
+        $this->question_service->register($question);
+        $list = $this->question_service->getQuestionListBySimpollId(1);
+        echo $this->unit->run(count($list), 6, "register Test");
+
         $this->db->trans_complete();
     }
 
