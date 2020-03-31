@@ -85,7 +85,7 @@ class Simpoll extends CI_Controller {
     // POST /api/simpoll
     function makeSimpoll(){
         $jsonArray = json_decode(file_get_contents('php://input'),true);
-        $simpoll = $this->_makeSimpoll($jsonArray);
+    /*    $simpoll = $this->_makeSimpoll($jsonArray);
 
         $simpoll_id = $this->simpoll_service->register($simpoll);
 
@@ -97,7 +97,8 @@ class Simpoll extends CI_Controller {
         );
         $this->load->model('service/question_service');
         $bool = $this->question_service->register($question);
-
+*/
+        $bool = $this->simpoll_service->createSimpoll($jsonArray);
         if($bool){
             $this->response_json(null,true,"Make Simpoll Success!");
         }else{

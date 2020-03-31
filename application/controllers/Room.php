@@ -10,7 +10,7 @@ class Room extends CI_Controller {
         $method = $this->input->method(TRUE);
 
         if($method == "GET"){
-            else $this->_getRoom($param);
+            $this->_getRoom($param);
         }
         else if($method == "DELETE"){
             $this->_deleteRoom($param);
