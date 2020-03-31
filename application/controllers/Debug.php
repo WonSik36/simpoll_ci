@@ -167,7 +167,7 @@ class Debug extends CI_Controller {
         echo $this->unit->run($this->simpoll_model->selectOneById('3'),null,"deleteOne test");
 
         // selectListWithVoteByRoomId
-        $simpollWithQuestion = $this->simpoll_model->selectListWithQuestionByRoomId('1');
+        $simpollWithQuestionAndOption = $this->simpoll_model->selectSimpollById('1');
         echo "<h3>selectListWithSimpollByRoomId Test</h3>";
         echo "<table>";
         echo "<tr>";
@@ -175,7 +175,7 @@ class Debug extends CI_Controller {
         echo "<th>deadline</th><th>is_comment_enable</th><th>is_anonymous</th><th>part_auth</th><th>question_id</th><th>question_title</th>";
         echo "<th>question_type</th><th>option_id</th><th>option_name</th><th>option_user_id</th><th>option_user_nickname</th><th>option_count</th>";
         echo "</tr>";
-        for($i=0;$i<count($simpollWithQuestion);$i++){
+        for($i=0;$i<count($simpollWithQuestionAndOption);$i++){
             echo "<tr>";
             echo "<td>".$simpollWithQuestionAndOption[$i]['room_id']."</td>";
             echo "<td>".$simpollWithQuestionAndOption[$i]['simpoll_id']."</td>";

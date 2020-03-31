@@ -15,6 +15,18 @@ class Simpoll_model extends CI_Model {
         return $query;
     }
 
+    function selectSimpollById($sid){
+        $sql = "SELECT sp_simpoll.sid as simpoll_id, sp_simpoll.room_id as room_id, sp_simpoll.title as simpoll_title, sp_simpoll.url_name as url_name, ";
+        $sql .= "sp_simpoll.user_id as user_id, sp_simpoll.user_nickname as user_nickname, sp_simpoll.deadline as deadline, ";
+        $sql .= "sp_simpoll.is_comment_enable as is_comment_enable, sp_simpoll.is_anonymous as is_anonymous, sp_simpoll.part_auth as part_auth, ";
+        $sql .= "sp_question.sid as question_id, sp_question.title as question_title, sp_question.choice_no as question_choice_no, sp_question.question_type as question_type, ";
+        $sql .= "sp_option.sid as option_id, sp_option.name as option_name, sp_option.user_id as option_user_id, sp_option.user_nickname as option_user_nickname, sp_option.count as option_count ";
+        $sql .= "FROM sp_simpoll INNER JOIN sp_question ON sp_simpoll.sid = sp_question.simpoll_id LEFT JOIN sp_option ON sp_question.sid=sp_option.question_id ";
+        $sql .= "WHERE sp_simpoll.sid=? AND sp_simpoll.is_deleted=0 AND sp_question.is_deleted=0 ";
+        $sql .= "ORDER BY sp_question.sid DESC";
+
+        return $this->db->query($sql, array($sid))->result_array();
+    }
     function selectOneById($sid){
         $sql = "SELECT * FROM sp_simpoll WHERE sid=? AND is_deleted=0";
 
