@@ -97,7 +97,13 @@ class Simpoll extends CI_Controller {
         );
         $this->load->model('service/question_service');
         $bool = $this->question_service->register($question);
-*/
+*/      
+        // $user_id = $this->session->userdata('sid');
+        // $user_nickanme = $this->session->userdata('nickname');
+        // $jsonArray['user_id'] = $user_id;
+        // $jsonArray['user_nickname'] = $user_nickname;
+        $jsonArray['user_id'] = "1";
+        $jsonArray['user_nickname'] = "nickname";
         $bool = $this->simpoll_service->createSimpoll($jsonArray);
         if($bool){
             $this->response_json(null,true,"Make Simpoll Success!");

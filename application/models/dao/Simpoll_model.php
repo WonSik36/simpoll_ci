@@ -11,7 +11,6 @@ class Simpoll_model extends CI_Model {
         $sql .= "VALUES (?,?,?,?,?,?,?,?,?)";
         $query = $this->db->query($sql, array($simpoll['room_id'],$simpoll['title'],$simpoll['url_name'],$simpoll['user_id'],
                 $simpoll['user_nickname'], $simpoll['deadline'], $simpoll['is_comment_enable'], $simpoll['is_anonymous'], $simpoll['part_auth']));
-
         return $query;
     }
 

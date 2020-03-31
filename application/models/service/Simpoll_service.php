@@ -35,18 +35,24 @@ class Simpoll_service extends CI_Model {
             // 심폴 생성
             $bool = $this->simpoll_model->insertOne($input);
             if($bool){
-                for($i=0; $i<count($input['question']); $i++){
-                    $simpoll = $this->simpoll_model->selectOneById($input['sid']);
-                    $question = $simpoll['question'][$i];
+                $simpoll = $this->simpoll_model->selectListByRoomId($input['room_id'])[0];
+
+                for($i=0; $i<count($input['questions']); $i++){
+                    $question = $input['questions'][$i];
                     $question['simpoll_id'] = $simpoll['sid'];
-                    $question_service->register($question);
-                    for($j=0; $i<count($input['question'][$i]['options']); $j++){
-                        $question = $this->question_model->selectOneById($question['sid']);
-                        $option = $input['question'][$i]['options'][$j];
+
+                    $this->question_service->register($question);
+                    $questionList = $this->question_model->selectListBySimpollId($simpoll['sid']);
+                    $question = $questionList[count($questionList)-1];
+
+                    for($j=0; $j<count($input['questions'][$i]['options']); $j++){
+                        $option = array(
+                            'name'=>$input['questions'][$i]['options'][$j]
+                        );
                         $option['question_id'] = $question['sid'];
                         $option['user_id'] = '';
                         $option['user_nickname'] = '';
-                        $option_service->registerOption($option);
+                        $this->option_service->registerOption($option);
                     }
                 }
             }else{
