@@ -232,6 +232,8 @@ class Debug extends CI_Controller {
         }
         echo "</table>";
 
+        echo $this->simpoll_controller->restWithParam('1?type=id');
+
         $this->db->trans_complete();
     }
 
