@@ -96,14 +96,15 @@ class Room extends CI_Controller {
     // POST /api/room/{roomId}/user
     function addAudience2Room($room_id){
         $jsonArray = json_decode(file_get_contents('php://input'),true);
-
+        //echo var_dump($jsonArray);
+        //echo var_dump($room_id);
         if(empty($jsonArray['user_id']))
             $this->response_json(null, false, "Not right format");
 
         if(!empty($this->room_service->getRoomUserByRoomIdAndUserId($room_id, $jsonArray['user_id'])))
             $this->response_json(null, false, "Already User is in The Room");
 
-        $this->room_service->addAudience2Room($room_id, $jsonArray['user_id']);
+        $this->room_service->addAudience2Room($room_id, $jsonArray['user_id'][0]);
         $this->response_json(null, true, "Add Audience to Room Success!");
     }
 

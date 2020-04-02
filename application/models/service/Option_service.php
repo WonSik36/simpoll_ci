@@ -33,16 +33,16 @@ class Option_service extends CI_Model {
 
             // case2: 익명이면서 로그인 한 사람만 참여 가능 -> user_id = 사용자 id, cur_name = nickname
             }else if($is_anonymous==1 && $part_auth==0){
-                $inputs = $this->makeOption($option_id[$i], $option['name'], $option['question_id'], $user['sid'], $user_id, $option['user_nickname'], $user['nickname'], $option['count']);
+                $inputs = $this->makeOption($option_id[$i], $option['name'], $option['question_id'], $option['user_id'], $user_id, $option['user_nickname'], $user['nickname'], $option['count']);
                 $result = $this->option_model->updateOne($inputs);
 
             // case3: 익명이면서 링크를 가진 누구나 투표 가능 -> user_id = NULL, cur_name = 'anonymous'
             }else if($is_anonymous==1 && $part_auth==1){
                 $inputs;
                 if(empty($user))
-                    $inputs = $this->makeOption($option_id[$i], $option['name'], $option['question_id'], null, null, $option['user_nickname'], null, $option['count']);
+                    $inputs = $this->makeOption($option_id[$i], $option['name'], $option['question_id'], $option['user_id'], null, $option['user_nickname'], null, $option['count']);
                 else
-                    $inputs = $this->makeOption($option_id[$i], $option['name'], $option['question_id'], $user['sid'], $user_id, $option['user_nickname'], $user['nickname'], $option['count']);
+                    $inputs = $this->makeOption($option_id[$i], $option['name'], $option['question_id'], $option['user_id'], $user_id, $option['user_nickname'], $user['nickname'], $option['count']);
                     $result = $this->option_model->updateOne($inputs);
 
             // case4: 실명이면서 링크를 가진 누구나 투표 가능 -> 불가능한 경우
@@ -65,19 +65,20 @@ class Option_service extends CI_Model {
     }
 
     function makeOption($option_id, $option_name, $question_id, $user_id, $new_user_id, $user_nickname, $new_user_nickname, $count){
-        if(!empty($user_id)){
+        if(!empty($new_user_id)){
             $array = array($user_id,$new_user_id);
             $user_id = implode('|', $array);
             $array2 = array($user_nickname,$new_user_nickname);
             $user_nickname = implode('|', $array2);
         }
+        $count = ((int)$count)+1;
         $inputs = array(
             'sid' => $option_id,
             'name' => $option_name,
             'user_id' => $user_id,
             'user_nickname' => $user_nickname,
             'question_id' => $question_id,
-            'count' => $count++
+            'count' => $count
         );
 
         return $inputs;

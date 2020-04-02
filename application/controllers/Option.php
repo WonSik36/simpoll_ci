@@ -9,7 +9,7 @@ class Option extends CI_Controller {
     function rest(){
         $method = $this->input->method(TRUE);
 
-        else if($method == "POST"){
+        if($method == "POST"){
             $this->_submitQuestion();
         }
     }
@@ -56,7 +56,7 @@ class Option extends CI_Controller {
     // POST /api/option
     function _submitQuestion(){
         $jsonArray = json_decode(file_get_contents('php://input'),true);
-        if(empty($jsonArray['user_id']) || empty($jsonArray['question_id']) || empty($jsonArray['choice_no']))
+        if(empty($jsonArray['option_id']))
             $this->response_json(null, false, "Not right format");
 
         $user_id = $this->session->userdata('sid');

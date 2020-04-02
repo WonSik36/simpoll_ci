@@ -15,7 +15,7 @@ class Simpoll_service extends CI_Model {
     }
 
     function getSimpollById($sid){
-        return $this->simpoll_model->selectSimpollById($sid);
+        return $this->simpoll_model->selectOneById($sid);
     }
 
     // 투표 결과 (청중, 강연자)

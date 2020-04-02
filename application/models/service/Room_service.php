@@ -18,7 +18,7 @@ class Room_service extends CI_Model {
 
         // dao에 room insert를 요청한다.
         $this->room_model->insertOne($room);
-        
+
         // master를 이용해서 해당 방의 sid를 검색한다.
         $user_id = $room['master'];
         $newRoom = $this->room_model->selectListByMaster($user_id)[0];
@@ -39,8 +39,10 @@ class Room_service extends CI_Model {
         param: 방아이디, 유저아이디, 권한(1:방장, 2:일반)
     */
     function addAudience2Room($room_id, $user_id){
+
+
         $this->db->trans_start();
-        $this->room_model->insertUser2Room($room_id, $user_id, 2);
+        $this->room_model->insertUser2Room($room_id, (int)$user_id, 2);
         $this->room_model->addPartNum($room_id);
         $this->db->trans_complete();
 
