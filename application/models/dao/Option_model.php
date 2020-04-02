@@ -40,8 +40,8 @@ class Option_model extends CI_Model {
     }
 
     function updateOne($option){
-        $sql = "UPDATE sp_option SET user_id=?, user_nickname=?, question_id=? WHERE sid=?";
-        $query = $this->db->query($sql, array($option['user_id'],$option['user_nickname'],$option['question_id'],$option['sid']));
+        $sql = "UPDATE sp_option SET user_id=?, user_nickname=?, question_id=?, count=? WHERE sid=?";
+        $query = $this->db->query($sql, array($option['user_id'],$option['user_nickname'],$option['question_id'],$option['count'],$option['sid']));
 
         return $query;
     }

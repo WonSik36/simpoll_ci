@@ -3,6 +3,7 @@ class Simpoll extends CI_Controller {
     function __construct(){
         parent::__construct();
         $this->load->model('service/simpoll_service');
+        $this->load->library('session');
     }
 
     function restWithParam($param){
@@ -59,7 +60,7 @@ class Simpoll extends CI_Controller {
         $type = $this->input->get('type');
 
         $simpoll = null;
-        $simpoll = $this->simpoll_service->getSimpollById($id);
+        $simpoll = $this->simpoll_service->getSimpollListWithQuestionListBySimpollId($id);
 
         if(empty($simpoll)){
             $this->response_json(null,false,"No Simpoll for ".$id);
@@ -99,7 +100,7 @@ class Simpoll extends CI_Controller {
         $bool = $this->question_service->register($question);
 */
         $user_id = $this->session->userdata('sid');
-        $user_nickanme = $this->session->userdata('nickname');
+        $user_nickname = $this->session->userdata('nickname');
         $jsonArray['user_id'] = $user_id;
         $jsonArray['user_nickname'] = $user_nickname;
         //$jsonArray['user_id'] = "1";
