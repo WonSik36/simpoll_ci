@@ -25,13 +25,7 @@
     </span>
     <ul class="topnav">
         <li class="right">
-            <a href="/index.php/room/register">새로운 방 만들기</a>
-        </li>
-        <li class="right">
-            <a href="/index.php/room/audience">참여한 방 목록</a>
-        </li>
-        <li class="right">
-            <a href="/index.php/room/speacker">개설한 방 목록</a>
+            <a href="/index.php/home/dashboard">대시보드</a>
         </li>
         <li id="icon">
             <i class="fas fa-user-circle"></i>
