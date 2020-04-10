@@ -80,8 +80,6 @@ class Simpoll extends CI_Controller {
             $this->response_json(null, false, "Delete Simpoll Failed...");
     }
 
-    /* need to fix: Transaction */
-    /* need to fix: Deal with multiple questions */
     // URL:
     // POST /api/simpoll
     function makeSimpoll(){
@@ -101,40 +99,6 @@ class Simpoll extends CI_Controller {
         }
     }
 
-    /* need to fix: input format */
-/*    function _makeSimpoll($jsonArray){
-        if(empty($jsonArray['room_id']) || empty($jsonArray['simpoll_title']) || empty($jsonArray['user_id']) || empty($jsonArray['user_nickname'])
-                || empty($jsonArray['deadline']))
-            $this->response_json(null, false, "Not right format");
-
-        $url_name = null;
-        if(!empty($jsonArray['url_name']))
-            $url_name = $jsonArray['url_name'];
-        $simpoll_title = null;
-        if(!empty($jsonArray['title']))
-            $simpoll_title = $jsonArray['simpoll_title'];
-        $is_comment_enable = 1;
-        if(empty($jsonArray['is_comment_enable']))
-            $is_comment_enable = 0;
-        $is_anonymous = 1;
-        if(empty($jsonArray['is_anonymous']))
-            $is_anonymous = 0;
-
-        $simpoll = array(
-            'room_id'=>$jsonArray['room_id'],
-            'title'=>$simpoll_title,
-            'url_name'=>$url_name,
-            'user_id'=>$jsonArray['user_id'],
-            'user_nickname'=>$jsonArray['user_nickname'],
-            'deadline'=>$jsonArray['deadline'],
-            'is_comment_enable'=>$is_comment_enable,
-            'is_anonymous'=>$is_anonymous,
-            'part_auth'=>$jsonArray['part_auth']
-        );
-
-        return $simpoll;
-    }
-*/
     function response_json($data, $isSucceed, $message){
         $res = array();
 

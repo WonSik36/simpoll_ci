@@ -13,10 +13,10 @@ class Option_service extends CI_Model {
         parameter: 투표(배열)와 유저의 선택지("|"로 나누어져있음)
     */
     function voting($option_id,$user_id){
+        $result = false;
         $this->load->model('dao/user_model');
         $this->load->model('dao/question_model');
         $this->load->model('dao/simpoll_model');
-        echo var_dump($user_id);
         $user = $this->user_model->selectOneById($user_id);
         $option1 = $this->option_model->selectOneById($option_id[0]);
         $question = $this->question_model->selectOneById($option1['question_id']);
@@ -29,21 +29,23 @@ class Option_service extends CI_Model {
             // case1: 실명이면서 로그인 한 사람만 참여 가능 -> user_id = 사용자 id, cur_name = name
             if($is_anonymous==0 && $part_auth==0){
                 $inputs = $this->makeOption($option_id[$i], $option['name'], $option['question_id'], $option['user_id'], $user_id, $option['user_nickname'], $user['name'], $option['count']);
-                //$result = $this->option_model->updateOne($inputs);
+                $result = $this->option_model->updateOne($inputs);
 
             // case2: 익명이면서 로그인 한 사람만 참여 가능 -> user_id = 사용자 id, cur_name = nickname
             }else if($is_anonymous==1 && $part_auth==0){
                 $inputs = $this->makeOption($option_id[$i], $option['name'], $option['question_id'], $option['user_id'], $user_id, $option['user_nickname'], $user['nickname'], $option['count']);
-                //$result = $this->option_model->updateOne($inputs);
+                $result = $this->option_model->updateOne($inputs);
 
             // case3: 익명이면서 링크를 가진 누구나 투표 가능 -> user_id = NULL, cur_name = 'anonymous'
             }else if($is_anonymous==1 && $part_auth==1){
                 $inputs;
-                if(empty($user))
+                if(empty($user)){
                     $inputs = $this->makeOption($option_id[$i], $option['name'], $option['question_id'], $option['user_id'], null, $option['user_nickname'], null, $option['count']);
-                else
+                }else{
                     $inputs = $this->makeOption($option_id[$i], $option['name'], $option['question_id'], $option['user_id'], $user_id, $option['user_nickname'], $user['nickname'], $option['count']);
-                    //$result = $this->option_model->updateOne($inputs);
+                }
+                
+                $result = $this->option_model->updateOne($inputs);
 
             // case4: 실명이면서 링크를 가진 누구나 투표 가능 -> 불가능한 경우
             }else{

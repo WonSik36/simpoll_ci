@@ -42,7 +42,7 @@ class Simpoll_service extends CI_Model {
                     $question['simpoll_id'] = $simpoll['sid'];
 
                     $this->question_service->register($question);
-                    $questionList = $this->question_model->selectListBySimpollId($simpoll['sid']);
+                    $questionList = $this->question_service->getQuestionListBySimpollId($simpoll['sid']);
                     $question = $questionList[count($questionList)-1];
 
                     for($j=0; $j<count($input['questions'][$i]['options']); $j++){

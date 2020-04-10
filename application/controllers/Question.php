@@ -4,17 +4,6 @@ class Question extends CI_Controller {
         parent::__construct();
         $this->load->model('service/question_service');
     }
-//사용 X
-    // URL:
-    // DELETE /api/vote/{voteId}
-    function deleteVote($vote_id){
-        $bool = $this->vote_service->deleteVote($vote_id);
-
-        if($bool)
-            $this->response_json(null, true, "Delete Vote Success!");
-        else
-            $this->response_json(null, false, "Delete Vote Failed...");
-    }
 
     function response_json($data, $isSucceed, $message){
         $res = array();

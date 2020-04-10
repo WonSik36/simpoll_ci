@@ -6,7 +6,7 @@ class Question_service extends CI_Model {
         parent::__construct();
         $this->load->model('dao/question_model');
     }
-    //사용 X
+
     function register($question) {
         return $this->question_model->insertOne($question);
     }
