@@ -21,9 +21,14 @@ class Simpoll extends CI_Controller {
     function id($simpoll_id){
         // select simpoll(list) by id
         // view
+        $simpollList = $this->simpoll_service->getSimpollListWithQuestionListBySimpollId($simpoll_id);
+        $this->load->view('',$simpollList);
+
     }
 
     function url($url){
+        $simpollList = $this->getSimpollByUrl($url);
+        $this->id($simpollList['sid']);
     }
 
     // URL:
