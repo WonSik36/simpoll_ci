@@ -4,7 +4,7 @@ class Question extends CI_Controller {
         parent::__construct();
         $this->load->model('service/question_service');
     }
-
+//사용 X
     // URL:
     // DELETE /api/vote/{voteId}
     function deleteVote($vote_id){

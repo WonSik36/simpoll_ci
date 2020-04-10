@@ -19,7 +19,7 @@ class Option_model extends CI_Model {
         return $this->db->query($sql, array($sid))->row_array();
     }
 
-    /* need to fix */
+
     function selectOneByquiestionIdAndUserId($quiestion_id, $user_id){
         $sql = "SELECT * FROM sp_option WHERE quiestion_id=? AND user_id=? AND is_deleted=0";
 
@@ -32,7 +32,7 @@ class Option_model extends CI_Model {
         return $this->db->query($sql, array($quiestion_id))->result_array();
     }
 
-    /* need to fix */
+
     function selectListByUserId($user_id){
         $sql = "SELECT * FROM sp_option WHERE user_id=? AND is_deleted=0 ORDER BY sid DESC";
 
@@ -45,7 +45,7 @@ class Option_model extends CI_Model {
 
         return $query;
     }
-    /*need to fix*/
+    
     function count(){
         $sql = "SELECT COUNT(*) as num FROM sp_option";
         $result = $this->db->query($sql)->row_array();

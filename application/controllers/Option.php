@@ -17,7 +17,7 @@ class Option extends CI_Controller {
     // URL:
     // GET /api/option?questionId=?&userId=?&persontype=audience
     // GET /api/option?questionId=?&userId=?&persontype=speacker
-    //없애기.
+
     function _getQuestionResult(){
         $question_id = $this->input->get('questionId');
         if(empty($question_id)){
@@ -71,7 +71,7 @@ class Option extends CI_Controller {
             $this->response_json(null, true, "Simpolling Failed...");
         }
     }
-
+/*
     // URL:
     // PUT /api/option/{optionId}
     //사용 X
@@ -92,6 +92,7 @@ class Option extends CI_Controller {
             $this->response_json(null, true, "Simpoll Update Failed...");
         }
     }
+*/
     // simpoll 생성시, 만들어지는 선택지 한 개 한 개를 저장.
     function registerOption($question_id){
         $jsonArray = json_decode(file_get_contents('php://input'),true);

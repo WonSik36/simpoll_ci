@@ -85,19 +85,7 @@ class Simpoll extends CI_Controller {
     // POST /api/simpoll
     function makeSimpoll(){
         $jsonArray = json_decode(file_get_contents('php://input'),true);
-    /*    $simpoll = $this->_makeSimpoll($jsonArray);
 
-        $simpoll_id = $this->simpoll_service->register($simpoll);
-
-        $question = array(
-            'simpoll_id'=>$simpoll_id,
-            'title'=>$jsonArray['question_title'],
-            'choice_no'=>$jsonArray['choice_no'],
-            'question_type'=>$jsonArray['question_type']
-        );
-        $this->load->model('service/question_service');
-        $bool = $this->question_service->register($question);
-*/
         $user_id = $this->session->userdata('sid');
         $user_nickanme = $this->session->userdata('nickname');
         $jsonArray['user_id'] = $user_id;
@@ -113,7 +101,7 @@ class Simpoll extends CI_Controller {
     }
 
     /* need to fix: input format */
-    function _makeSimpoll($jsonArray){
+/*    function _makeSimpoll($jsonArray){
         if(empty($jsonArray['room_id']) || empty($jsonArray['simpoll_title']) || empty($jsonArray['user_id']) || empty($jsonArray['user_nickname'])
                 || empty($jsonArray['deadline']))
             $this->response_json(null, false, "Not right format");
@@ -145,7 +133,7 @@ class Simpoll extends CI_Controller {
 
         return $simpoll;
     }
-
+*/
     function response_json($data, $isSucceed, $message){
         $res = array();
 

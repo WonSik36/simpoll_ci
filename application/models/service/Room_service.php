@@ -64,20 +64,20 @@ class Room_service extends CI_Model {
         param: 유저 시퀀스 아이디
         return: 방(array) array
     */
-    function getMasterRoomList($user_id) {
+/*    function getMasterRoomList($user_id) {
         return $this->room_model->selectListByMaster($user_id);
     }
-
+*/
     /*
         getAudienceRoomList
         자신이 참여하고 있는 방 목록 반환
         param: 유저 시퀀스 아이디
         return: 방(array) array
     */
-    function getAudienceRoomList($user_id) {
+/*    function getAudienceRoomList($user_id) {
         return $this->room_model->selectListByUserId($user_id);
     }
-
+*/
     /*
         getRoomByUrl
         입력받은 URL에 매칭되는 방을 찾는다
