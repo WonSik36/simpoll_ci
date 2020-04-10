@@ -68,7 +68,9 @@ class Option_service extends CI_Model {
 
     function makeOption($option_id, $option_name, $question_id, $user_id, $new_user_id, $user_nickname, $new_user_nickname, $count){
 
-        if(!empty($user_id)||!empty($user_nickname)){
+        if(empty($new_user_id) && empty($new_user_nickname)){
+            // dont change current user id list and user nickname list
+        }else if(!empty($user_id)||!empty($user_nickname)){
             $array = array($user_id,$new_user_id);
             $user_id = implode('|', $array);
             $array2 = array($user_nickname,$new_user_nickname);
@@ -76,7 +78,6 @@ class Option_service extends CI_Model {
         }else{
             $user_id = $new_user_id;
             $user_nickname = $new_user_nickname;
-
         }
 
         $count = ((int)$count)+1;

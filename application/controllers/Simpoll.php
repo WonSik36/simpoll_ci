@@ -19,11 +19,9 @@ class Simpoll extends CI_Controller {
     }
 
     function id($simpoll_id){
-        // select simpoll(list) by id
-        // view
-        $simpollList = $this->simpoll_service->getSimpollListWithQuestionListBySimpollId($simpoll_id);
-        $this->load->view('',$simpollList);
-
+        $simpoll = $this->simpoll_service->getSimpollListWithQuestionListBySimpollId($simpoll_id);
+        // 로그인 여부 필요할시 검증 절차
+        $this->load->view('simpoll_page',array('simpoll'=>$simpoll));
     }
 
     function url($url){
