@@ -18,6 +18,14 @@ class Simpoll extends CI_Controller {
         }
     }
 
+    function id($simpoll_id){
+        // select simpoll(list) by id
+        // view
+    }
+
+    function url($url){
+    }
+
     // URL:
     // GET /api/room/{roomId}/question?userId=?     -> audience
     // GET /api/room/{roomId}/question              -> speacker

@@ -5,6 +5,7 @@ class Home extends CI_Controller {
         $this->load->library('session');
     }
 
+    // deprecated
     function session(){
         $this->load->view('debug',array('debug'=>var_dump($this->session->all_userdata())));
     }
@@ -15,26 +16,14 @@ class Home extends CI_Controller {
 
     function search(){
         $code = $this->input->get('code');
-        $type = $this->input->get('type');
 
-        $message;
+        $message = "해당하는 Simpoll로 이동합니다.";
         $location;
 
-        if($type=="room"){
-            $message = "해당하는 방으로 이동합니다.";
-            
-            if(is_numeric($code))
-                $location = "/index.php/room/page/".$code;
-            else
-                $location = "/index.php/room/url/".$code;
-        }else{
-            $message = "해당하는 Simpoll로 이동합니다.";
-
-            if(is_numeric($code))
-                $location = "/index.php/group/page/".$code;
-            else
-                $location = "/index.php/group/url/".$code;
-        }
+        if(is_numeric($code))
+            $location = "/index.php/simpoll/id/".$code;
+        else
+            $location = "/index.php/simpoll/url/".$code;
 
         $this->load->view("result", array('message'=>$message, 'location'=>$location));
     }
