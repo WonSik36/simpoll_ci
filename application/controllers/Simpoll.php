@@ -20,13 +20,21 @@ class Simpoll extends CI_Controller {
 
     function id($simpoll_id){
         $simpoll = $this->simpoll_service->getSimpollListWithQuestionListBySimpollId($simpoll_id);
+        
         // 로그인 여부 필요할시 검증 절차
+        if($simpoll[0]['part_auth'] == 0){
+            if(empty($this->session->userdata('sid'))){
+                $this->load->view('result',array('message'=>'로그인 하시기 바랍니다.','location'=>'/index.php/user/login'));
+                return;
+            }
+        }
+
         $this->load->view('simpoll_page',array('simpoll'=>$simpoll));
     }
 
     function url($url){
-        $simpollList = $this->getSimpollByUrl($url);
-        $this->id($simpollList['sid']);
+        $simpoll = $this->simpoll_service->getSimpollByUrl($url);
+        $this->id($simpoll['sid']);
     }
 
     // URL:

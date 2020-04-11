@@ -12,6 +12,7 @@ class Option_service extends CI_Model {
         voting
         parameter: 투표(배열)와 유저의 선택지("|"로 나누어져있음)
     */
+    // 검증 과정 필요
     function voting($option_id,$user_id){
         $result = false;
         $this->load->model('dao/user_model');
@@ -28,11 +29,13 @@ class Option_service extends CI_Model {
             $option = $this->option_model->selectOneById($option_id[$i]);
             // case1: 실명이면서 로그인 한 사람만 참여 가능 -> user_id = 사용자 id, cur_name = name
             if($is_anonymous==0 && $part_auth==0){
+                // 검증 과정 필요
                 $inputs = $this->makeOption($option_id[$i], $option['name'], $option['question_id'], $option['user_id'], $user_id, $option['user_nickname'], $user['name'], $option['count']);
                 $result = $this->option_model->updateOne($inputs);
 
             // case2: 익명이면서 로그인 한 사람만 참여 가능 -> user_id = 사용자 id, cur_name = nickname
             }else if($is_anonymous==1 && $part_auth==0){
+                // 검증 과정 필요
                 $inputs = $this->makeOption($option_id[$i], $option['name'], $option['question_id'], $option['user_id'], $user_id, $option['user_nickname'], $user['nickname'], $option['count']);
                 $result = $this->option_model->updateOne($inputs);
 
