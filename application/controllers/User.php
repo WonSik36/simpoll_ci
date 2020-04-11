@@ -64,6 +64,7 @@ class User extends CI_Controller {
         }
     }
 
+
     function signup(){
       if(!empty($this->input->post('email'))){
           $email = $this->input->post('email');
@@ -109,7 +110,7 @@ class User extends CI_Controller {
             $res['message'] = $message;
         }
 
-        echo json_encode($res); 
+        echo json_encode($res);
         exit;
     }
 }

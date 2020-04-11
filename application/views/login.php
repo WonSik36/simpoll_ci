@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://kit.fontawesome.com/228af79543.js" crossorigin="anonymous"></script>
     <title>Simpoll</title>
     <style>
     input[type=text] {
@@ -61,6 +62,13 @@
         <div>
             <a href="id_inquiry.php">아이디 찾기</a> | <a href="pw_inquiry.php">비밀번호 찾기</a> | <a href="/index.php/user/signup">회원가입</a>
         </div>
+        <?php
+				if($this->session->userdata('sess_logged_in')==0){?>
+					<a href="/index.php/login/google"class="waves-effect waves-light btn red"><i class="fa fa-google left"></i>Google login</a>
+				<?php }else{?>
+					<a href="/index.php/home" class="waves-effect waves-light btn red"><i class="fa fa-google left"></i>Google logout</a>
+				<?php }
+		?>
     </div>
 </body>
 </html>
