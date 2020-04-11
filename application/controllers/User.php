@@ -42,6 +42,18 @@ class User extends CI_Controller {
     }
 
     function login(){
+        $this->load->config('oauth');
+        $this->google_setting = $this->config->item('google_login');
+        $param = array(
+            'response_type' => 'code',
+            'client_id' => $this->google_setting['client_id'],
+            'redirect_uri' => $this->google_setting['redirect_uri'],
+            'access_type' => "offline",
+            'scope' => "https://www.googleapis.com/auth/userinfo.profile"
+        );
+
+        $authUrl = $this->google_setting['authorize_url'].'?'.http_build_query($param);
+
         // login 요청 -> login 검증 실행
         if(!empty($this->input->post('email'))){
             $email = $this->input->post('email');
@@ -55,12 +67,12 @@ class User extends CI_Controller {
                 $this->load->view('result',array('message'=>"로그인 성공",'location'=>"/index.php/home/dashboard"));
             // 실패
             }else{
-                $this->load->view('login');
+                $this->load->view('login', array('authUrl'=>$authUrl));
             }
 
         // login page 요청 -> login page 리턴
         }else{
-            $this->load->view('login');
+            $this->load->view('login', array('authUrl'=>$authUrl));
         }
     }
 

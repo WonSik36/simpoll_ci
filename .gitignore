@@ -1,3 +1,4 @@
 .vscode
 .ftpconfig
 database.php
+oauth.php
