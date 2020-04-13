@@ -4,6 +4,7 @@ class Simpoll extends CI_Controller {
         parent::__construct();
         $this->load->model('service/simpoll_service');
         $this->load->library('session');
+        $this->load->helper('date');
     }
 
     function restWithParam($param){
@@ -20,7 +21,21 @@ class Simpoll extends CI_Controller {
 
     function id($simpoll_id){
         $simpoll = $this->simpoll_service->getSimpollListWithQuestionListBySimpollId($simpoll_id);
-        
+        //해당 심폴이 없으면
+        if(empty($simpoll)){
+            $this->load->view('result',array('message'=>'존재하지 않는 simpoll 입니다.','location'=>'/index.php/home'));
+            return;
+        }
+
+        // 기간이 지나면
+        $cur_time = time();
+        $deadline = strtotime($simpoll[0]['deadline']);
+
+        if($deadline<$cur_time){
+            $this->load->view('result',array('message'=>'기간이 지난 simpoll입니다.','location'=>'/index.php/home'));
+            return;
+        }
+
         // 로그인 여부 필요할시 검증 절차
         if($simpoll[0]['part_auth'] == 0){
             if(empty($this->session->userdata('sid'))){
