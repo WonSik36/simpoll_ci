@@ -4,7 +4,6 @@ class Simpoll extends CI_Controller {
         parent::__construct();
         $this->load->model('service/simpoll_service');
         $this->load->library('session');
-        $this->load->helper('date');
     }
 
     function restWithParam($param){

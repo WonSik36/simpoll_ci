@@ -10,9 +10,6 @@
         <li class="right">
             <a href="/index.php/user/login">로그인</a>
         </li>
-        <li class="right">
-            <a href="/index.php/user/signup">회원가입</a>
-        </li>
     </ul>
 </div>
 <?php
