@@ -42,6 +42,7 @@
 <body>
     <div class="align-center" style="margin-top: 100px;">
         <h1 style="margin-bottom: 100px;"><a href="/index.php/home">Simpoll</a></h1>
+        <a href="<?=$authUrl?>"><button>구글 로그인</button></a>
         <form action="login" method="post">
             <p>
                 <input type="text" placeholder="아이디" name="email">

@@ -13,7 +13,7 @@ class Social_login {
 
         $this->CI->load->helper('url');
         $this->CI->load->library('session');
-        $this->CI->load->config('social_login');
+        $this->CI->load->config('oauth');
 
         $this->social_provider = strtolower(get_called_class());
         $this->social_setting = $this->CI->config->item( $this->social_provider );
